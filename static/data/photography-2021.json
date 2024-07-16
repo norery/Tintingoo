@@ -1,0 +1,25 @@
+{
+  "itemsBaseURL": "/images/photography/",
+  "thumbnailWidth": "auto",
+  "thumbnailHeight": 300,
+  "thumbnailBorderVertical": 0,
+  "thumbnailBorderHorizontal": 0,
+  "thumbnailAlignment": "justified",
+  "thumbnailGutterWidth": 6,
+  "thumbnailGutterHeight": 6,
+  "thumbnailLabel": {
+    "titleMultiLine": true
+  },
+  "allowHTMLinData": true,
+  "thumbnailHoverEffect2": "labelAppear75",
+  "viewerToolbar": {
+    "display": true,
+    "standard":   "minimizeButton, label",
+    "minimized":  "minimizeButton, label, downloadButton, infoButton"
+  },
+  "items": [
+      { "src": "2021_扫街自拍.jpeg", "srct": "2021_扫街自拍.jpeg", "title": "扫街自拍" },
+      { "src": "2021_cloud.jpeg", "srct": "2021_cloud.jpeg", "title": "北京晚霞" }
+    
+  ]
+}

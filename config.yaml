@@ -1,0 +1,163 @@
+baseURL: "https://tintingoo.com/"
+languageCode: "en-us"
+title: "Tintingo | 丁毅"
+googleAnalytics: "G-RJC7CCKE67"
+disqusShortname: "Tintingo"
+ignoreFiles: [
+  "\\.Rmarkdown$", "\\.Rmd$", "\\.knit\\.md$", "\\.utf8\\.md$",
+  "_files$", "_cache$", "\\.txt$", "\\.csv$", "\\.tsv$",
+  "\\.tgz$", "\\.tar$", "\\.gz$", "\\.zip$", "\\.npz$"]
+hasCJKLanguage: true
+enableEmoji: true
+rssLimit: 100
+
+permalinks:
+  cn: "/cn/:year/:month/:slug/"
+  en: "/en/:year/:month/:slug/"
+  tech101: "/tech101/:year/:month/:slug/"
+
+menu:
+  home:
+    - name: "Home"
+      url: "/"
+      weight: 1
+    - name: "Blog"
+      url: "/blogs/"
+      weight: 2
+    - name: "Categories"
+      url: "/categories/"
+      weight: 3
+    - name: "Photography"
+      url: "/photography/"
+      weight: 4
+
+  main:
+    - name: "Home"
+      url: "/"
+      weight: 1
+    - name: "Blog"
+      url: "/blogs/"
+      weight: 2
+    - name: "Categories"
+      url: "/categories/"
+      weight: 3
+    - name: "Photography"
+      url: "/photography/"
+      weight: 4
+
+
+taxonomies:
+  category: categories
+
+params:
+  description: "Tintingo's Personal Website | 丁毅的个人网站"
+  disqusURL: "https://tintingoo.com"
+  licenseURL: "https://github.com/norery/tintingoo.com/blob/main/LICENSE"
+  googleAdsense: "ca-pub-2608165017777396"
+
+  jsCookieVersion: "3.0.0"
+  jsCookieCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  prismjsVersion: "1.26.0"
+  prismjsCDN: "//cdnjs.cloudflare.com/ajax/libs"
+  prismjsPlugin: ["show-language"]
+
+  mathjaxVersion: "3.2.0"
+  mathjaxCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  pseudocodeVersion: "latest"
+  pseudocodeCDN: "//cdn.jsdelivr.net/npm"
+
+  jQueryVersion: "3.6.0"
+  jQueryCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  photoswipeVersion: "4.1.3"
+  photoswipeCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  videojsVersion: "7.18.0"
+  videojsCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  materialDesignWebFontVersion: "6.5.95"
+  materialDesignWebFontCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  materialComponentsWebVersion: "latest"
+  materialComponentsWebCDN: "//cdn.jsdelivr.net/npm"
+
+  APlayerVersion: "1.10.1"
+  APlayerCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  MetingJSVersion: "latest"
+  MetingJSCDN: "//cdn.jsdelivr.net/npm"
+
+  lazysizesVersion: "5.3.2"
+  lazysizesCDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  vanillaBackToTopVersion: "latest"
+  vanillaBackToTopCDN: "//cdn.jsdelivr.net/npm"
+
+  nanogallery2Version: "3.0.5"
+  nanogallery2CDN: "//cdnjs.cloudflare.com/ajax/libs"
+
+  lang:
+    slogan:
+      en: "Tintingoo's Blog"
+      cn: "Tintingoo's Blog"
+    author:
+      en: "Tintingo"
+      cn: "Tintingo"
+    license:
+      cn: "License"
+      en: "License"
+    subscribe:
+      cn: "Subscribe"
+      en: "Subscribe"
+    categories:
+      cn: "Categories"
+      en: "Categories"
+    tags:
+      cn: "Tags"
+      en: "Tags"
+    wordcount:
+      cn: "Word Count"
+      en: "Word Count"
+    donate:
+      cn: "DONATE"
+      en: "DONATE"
+    donate_slogan:
+      cn: "「Donation Given, Fragrance in Hand」"
+      en: "「Donation Given, Fragrance in Hand」"
+    donate_2_cny:
+      cn: "2 元"
+      en: "2 CNY"
+    donate_5_cny:
+      cn: "5 元"
+      en: "5 CNY"
+    donate_10_cny:
+      cn: "10 元"
+      en: "10 CNY"
+    donate_50_cny:
+      cn: "50 元"
+      en: "50 CNY"
+    donate_100_cny:
+      cn: "100 元"
+      en: "100 CNY"
+    donate_custom_cny:
+      cn: "任意金额"
+      en: "CUSTOM"
+
+markup:
+  defaultMarkdownHandler: goldmark
+  blackfriday:
+    extensionsmask: ["noIntraEmphasis"]
+    hrefTargetBlank: true
+    noreferrerLinks: true
+    footnotereturnlinkcontents: "↩"
+  highlight:
+    codeFences: false
+  goldmark:
+    renderer:
+      unsafe: true
+    parser:
+      autoHeadingIDType: goldmark
+  tableOfContents:
+    startLevel: 1
