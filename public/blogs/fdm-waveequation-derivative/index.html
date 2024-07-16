@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+        <title>有限差分方法近似函数导数 - Tintingo | 丁毅</title>
+
+    <meta name="referrer" content="no-referrer">
+    
+    <meta property="og:title" content="有限差分方法近似函数导数 - Tintingo | 丁毅">
+    <meta name="description" property="og:description" content="有限差分法是求解偏微分方程的主要数值方法之一，其基本思想是用离散的只含有有限个未知量的差分方程组去近似代替连续变量的微分方程和定解条件，并把">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tintingo | 丁毅">
+    <meta property="og:url" content="http://localhost:4321/blogs/fdm-waveequation-derivative/">
+
+    
+    
+    
+    
+    <meta name="author" property="article:author" content="Tintingo">
+    
+    
+    
+    <meta name="date" property="article:published_time" content="2022-02-26" scheme="YYYY-MM-DD">
+    
+    
+    <meta name="date" property="article:modified_time" content="2022-02-26" scheme="YYYY-MM-DD">
+    
+
+    
+    <meta name="keywords" property="article:tag" content ="WaveEquation,FDM">
+    
+    
+    <meta name="theme-color" content="#0d0d0d">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/web/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/web/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/web/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="62x62" href="/images/web/favicon-62x62.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/web/favicon-192x192.png">
+    <link rel="apple-touch-icon" size="192x192" href="/images/web/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+        
+    
+
+    
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://localhost:4321/blogs"
+        },
+        "name": "有限差分方法近似函数导数",
+        "headline": "有限差分方法近似函数导数",
+        "description" : "有限差分法是求解偏微分方程的主要数值方法之一，其基本思想是用离散的只含有有限个未知量的差分方程组去近似代替连续变量的微分方程和定解条件，并把",
+        "genre": [
+            "WaveEquation"
+        ],
+        "datePublished": "2022-02-26",
+        "dateModified": "2022-02-26",
+        "wordCount": "1242",
+        "keywords": [
+            "WaveEquation", "FDM"
+        ],
+        "image": [
+            
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Tintingo"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Tintingo",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://localhost:4321/images/web/publisher-logo.png"
+            }
+        },
+        "url": "http://localhost:4321/blogs/fdm-waveequation-derivative/"
+    }
+    </script>
+    
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.0/js.cookie.min.js'></script>
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.5.95/css/materialdesignicons.min.css">
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism.min.css">
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-.min.css">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJC7CCKE67"></script>
+<script>
+if (window.location.hostname != "127.0.0.1" && window.location.hostname != "localhost") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJC7CCKE67');
+}
+</script>
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/light.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" id="dark-mode-style" disabled="disabled">
+<link rel="stylesheet" type="text/css" href="/css/icons.css">
+<link rel="stylesheet" type="text/css" href="/css/print.css">
+
+  </head>
+
+  
+  <body class="blogs">
+    <header class="masthead">
+      
+
+<div class="logo"></div>
+<p class="slogan">Tintingoo&#39;s Blog</p>
+      <nav class="menu">
+  <ul>
+  
+  
+  
+    
+  
+  
+    <li><a href="/">Home</a></li>
+  
+    <li><a href="/blogs/">Blog</a></li>
+  
+    <li><a href="/categories/">Categories</a></li>
+  
+    <li><a href="/photography/">Photography</a></li>
+  
+  
+
+
+<li class="menu-separator"><span>&nbsp;</span></li>
+
+<li><a href="/blogs/index.xml" target="_blank" type="application/rss+xml" title="RSS feed">Subscribe</a></li>
+
+<li><a href="https://github.com/norery/tintingoo.com/blob/main/LICENSE" target="_blank" title="Attribution-NonCommercial-ShareAlike 4.0 International">License</a></li>
+
+
+  <li class="light-dark-mode no-border-bottom"><a id="light-dark-mode-action"><span id="light-dark-mode-icon" class="mdi mdi-weather-night"></span></a></li>
+  </ul>
+</nav>
+
+      <script src="/js/toggle-theme.js"></script>
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>有限差分方法近似函数导数</h1>
+
+
+
+
+
+
+
+<h3>Tintingo / 
+2022-02-26</h3>
+
+
+
+<h3 class="post-meta">
+
+
+<strong>Categories: </strong>
+<a href="/categories/waveequation">WaveEquation</a>
+
+
+
+
+/
+
+
+
+
+<strong>Tags: </strong>
+<span>WaveEquation</span>, <span>FDM</span>
+
+
+
+
+/
+
+
+<strong>Word Count: </strong>
+1242
+</h3>
+
+
+
+<hr>
+
+
+      </header>
+
+
+
+<div class="toc-depth-3" ><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#一阶导数的有限差分近似">一阶导数的有限差分近似</a>
+          <ul>
+            <li><a href="#三种一阶导数的差商形式">三种一阶导数的差商形式</a></li>
+            <li><a href="#python-计算数值一阶导数----中心差商">python 计算数值一阶导数 &ndash; 中心差商</a></li>
+          </ul>
+        </li>
+        <li><a href="#二阶导数的有限差分近似">二阶导数的有限差分近似</a>
+          <ul>
+            <li><a href="#python-计算数值二阶导数----三点及五点差商">python 计算数值二阶导数 &ndash; 三点及五点差商</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div> 
+
+
+<p>有限差分法是求解偏微分方程的主要数值方法之一，其基本思想是用离散的只含有有限个未知量的差分方程组去近似代替连续变量的微分方程和定解条件，并把差分方程组的解作为微分方程定解问题的近似解。
+用差分法将连续问题离散化的主要步骤如下：</p>
+<ol>
+<li>对求解区域作网格剖分，用有限的网格节点代替连续区域。</li>
+<li>构造差分格式，即通过适当的方法将微分方程离散化，导出线性方程组。</li>
+<li>对离散点上的近似值进行插值逼近，得到整个区域上的近似解。</li>
+</ol>
+<p>有限差分法把控制方程中的导数用网格节点上的函数值的差商代替以进行离散，从而建立以网格节点上的值为未知数的代数方程组。</p>
+<h2 id="一阶导数的有限差分近似">一阶导数的有限差分近似</h2>
+<h3 id="三种一阶导数的差商形式">三种一阶导数的差商形式</h3>
+<p>需要说明的是，利用有限差分离散偏微分方程的方法是多种多样的，即使对同一个方程也可以构造不同的差分格式。首先，使用网格节点上函数值的差商代替导数时，就可以分为前向差商、中心差商、后向差商等方法。</p>
+<p>\begin{equation}
+\label{eq:21}
+\nonumber
+\frac{df}{dx}^{forward} \approx \frac{f(x+dx) - (x)}{dx}
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:22}
+\nonumber
+\frac{df}{dx}^{center} \approx \frac{f(x+dx) - (x-dx)}{2dx}
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:23}
+\nonumber
+\frac{df}{dx}^{backward} \approx \frac{f(x) - (x-dx)}{dx}
+\end{equation}</p>
+<p>可以从下图中清楚地看到三种情况的几何意义。</p>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226143449.png" alt=""></p>
+<p>当 $dx$ 足够小时，我们就可以认为使用函数点与周围点的差商能够近似代替该点的导数。下面使用 python 代码说明中心差商对导数的近似。</p>
+<h3 id="python-计算数值一阶导数----中心差商">python 计算数值一阶导数 &ndash; 中心差商</h3>
+<p>对于函数：
+$$f(x) = sin(kx)$$
+其中 $k$ 为波数：$k = 2\pi/\lambda$，可以很容易求得该函数的一阶导数作为中心差商的验证：
+$$f^{\prime}(x) = kcos(kx)$$
+函数在 $x$ 点处的中心差商表示为：</p>
+<p>\begin{equation}
+\label{eq:20}
+f^{\prime}(x) \approx \frac{f(x+dx) - f(x-dx)}{2dx}
+\end{equation}</p>
+<pre><code class="language-python"># Import Libraries
+import numpy as np
+from math import *
+import matplotlib.pyplot as plt
+
+# Initial parameters
+xmax = 10.0                     # physical domain (m)
+nx = 200                        # number of samples    
+dx = xmax/(nx-1)                # grid increment dx (m)
+x  = np.linspace(0,xmax,nx)     # space coordinates
+
+# Initialization of sin function
+l = 40*dx     # wavelength
+k = 2*pi/l    # wavenumber
+f = np.sin(k*x)
+
+# First derivative with two points
+
+# Initiation of numerical and analytical derivatives 
+nder=np.zeros(nx)          # numerical derivative
+ader=np.zeros(nx)          # analytical derivative
+
+# Numerical derivative of the given function
+for i in range (1, nx-1):
+    nder[i]=(f[i+1]-f[i-1])/(2*dx)
+
+# Analytical derivative of the given function
+ader= k * np.cos(k*x)   
+# Exclude boundaries
+ader[0]=0.
+ader[nx-1]=0.
+
+# Error (rms) 
+rms = np.sqrt(np.mean((nder-ader)**2))
+
+# Plotting 
+# ----------------------------------------------------------------
+plt.figure(figsize=(10,6))
+plt.plot (x, nder,label=&quot;Numerical Derivative, 2 points&quot;, marker='+', color=&quot;blue&quot;)
+plt.plot (x, ader, label=&quot;Analytical Derivative&quot;, lw=2, ls=&quot;-&quot;,color=&quot;black&quot;)
+plt.plot (x, nder-ader, label=&quot;Difference&quot;, lw=2, ls=&quot;:&quot;)
+plt.title(&quot;First derivative, Err (rms) = %.6f &quot; % (rms) )
+plt.xlabel('x, m')
+plt.ylabel('Amplitude')
+plt.legend(loc='lower left')
+plt.grid()
+plt.show()
+</code></pre>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226145644.png" alt=""></p>
+<h2 id="二阶导数的有限差分近似">二阶导数的有限差分近似</h2>
+<p>使用与上一节中一阶导数相同的推导思路，若使用 $x-dx$, $x$, $x+dx$ 三点计算差商，则二阶导数的三点有限差分近似可以写为：</p>
+<p>\begin{equation}
+f^{\prime\prime}_{num}(x)=\dfrac{f(x+dx)-2 f(x)+f(x-dx)}{dx^2}
+\end{equation}</p>
+<p>以及如果使用 $x-2dx$, $x-dx$, $x$, $x+dx$, $x+2dx$ 五点计算差商，则二阶导数的五点有限差分近似可以写为：
+\begin{equation}
+f^{\prime\prime}(x)=\dfrac{-\dfrac{1}{12}f(x-2dx)+\dfrac{4}{3}f(x-dx)-\dfrac{5}{2}f(x) +\dfrac{4}{3}f(x+dx)-\dfrac{1}{12}f(x+2dx)}{dx^2}
+\end{equation}</p>
+<h3 id="python-计算数值二阶导数----三点及五点差商">python 计算数值二阶导数 &ndash; 三点及五点差商</h3>
+<p>对于 Gaussian 函数：</p>
+<p>\begin{equation}
+f(x)=\dfrac{1}{\sqrt{2 \pi a}}e^{-\dfrac{(x-x_0)^2}{2a}}
+\end{equation}</p>
+<p>对该函数进行二阶求导，可以得到：</p>
+<div>
+\begin{equation} 
+f^{\prime\prime}(x)= \dfrac{1}{\sqrt{2\pi a}} ( \dfrac{(x-x_0)^2}{a^2}- \dfrac{1}{a} ) \ e^{-\dfrac{(x-x_0)^2}{2a}}
+\end{equation} 
+</div>
+<pre><code class="language-python"># Initialization 
+xmax=10.0       # physical domain (m)
+nx=100          # number of space samples
+a=.25           # exponent of Gaussian function    
+dx=xmax/(nx-1)  # Grid spacing dx (m)
+x0 = xmax/2     # Center of Gaussian function x0 (m)
+
+x=np.linspace(0,xmax,nx)   # defining space variable
+
+# Initialization of Gaussian function           
+f=(1./sqrt(2*pi*a))*np.exp(-(((x-x0)**2)/(2*a)))
+
+# Second derivative with three-point operator
+
+# Initiation of numerical and analytical derivatives 
+nder3=np.zeros(nx)          # numerical derivative
+ader=np.zeros(nx)          # analytical derivative
+
+# Numerical second derivative of the given function 
+for i in range (1, nx-1):
+    nder3[i]=(f[i+1] - 2*f[i] + f[i-1])/(dx**2)
+
+# Analytical second derivative of the Gaissian function
+ader=1./sqrt(2*pi*a)*((x-x0)**2/a**2 -1/a)*np.exp(-1/(2*a)*(x-x0)**2)
+# Exclude boundaries
+ader[0]=0.
+ader[nx-1]=0.
+
+# Calculate rms error of numerical derivative
+rms = np.sqrt(np.mean((nder3-ader)**2))
+
+# Plotting 
+plt.figure(figsize=(10,6))
+plt.plot (x, nder3,label=&quot;Numerical Derivative, 3 points&quot;, lw=2, color=&quot;violet&quot;)
+plt.plot (x, ader, label=&quot;Analytical Derivative&quot;, lw=2, ls=&quot;--&quot;)
+plt.plot (x, nder3-ader, label=&quot;Difference&quot;, lw=2, ls=&quot;:&quot;)
+plt.title(&quot;Second derivative, Err (rms) = %.6f &quot; % (rms) )
+plt.xlabel('x, m')
+plt.ylabel('Amplitude')
+plt.legend(loc='lower left')
+plt.grid()
+plt.show()
+</code></pre>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226153327.png" alt=""></p>
+<p>到这里我们就使用三点差商形式求得了 Gaussian 函数的数值二阶导数，与解析得到的二阶导数相比，误差 rms 为 0.008186. 保持其他参数不变，我们使用五点差商形式看看精度如何。</p>
+<pre><code class="language-python"># Second derivative with five points Q: five points = fourth-order?
+
+# Initialisation of derivative
+nder5=np.zeros(nx) 
+
+# Calculation of 2nd derivative  
+for i in range (2, nx-2):
+    nder5[i] = (-1./12 * f[i - 2] + 4./3  * f[i - 1] - 5./2 * f[i] \
+                       +4./3  * f[i + 1] - 1./12  * f[i + 2]) / dx ** 2
+    
+# Exclude boundaries
+ader[1]=0.
+ader[nx-2]=0.
+    
+# Calculate rms error of numerical derivative
+rms=rms*0
+rms = np.sqrt(np.mean((nder5-ader)**2))
+</code></pre>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226153353.png" alt=""></p>
+<p>可以发现五点差商形式的误差 rms 为 0.000218，比三点差商形式高出一个数量级。</p>
+
+
+
+<link rel="stylesheet" href="/css/donate.css" />
+
+
+<div class="donate">
+  <div class="donate-header"></div>
+  <div class="donate-slug" id="donate-slug">FDM-WaveEquation-Derivative</div>
+  <button class="donate-button">DONATE</button>
+  <div class="donate-footer">「Donation Given, Fragrance in Hand」</div>
+</div>
+<div class="donate-modal-wrapper">
+  <div class="donate-modal">
+    <div class="donate-box">
+      <div class="donate-box-content">
+        <div class="donate-box-content-inner">
+          <div class="donate-box-header">「Donation Given, Fragrance in Hand」</div>
+          <div class="donate-box-body">
+            <div class="donate-box-money">
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-2" data-v="2" data-unchecked="￥ 2" data-checked="2 元">￥ 2</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-5" data-v="5" data-unchecked="￥ 5" data-checked="5 元">￥ 5</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-10" data-v="10" data-unchecked="￥ 10" data-checked="10 元">￥ 10</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-50" data-v="50" data-unchecked="￥ 50" data-checked="50 元">￥ 50</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-100" data-v="100" data-unchecked="￥ 100" data-checked="100 元">￥ 100</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-custom" data-v="custom" data-unchecked="任意金额" data-checked="任意金额">任意金额</button>
+            </div>
+            <div class="donate-box-pay">
+              <img class="donate-box-pay-qrcode" id="donate-box-pay-qrcode" src=""/>
+            </div>
+          </div>
+          <div class="donate-box-footer">
+            <div class="donate-box-pay-method donate-box-pay-method-checked" data-v="wechat-pay">
+              <img class="donate-box-pay-method-image" id="donate-box-pay-method-image-wechat-pay" src=""/>
+            </div>
+            <div class="donate-box-pay-method" data-v="alipay">
+              <img class="donate-box-pay-method-image"  id="donate-box-pay-method-image-alipay" src=""/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="donate-box-close-button">
+      <svg class="donate-box-close-button-icon" fill="#fff" viewBox="0 0 24 24" width="24" height="24"><path d="M13.486 12l5.208-5.207a1.048 1.048 0 0 0-.006-1.483 1.046 1.046 0 0 0-1.482-.005L12 10.514 6.793 5.305a1.048 1.048 0 0 0-1.483.005 1.046 1.046 0 0 0-.005 1.483L10.514 12l-5.208 5.207a1.048 1.048 0 0 0 .006 1.483 1.046 1.046 0 0 0 1.482.005L12 13.486l5.207 5.208a1.048 1.048 0 0 0 1.483-.006 1.046 1.046 0 0 0 .005-1.482L13.486 12z" fill-rule="evenodd"></path></svg>
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/donate.js"></script>
+</script>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/blogs/fdm-waveequation-taylor/">从泰勒展开推导弹性波动方程的有限差分近似</a></span>
+  <span class="nav-next"></span>
+</nav>
+<script type="text/javascript">
+document.addEventListener('keyup', function(e) {
+  if (e.target.nodeName.toUpperCase() != 'BODY') return;
+  var url = false;
+  if (e.which == 37) {  
+    
+    url = '\/blogs\/fdm-waveequation-taylor\/';
+    
+  } else if (e.which == 39) {  
+    
+  }
+  if (url) window.location = url;
+});
+</script>
+
+
+
+
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2608165017777396"
+     data-ad-slot="1261604535"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+<section class="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+    this.page.url = "https:\/\/tintingoo.com" + location.pathname;
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var disqus_js = '//Tintingo.disqus.com/embed.js';
+    var d = document, s = d.createElement('script');
+    s.src = disqus_js; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    var t = d.getElementById('disqus_thread');
+    var b = false, l = function(scroll) {
+      if (b) return;
+      (d.head || d.body).appendChild(s); b = true;
+      if (scroll) t.scrollIntoView();
+    }
+    s.onerror = function(e) {
+      if (sessionStorage.getItem('failure-note')) return;
+      t.innerText = 'Sorry, but you cannot make comments because Disqus failed to load for some reason. It is known to be blocked in China. If you are sure it is not blocked in your region, please refresh the page. 中国大陆地区读者需要翻墙才能发表评论。';
+      sessionStorage.setItem('failure-note', true);
+    };
+    
+    if (location.hash.match(/^#comment-[0-9]+$/)) return l(true);
+    var c = function() {
+      if (b) return;
+      var rect = t.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) l();
+    };
+    window.addEventListener('load', c);
+    d.addEventListener('scroll', c);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/show-language/prism-show-language.min.js"></script>
+
+<script>
+    (function() {
+        if (!self.Prism) {
+            return;
+        }
+
+        Prism.languages.dos = Prism.languages.powershell;
+        Prism.languages.gremlin = Prism.languages.groovy;
+
+        var Languages = {
+            'r': 'R', 'python': 'Python', 'xml': 'XML', 'html': 'HTML',
+            'yaml': 'YAML', 'latex': 'LaTeX', 'tex': 'TeX',
+            'powershell': 'PowerShell', 'javascript': 'JavaScript',
+            'dos': 'DOS', 'qml': 'QML', 'json': 'JSON', 'bash': 'Bash',
+            'text': 'Text', 'txt': 'Text', 'sparql': 'SPARQL',
+            'gremlin': 'Gremlin', 'cypher': 'Cypher', 'ngql': 'nGQL',
+            'shell': 'Shell', 'sql': 'SQL', 'apacheconf': 'Apache Configuration'
+        };
+
+        Prism.hooks.add('before-highlight', function(env) {
+        	var language = Languages[env.language] || env.language;
+        	env.element.setAttribute('data-language', language);
+        });
+    })();
+</script>
+
+
+
+
+<script async src="/js/fix-toc.js"></script>
+<script async src="/js/center-img.js"></script>
+<script async src="/js/right-quote.js"></script>
+<script async src="/js/fix-footnote.js"></script>
+<script async src="/js/external-link.js"></script>
+<script async src="/js/alt-title.js"></script>
+<script src="/js/no-highlight.js"></script>
+<script src="/js/math-code.js"></script>
+
+
+<script>
+window.MathJax = {
+  loader: {
+    load: ['[tex]/boldsymbol']
+  },
+  tex: {
+    tags: "all",
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    packages: {
+      '[+]': ['boldsymbol']
+    }
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js" crossorigin></script>
+
+
+
+
+
+
+
+<script async src="/js/load-typekit.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/vanilla-back-to-top@latest/dist/vanilla-back-to-top.min.js"></script>
+<script>
+addBackToTop({
+  diameter: 48
+})
+</script>
+
+
+
+  <hr>
+  <div class="copyright no-border-bottom">
+    <div class="copyright-author-year">
+      <span>&copy; 2021-2024</span>
+    </div>
+    <div class="copyright-links">
+      <a href="https://github.com/norery/tintingoo.com" rel="noreferrer" target="_blank">Github</a>
+      <span> · </span>
+      <a href="https://www.researchgate.net/profile/Yi-Ding-157" rel="noreferrer" target="_blank">ResearchGate</a>
+      <span> · </span>
+      <a href="https://orcid.org/my-orcid?orcid=0000-0003-3443-9313" rel="noreferrer" target="_blank">ORCID</a>
+      <span> · </span>
+      <a href="https://www.scopus.com/authid/detail.uri?authorId=58078994400" rel="noreferrer" target="_blank">Scopus</a>
+    </div>
+  </div>
+  </footer>
+  </article>
+  </body>
+</html>
+

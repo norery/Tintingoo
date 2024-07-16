@@ -1,0 +1,2161 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>中文博客 on Tintingo | 丁毅</title>
+    <link>http://localhost:4321/blogs/</link>
+    <description>Recent content in 中文博客 on Tintingo | 丁毅</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Dec 2017 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:4321/blogs/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>有限差分方法近似函数导数</title>
+      <link>http://localhost:4321/blogs/fdm-waveequation-derivative/</link>
+      <pubDate>Sat, 26 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/fdm-waveequation-derivative/</guid>
+      <description>
+        <![CDATA[
+        <p>有限差分法是求解偏微分方程的主要数值方法之一，其基本思想是用离散的只含有有限个未知量的差分方程组去近似代替连续变量的微分方程和定解条件，并把差分方程组的解作为微分方程定解问题的近似解。
+用差分法将连续问题离散化的主要步骤如下：</p>
+<ol>
+<li>对求解区域作网格剖分，用有限的网格节点代替连续区域。</li>
+<li>构造差分格式，即通过适当的方法将微分方程离散化，导出线性方程组。</li>
+<li>对离散点上的近似值进行插值逼近，得到整个区域上的近似解。</li>
+</ol>
+<p>有限差分法把控制方程中的导数用网格节点上的函数值的差商代替以进行离散，从而建立以网格节点上的值为未知数的代数方程组。</p>
+<h2 id="一阶导数的有限差分近似">一阶导数的有限差分近似</h2>
+<h3 id="三种一阶导数的差商形式">三种一阶导数的差商形式</h3>
+<p>需要说明的是，利用有限差分离散偏微分方程的方法是多种多样的，即使对同一个方程也可以构造不同的差分格式。首先，使用网格节点上函数值的差商代替导数时，就可以分为前向差商、中心差商、后向差商等方法。</p>
+<p>\begin{equation}
+\label{eq:21}
+\nonumber
+\frac{df}{dx}^{forward} \approx \frac{f(x+dx) - (x)}{dx}
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:22}
+\nonumber
+\frac{df}{dx}^{center} \approx \frac{f(x+dx) - (x-dx)}{2dx}
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:23}
+\nonumber
+\frac{df}{dx}^{backward} \approx \frac{f(x) - (x-dx)}{dx}
+\end{equation}</p>
+<p>可以从下图中清楚地看到三种情况的几何意义。</p>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226143449.png" alt=""></p>
+<p>当 $dx$ 足够小时，我们就可以认为使用函数点与周围点的差商能够近似代替该点的导数。下面使用 python 代码说明中心差商对导数的近似。</p>
+<h3 id="python-计算数值一阶导数----中心差商">python 计算数值一阶导数 &ndash; 中心差商</h3>
+<p>对于函数：
+$$f(x) = sin(kx)$$
+其中 $k$ 为波数：$k = 2\pi/\lambda$，可以很容易求得该函数的一阶导数作为中心差商的验证：
+$$f^{\prime}(x) = kcos(kx)$$
+函数在 $x$ 点处的中心差商表示为：</p>
+<p>\begin{equation}
+\label{eq:20}
+f^{\prime}(x) \approx \frac{f(x+dx) - f(x-dx)}{2dx}
+\end{equation}</p>
+<pre><code class="language-python"># Import Libraries
+import numpy as np
+from math import *
+import matplotlib.pyplot as plt
+
+# Initial parameters
+xmax = 10.0                     # physical domain (m)
+nx = 200                        # number of samples    
+dx = xmax/(nx-1)                # grid increment dx (m)
+x  = np.linspace(0,xmax,nx)     # space coordinates
+
+# Initialization of sin function
+l = 40*dx     # wavelength
+k = 2*pi/l    # wavenumber
+f = np.sin(k*x)
+
+# First derivative with two points
+
+# Initiation of numerical and analytical derivatives 
+nder=np.zeros(nx)          # numerical derivative
+ader=np.zeros(nx)          # analytical derivative
+
+# Numerical derivative of the given function
+for i in range (1, nx-1):
+    nder[i]=(f[i+1]-f[i-1])/(2*dx)
+
+# Analytical derivative of the given function
+ader= k * np.cos(k*x)   
+# Exclude boundaries
+ader[0]=0.
+ader[nx-1]=0.
+
+# Error (rms) 
+rms = np.sqrt(np.mean((nder-ader)**2))
+
+# Plotting 
+# ----------------------------------------------------------------
+plt.figure(figsize=(10,6))
+plt.plot (x, nder,label=&quot;Numerical Derivative, 2 points&quot;, marker='+', color=&quot;blue&quot;)
+plt.plot (x, ader, label=&quot;Analytical Derivative&quot;, lw=2, ls=&quot;-&quot;,color=&quot;black&quot;)
+plt.plot (x, nder-ader, label=&quot;Difference&quot;, lw=2, ls=&quot;:&quot;)
+plt.title(&quot;First derivative, Err (rms) = %.6f &quot; % (rms) )
+plt.xlabel('x, m')
+plt.ylabel('Amplitude')
+plt.legend(loc='lower left')
+plt.grid()
+plt.show()
+</code></pre>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226145644.png" alt=""></p>
+<h2 id="二阶导数的有限差分近似">二阶导数的有限差分近似</h2>
+<p>使用与上一节中一阶导数相同的推导思路，若使用 $x-dx$, $x$, $x+dx$ 三点计算差商，则二阶导数的三点有限差分近似可以写为：</p>
+<p>\begin{equation}
+f^{\prime\prime}_{num}(x)=\dfrac{f(x+dx)-2 f(x)+f(x-dx)}{dx^2}
+\end{equation}</p>
+<p>以及如果使用 $x-2dx$, $x-dx$, $x$, $x+dx$, $x+2dx$ 五点计算差商，则二阶导数的五点有限差分近似可以写为：
+\begin{equation}
+f^{\prime\prime}(x)=\dfrac{-\dfrac{1}{12}f(x-2dx)+\dfrac{4}{3}f(x-dx)-\dfrac{5}{2}f(x) +\dfrac{4}{3}f(x+dx)-\dfrac{1}{12}f(x+2dx)}{dx^2}
+\end{equation}</p>
+<h3 id="python-计算数值二阶导数----三点及五点差商">python 计算数值二阶导数 &ndash; 三点及五点差商</h3>
+<p>对于 Gaussian 函数：</p>
+<p>\begin{equation}
+f(x)=\dfrac{1}{\sqrt{2 \pi a}}e^{-\dfrac{(x-x_0)^2}{2a}}
+\end{equation}</p>
+<p>对该函数进行二阶求导，可以得到：</p>
+<div>
+\begin{equation} 
+f^{\prime\prime}(x)= \dfrac{1}{\sqrt{2\pi a}} ( \dfrac{(x-x_0)^2}{a^2}- \dfrac{1}{a} ) \ e^{-\dfrac{(x-x_0)^2}{2a}}
+\end{equation} 
+</div>
+<pre><code class="language-python"># Initialization 
+xmax=10.0       # physical domain (m)
+nx=100          # number of space samples
+a=.25           # exponent of Gaussian function    
+dx=xmax/(nx-1)  # Grid spacing dx (m)
+x0 = xmax/2     # Center of Gaussian function x0 (m)
+
+x=np.linspace(0,xmax,nx)   # defining space variable
+
+# Initialization of Gaussian function           
+f=(1./sqrt(2*pi*a))*np.exp(-(((x-x0)**2)/(2*a)))
+
+# Second derivative with three-point operator
+
+# Initiation of numerical and analytical derivatives 
+nder3=np.zeros(nx)          # numerical derivative
+ader=np.zeros(nx)          # analytical derivative
+
+# Numerical second derivative of the given function 
+for i in range (1, nx-1):
+    nder3[i]=(f[i+1] - 2*f[i] + f[i-1])/(dx**2)
+
+# Analytical second derivative of the Gaissian function
+ader=1./sqrt(2*pi*a)*((x-x0)**2/a**2 -1/a)*np.exp(-1/(2*a)*(x-x0)**2)
+# Exclude boundaries
+ader[0]=0.
+ader[nx-1]=0.
+
+# Calculate rms error of numerical derivative
+rms = np.sqrt(np.mean((nder3-ader)**2))
+
+# Plotting 
+plt.figure(figsize=(10,6))
+plt.plot (x, nder3,label=&quot;Numerical Derivative, 3 points&quot;, lw=2, color=&quot;violet&quot;)
+plt.plot (x, ader, label=&quot;Analytical Derivative&quot;, lw=2, ls=&quot;--&quot;)
+plt.plot (x, nder3-ader, label=&quot;Difference&quot;, lw=2, ls=&quot;:&quot;)
+plt.title(&quot;Second derivative, Err (rms) = %.6f &quot; % (rms) )
+plt.xlabel('x, m')
+plt.ylabel('Amplitude')
+plt.legend(loc='lower left')
+plt.grid()
+plt.show()
+</code></pre>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226153327.png" alt=""></p>
+<p>到这里我们就使用三点差商形式求得了 Gaussian 函数的数值二阶导数，与解析得到的二阶导数相比，误差 rms 为 0.008186. 保持其他参数不变，我们使用五点差商形式看看精度如何。</p>
+<pre><code class="language-python"># Second derivative with five points Q: five points = fourth-order?
+
+# Initialisation of derivative
+nder5=np.zeros(nx) 
+
+# Calculation of 2nd derivative  
+for i in range (2, nx-2):
+    nder5[i] = (-1./12 * f[i - 2] + 4./3  * f[i - 1] - 5./2 * f[i] \
+                       +4./3  * f[i + 1] - 1./12  * f[i + 2]) / dx ** 2
+    
+# Exclude boundaries
+ader[1]=0.
+ader[nx-2]=0.
+    
+# Calculate rms error of numerical derivative
+rms=rms*0
+rms = np.sqrt(np.mean((nder5-ader)**2))
+</code></pre>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/20220226153353.png" alt=""></p>
+<p>可以发现五点差商形式的误差 rms 为 0.000218，比三点差商形式高出一个数量级。</p>
+
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>从泰勒展开推导弹性波动方程的有限差分近似</title>
+      <link>http://localhost:4321/blogs/fdm-waveequation-taylor/</link>
+      <pubDate>Tue, 22 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/fdm-waveequation-taylor/</guid>
+      <description>
+        <![CDATA[
+        <p>以一维弹性波动方程为例：</p>
+<p>\begin{equation}
+\label{eq:1}
+\frac{\partial^{2}u(x,t)}{\partial x^{2}} = \frac{1}{c^{2}} \frac{\partial^{2} u(x,t)}{\partial t^{2}} + f(x,t)
+\end{equation}</p>
+<p>式中，位移 $u(x,t)$ 是空间坐标 x 和时间 t 的单值连续函数，$c$ 为波速，$f(x,t)$ 为源项。</p>
+<h2 id="从泰勒展开推导弹性波动方程的有限差分近似">从泰勒展开推导弹性波动方程的有限差分近似</h2>
+<h3 id="空间差分算子的推导">空间差分算子的推导</h3>
+<p>首先对位移函数 $u(x,t)$ 在坐标 $x$ 两侧附近作泰勒展开：</p>
+<p>\begin{equation}
+\label{eq:2}
+u(x + \Delta x, t) = u(x, t) + \Delta x \frac{\partial u(x, t)}{\partial x} + \frac{1}{2} \Delta x^{2} \frac{\partial^{2} u(x,t)}{\partial x^{2}} + \frac{1}{6}\Delta x^{3}\frac{\partial^{3}u(x,t)}{\partial x^{3}} + \cdots
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:3}
+u(x - \Delta x, t) = u(x, t) - \Delta x \frac{\partial u(x, t)}{\partial x} + \frac{1}{2} \Delta x^{2} \frac{\partial^{2} u(x,t)}{\partial x^{2}} - \frac{1}{6}\Delta x^{3}\frac{\partial^{3}u(x,t)}{\partial x^{3}} + \cdots
+\end{equation}</p>
+<h4 id="位移对空间一阶偏导数的近似形式推导">位移对空间一阶偏导数的近似形式推导</h4>
+<p>用 式 \ref{eq:2} 减去 式 \ref{eq:3}：</p>
+<p>\begin{equation}
+\label{eq:4}
+\nonumber
+u(x+\Delta x, t) - u(x-\Delta x, t) = 2 \Delta \frac{\partial u(x, t)}{\partial x} + \frac{1}{3}\Delta x^{3} \frac{\partial^{3}u(x,t)}{\partial x^{3}} + O(\Delta x^{4})
+\end{equation}</p>
+<p>将 $\frac{\partial u(x, t)}{\partial x}$ 移到左边，就可以得到：</p>
+<p>\begin{equation}
+\label{eq:5}
+\nonumber
+\frac{\partial u(x, t)}{\partial x} = \frac{u(x+\Delta x, t) - u(x-\Delta x, t)}{2\Delta x} - \frac{1}{6}\Delta x^{2} \frac{\partial^{3} u(x,t)}{\partial x^{3}} - O(\Delta x^{3})
+\end{equation}</p>
+<p>考虑到 $\Delta x \rightarrow 0$ 是一个小量，因此得到：</p>
+<p>\begin{equation}
+\label{eq:6}
+\nonumber
+\frac{\partial u(x, t)}{\partial x} = \frac{u(x+\Delta x, t) - u(x-\Delta x, t)}{2\Delta x} + O(\Delta x^{2})  = D_{x}u + O(\Delta x^{2})
+\end{equation}</p>
+<p>式中，$D_{x}$ 称为 <code>差分算子</code> ，$O(\Delta x^{2})$ 称为差分算子的 <code>截断误差</code> 。</p>
+<p>与公式中的其他项相比，小量 $\Delta x$ 的二阶及更高阶指数项可以忽略时，得到 <code>位移对空间一阶偏导数的近似形式</code> ：</p>
+<p>\begin{equation}
+\label{eq:7}
+\frac{\partial u(x, t)}{\partial x} \approx D_{x}u = \frac{u(x+\Delta x, t) - u(x-\Delta x, t)}{2\Delta x}
+\end{equation}</p>
+<h4 id="位移对空间二阶偏导数的近似形式推导">位移对空间二阶偏导数的近似形式推导</h4>
+<p>用 式 \ref{eq:2} 加上 式 \ref{eq:3}，得到：</p>
+<p>\begin{equation}
+\label{eq:8}
+\nonumber
+u(x+\Delta x, t) + u(x-\Delta x, t) = 2 u(x, t) + \Delta x^{2} \frac{\partial^{2} u(x, t)}{\partial x^{2}} + O(\Delta x^{4})
+\end{equation}</p>
+<p>将 $\frac{\partial^{2} u(x, t)}{\partial x^{2}}$ 移到左边，整理为：</p>
+<p>\begin{equation}
+\label{eq:9}
+\nonumber
+\frac{\partial^{2} u(x, t)}{\partial x^{2}}  = \frac{u(x+\Delta x, t) + u(x - \Delta x, t) - 2u(x,t)}{\Delta x^{2}} + O(\Delta x^{2}) = D_{xx}u + O(\Delta x^{2})
+\end{equation}</p>
+<p>式中，$D_{xx}$ 为 <code>二阶差分算子</code> ，$O(\Delta x^{2})$ 称为差分算子的 <code>截断误差</code> 。</p>
+<p>与公式中的其他项相比，小量 $\Delta x$ 的二阶及更高阶指数项可以忽略时，得到 <code>位移对空间二阶偏导数的近似形式</code> ：</p>
+<p>\begin{equation}
+\label{eq:10}
+\frac{\partial^{2} u(x, t)}{\partial x^{2}}  \approx D_{xx}u = \frac{u(x+\Delta x, t) + u(x - \Delta x, t) - 2u(x,t)}{\Delta x^{2}}
+\end{equation}</p>
+<p>因此，位移函数在坐标 x 处的一阶和二阶偏导数，都可以近似表示为 x 附近函数值的差商形式，截断误差均为 $O(\Delta x^{2})$ 。</p>
+<h3 id="时间差分算子的推导">时间差分算子的推导</h3>
+<p>首先对位移函数 $u(x,t)$ 在坐标 $t$ 两侧附近作泰勒展开：</p>
+<p>\begin{equation}
+\label{eq:11}
+u(x, t + \Delta t) = u(x, t) + \Delta t \frac{\partial u(x, t)}{\partial t} + \frac{1}{2} \Delta t^{2} \frac{\partial^{2} u(x,t)}{\partial t^{2}} + \frac{1}{6}\Delta t^{3}\frac{\partial^{3}u(x,t)}{\partial t^{3}} + \cdots
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:12}
+u(x, t - \Delta t) = u(x, t) - \Delta t \frac{\partial u(x, t)}{\partial t} + \frac{1}{2} \Delta t^{2} \frac{\partial^{2} u(x,t)}{\partial t^{2}} -\frac{1}{6}\Delta t^{3}\frac{\partial^{3}u(x,t)}{\partial t^{3}} + \cdots
+\end{equation}</p>
+<p>与上述空间差分算子的推导过程类似，位移函数对时间的偏导数用差分算子 <code>$D_{t}$</code>, <code>$D_{tt}$</code> 表示为：</p>
+<p>\begin{equation}
+\label{eq:13}
+\frac{\partial u(x, t)}{\partial t} \approx D_{t}u = \frac{u(x, t+\Delta t) - u(x, t+\Delta t)}{2\Delta t}
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:14}
+\frac{\partial^{2} u(x, t)}{\partial t^{2}}  \approx D_{tt}u = \frac{u(x, t+\Delta t) + u(x, t+\Delta t) - 2u(x,t)}{\Delta t^{2}}
+\end{equation}</p>
+<p>截断误差为 $O(\Delta t^{2})$ 。</p>
+<h2 id="一维波动方程的有限差分近似">一维波动方程的有限差分近似</h2>
+<p>使用公式 \ref{eq:7}, \ref{eq:10}, \ref{eq:13}, \ref{eq:14} 中的差分算子代替波动方程 \ref{eq:1} 中的微分算子，可以将波动方程近似为：</p>
+<p>\begin{equation}
+\label{eq:15}
+\frac{u(x+\Delta x, t) + u(x - \Delta x, t) - 2 u(x, t)}{\Delta x^{2}} = \frac{1}{c^{2}} \frac{u(x, t+\Delta t) + u(x, t - \Delta t) - 2u(x, t)}{\Delta t^{2}} + f(x,t)
+\end{equation}</p>
+<p>接下来我们对连续的波动方程求解域离散化，对求解域进行均匀网格划分，空间和时间步长分别为 <code>$\Delta x$</code>, <code>$\Delta t$</code>, 如下图所示：</p>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/FDM_Space_time_discrete.jpeg" alt=""></p>
+<p>经过离散化的空间坐标和时间坐标可以表示为：</p>
+<p>\begin{equation}
+\label{eq:17}
+\nonumber
+x = x_{j} = j \Delta x, \quad j=0, \pm1, \pm2, \cdots
+\end{equation}</p>
+<p>\begin{equation}
+\label{eq:18}
+\nonumber
+t = t_{n} = n \Delta t, \quad n=0, \pm1, \pm2, \cdots
+\end{equation}</p>
+<p>对求解域离散化后，可以将离散化的波动方程表示为如下式所示的形式：</p>
+<div>
+\begin{equation}
+\label{eq:16}
+\frac{u_{j+1}^{n}+u_{j-1}^{n}-2u_{j}^{n}}{\Delta x^{2}} = \frac{1}{c^{2}} \frac{u_{j}^{n+1}+u_{j}^{n-1}-2u_{j}^{n}}{\Delta t^{2}} + f_j^n, \quad j=0,\pm1, \pm2, \cdots;n=0,1,2,\cdots
+\end{equation}
+</div>
+<p>将上式整理，得到 <code>$u_{j}^{n+1}$</code> 的外推格式：</p>
+<div>
+\begin{equation}
+\label{eq:20}
+u_{j}^{n+1} = c_{j}^2 \frac{dt^2}{dx^2} [u_{j+1}^{n} - 2u_j^n + u_{j-1}^n] + 2u_j^n - u_j^{n-1} + dt^2 f_j^n
+\end{equation}
+</div>
+<p>当第 $n-1$ 层的值 <code>$u_j^{n-1}$</code> 和第 $n$ 层的值 <code>$u_{j-1}{n}$</code>, <code>$u_{j}{n}$</code>, <code>$u_{j+1}{n}$</code> 的值已知时，可以直接计算得到第 $n+1$ 层的值 <code>$u_j^{n+1}$</code>。因此这种差分格式为三层显式差分格式。</p>
+<p>在计算的过程中，先对计算同一时刻的空间离散网格上的 $u$，也就是先求每一层的值，上一层算完了再算下一层。下面这个图片可能对理解计算的过程有帮助。</p>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/IMG_0529.jpeg" alt=""></p>
+
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>My Doom Emacs configuration file -- org version</title>
+      <link>http://localhost:4321/blogs/doom-emacs-config/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/doom-emacs-config/</guid>
+      <description>
+        <![CDATA[
+        <h1 class="title">Doom Emacs configuration</h1>
+
+<img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/doom-emacs-bw-light.svg" alt="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/doom-emacs-bw-light.svg" title="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/doom-emacs-bw-light.svg" style="max-width:100%;"/>
+<p>
+在使用了 Doom Emacs 一段时间后，我将自己积累的配置文件集合到这个 org 文件中，以便进行统一管理。接触过 Doom Emacs 的朋友肯定知道，在 Doom Emacs 中，用户配置文件主要可以分为三个：</p>
+<dl>
+<dt>
+<code class="verbatim">init.el</code>
+</dt>
+<dd>defines which of the existing Doom <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#modules">modules</a> are loaded. A Doom module is a bundle of packages, configuration and commands, organized into a unit that can be toggled easily from this file.</dd>
+<dt>
+<code class="verbatim">packages.el</code>
+</dt>
+<dd>defines which <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#package-management">packages</a> should be installed, beyond those that are installed and loaded as part of the enabled modules.</dd>
+<dt>
+<code class="verbatim">config.el</code>
+</dt>
+<dd>contains all <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configuring-doom">custom configuration</a> and code.</dd>
+</dl>
+<blockquote>
+<p>由于一些信息在网页中无法显示，可以对比我的 dotfiles 中的 <a href="https://github.com/norery/dotfiles/blob/master/.doom.d/DoomConfig.org">DoomConfig.org</a> 文件进行查看。主要有两点，在此进行说明：</p>
+</blockquote>
+<p>
+<strong><strong>1. 开头的信息</strong></strong></p>
+<div class="src src-shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>:DOC-CONFIG:
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Tangle by default to config.el, which is the most common case</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#+property: header-args:emacs-lisp :tangle config.el</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#+property: header-args :mkdirp yes :comments no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#+startup: fold</span>
+</span></span><span style="display:flex;"><span>:END:</span></span></code></pre></div>
+</div>
+<p>加上此信息后，emacs 就知道此文件中的 elisp 代码默认发送到 <code class="verbatim">config.el</code> 文件中去。</p>
+<p>
+<strong><strong>2. 代码块中的信息</strong></strong></p>
+<div class="src src-shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>; <span style="color:#75715e">#+begin_src emacs-lisp :tangle packages.el</span>
+</span></span><span style="display:flex;"><span>; <span style="color:#f92672">(</span>package! rime<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>; <span style="color:#75715e">#+end_src</span></span></span></code></pre></div>
+</div>
+<p>
+其中的 <code class="verbatim">emacs-lisp :tangle packages.el</code> 的作用就是当执行 <code class="verbatim">org-babel-tangle</code> 命令之后将代码块中的内容发送到 <code class="verbatim">packages.el</code> 文件中。</p>
+<p>
+当我们修改完此org文件并保存后，执行以下两个步骤可以将elisp代码块发送到对应的文件中：</p>
+<ol>
+<li>光标位于 <code class="verbatim">#+property: header-args:emacs-lisp :tangle config.el</code> 行，按下 <code class="verbatim">C-c C-c</code></li>
+<li><code class="verbatim">M-x org-babel-tangle</code></li>
+</ol>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+References
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+Emacs config is an art, and I have learned a lot by reading through other people&#39;s config files, and from many other resources. These are some of the best ones (several are also written in org mode). You will find snippets from all of these (and possibly others) throughout my config.</p>
+<ul>
+<li><a href="https://github.com/zzamboni/dot-doom">Diego Zamboni&#39;s Emacs config</a></li>
+<li><a href="http://pages.sachachua.com/.emacs.d/Sacha.html">Sacha Chua&#39;s Emacs Configuration</a></li>
+<li><a href="https://github.com/daedreth/UncleDavesEmacs#user-content-ido-and-why-i-started-using-helm">Uncle Dave&#39;s Emacs config</a></li>
+<li><a href="https://github.com/PythonNut/emacs-config">PythonNut&#39;s Emacs config</a></li>
+<li><a href="https://www.masteringemacs.org/">Mastering Emacs</a></li>
+<li><a href="https://tecosaur.github.io/emacs-config/config.html">Tecosaur&#39;s Emacs config</a></li>
+</ul>
+<p>Note: a lot of manual configuration has been rendered moot by using Emacs Doom, which aggregates a well-maintained and organized collection of common configuration settings for performance optimization, package management, commonly used packages (e.g. Org) and much more.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+Doom config file overview
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>
+Doom Emacs uses three config files:</p>
+<ul>
+<li><code class="verbatim">init.el</code> defines which of the existing Doom <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#modules">modules</a> are loaded. A Doom module is a bundle of packages, configuration and commands, organized into a unit that can be toggled easily from this file.</li>
+<li><code class="verbatim">packages.el</code> defines which <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#package-management">packages</a> should be installed, beyond those that are installed and loaded as part of the enabled modules.</li>
+<li><code class="verbatim">config.el</code> contains all <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configuring-doom">custom configuration</a> and code.</li>
+</ul>
+<p>There are other files that can be loaded, but theses are the main ones. The load order of different files is <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#load-order">defined depending on the type of session</a> being started.</p>
+<p>
+All the config files are generated from this Org file, to try and make its meaning as clear as possible. All <code class="verbatim">package!</code> declarations are written to <code class="verbatim">packages.el</code>, all other LISP code is written to <code class="verbatim">config.el</code>.</p>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Config file headers
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+We start by simply defining the standard headers used by the three files. These headers come from the initial files generated by <code class="verbatim">doom install</code>, and contain either some Emacs-LISP relevant indicators like <code class="verbatim">lexical-binding</code>, or instructions about the contents of the file.</p>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+generate init.el file headers
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<details><summary>init.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;;; init.el -*- lexical-binding: t; -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; DO NOT EDIT THIS FILE DIRECTLY</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is a file generated from a literate programing source file located at</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You should make any changes there and regenerate it from Emacs org-mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; using org-babel-tangle (C-c C-v t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This file controls what Doom modules are enabled and what order they load</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; in. Remember to run &#39;doom sync&#39; after modifying it!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; NOTE Press &#39;SPC h d h&#39; (or &#39;C-h d h&#39; for non-vim users) to access Doom&#39;s</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      documentation. There you&#39;ll find a &#34;Module Index&#34; link where you&#39;ll find</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      a comprehensive list of Doom&#39;s modules and what flags they support.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; NOTE Move your cursor over a module&#39;s name (or its flags) and press &#39;K&#39; (or</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      &#39;C-c c k&#39; for non-vim users) to view its documentation. This works on</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      flags as well (those symbols that start with a plus).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      Alternatively, press &#39;gd&#39; (or &#39;C-c c d&#39;) on a module to browse its</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      directory (for easy access to its source code).</span></span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+generate package.el file headers
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<details><summary>packages.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; -*- no-byte-compile: t; -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;; $DOOMDIR/packages.el</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; DO NOT EDIT THIS FILE DIRECTLY</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is a file generated from a literate programing source file located at</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You should make any changes there and regenerate it from Emacs org-mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; using org-babel-tangle (C-c C-v t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To install a package with Doom you must declare them here and run &#39;doom sync&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; on the command line, then restart Emacs for the changes to take effect -- or</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; use &#39;M-x doom/reload&#39;.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! some-package)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To install a package directly from a remote git repo, you must specify a</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; `:recipe&#39;. You&#39;ll find documentation on what `:recipe&#39; accepts here:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://github.com/raxod502/straight.el#the-recipe-format</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! another-package</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;  :recipe (:host github :repo &#34;username/repo&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; If the package you are trying to install does not contain a PACKAGENAME.el</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; file, or is located in a subdirectory of the repo, you&#39;ll need to specify</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; `:files&#39; in the `:recipe&#39;:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! this-package</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;  :recipe (:host github :repo &#34;username/repo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;           :files (&#34;some-file.el&#34; &#34;src/lisp/*.el&#34;)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; If you&#39;d like to disable a package included with Doom, you can do so here</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; with the `:disable&#39; property:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :disable t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You can override the recipe of a built in package without having to specify</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; all the properties for `:recipe&#39;. These will inherit the rest of its recipe</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; from Doom or MELPA/ELPA/Emacsmirror:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :recipe (:nonrecursive t))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package-2 :recipe (:repo &#34;myfork/package&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Specify a `:branch&#39; to install a package from a particular branch or tag.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is required for some packages whose default branch isn&#39;t &#39;master&#39; (which</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; our package manager can&#39;t deal with; see raxod502/straight.el#279)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :recipe (:branch &#34;develop&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Use `:pin&#39; to specify a particular commit to install.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :pin &#34;1a2b3c4d5e&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Doom&#39;s packages are pinned to a specific commit and updated from release to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; release. The `unpin!&#39; macro allows you to unpin single packages...</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(unpin! pinned-package)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; ...or multiple packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(unpin! pinned-package another-pinned-package)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(unpin! t)</span></span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+generate config.el file headers
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<details><summary>config.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; DO NOT EDIT THIS FILE DIRECTLY</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is a file generated from a literate programing source file located at</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You should make any changes there and regenerate it from Emacs org-mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; using org-babel-tangle (C-c C-v t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Place your private configuration here! Remember, you do not need to run &#39;doom</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; sync&#39; after modifying this file!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Some functionality uses this to identify you, e.g. GPG configuration, email</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; clients, file templates and snippets.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq user-full-name &#34;John Doe&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      user-mail-address &#34;john@doe.com&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Doom exposes five (optional) variables for controlling fonts in Doom. Here</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; are the three important ones:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; + `doom-font&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; + `doom-variable-pitch-font&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; + `doom-big-font&#39; -- used for `doom-big-font-mode&#39;; use this for</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   presentations or streaming.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; They all accept either a font-spec, font string (&#34;Input Mono-12&#34;), or xlfd</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; font string. You generally only need these two:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq doom-font (font-spec :family &#34;monospace&#34; :size 12 :weight &#39;semi-light)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;       doom-variable-pitch-font (font-spec :family &#34;sans&#34; :size 13))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; There are two ways to load a theme. Both assume the theme is installed and</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; available. You can either set `doom-theme&#39; or manually load a theme with the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; `load-theme&#39; function. This is the default:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq doom-theme &#39;doom-one)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; If you use `org&#39; and don&#39;t want your org files in the default location below,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; change `org-directory&#39;. It must be set before org loads!</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq org-directory &#34;~/org/&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This determines the style of line numbers in effect. If set to `nil&#39;, line</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; numbers are disabled. For relative line numbers, set this to `relative&#39;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq display-line-numbers-type t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Here are some additional functions/macros that could help you configure Doom:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `load!&#39; for loading external *.el files relative to this one</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `use-package!&#39; for configuring packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `after!&#39; for running code after a package has loaded</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `add-load-path!&#39; for adding directories to the `load-path&#39;, relative to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   this file. Emacs searches the `load-path&#39; when you load packages with</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   `require&#39; or `use-package&#39;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `map!&#39; for binding new keys</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To get information about any of these functions/macros, move the cursor over</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; the highlighted symbol at press &#39;K&#39; (non-evil users must press &#39;C-c c k&#39;).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This will open documentation for it, including demos of how they are used.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You can also try &#39;gd&#39; (or &#39;C-c c d&#39;) to jump to their definition and see how</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; they are implemented.</span></span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+Customized variables
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<p>
+Doom <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configure">does not recommend the Emacs <code class="verbatim">customize</code> mechanism</a>:</p>
+<blockquote>
+<p><em>Note: do not use M-x customize or the customize API in general. Doom is designed to be configured programmatically from your config.el, which can conflict with Customize’s way of modifying variables.</em></p>
+</blockquote>
+<p>
+All necessary settings are therefore set by hand as part of this configuration file. The only exceptions are &#34;safe variable&#34; and &#34;safe theme&#34; settings, which are automatically saved by Emacs in <code class="verbatim">custom.el</code>, but this is OK as they don&#39;t conflict with anything else from the config.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-2">
+<h2 id="headline-8">
+Doom modules
+</h2>
+<div id="outline-text-headline-8" class="outline-text-2">
+<p>
+This code is written to the <code class="verbatim">init.el</code> to select which modules to load. Written here as-is for now, as it is quite well structured and clear.</p>
+<details><summary>packages.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(doom! :input
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;chinese</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;japanese</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;layout            ; auie,ctsrnm is the superior home row</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :completion
+</span></span><span style="display:flex;"><span>       company           <span style="color:#75715e">; the ultimate code completion backend</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;helm              ; the *other* search engine for love and life</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ido               ; the other *other* search engine...</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ivy               ; a search engine for love and life</span>
+</span></span><span style="display:flex;"><span>       vertico           <span style="color:#75715e">; the search engine of the future</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :ui
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;deft              ; notational velocity for Emacs</span>
+</span></span><span style="display:flex;"><span>       doom              <span style="color:#75715e">; what makes DOOM look the way it does</span>
+</span></span><span style="display:flex;"><span>       doom-dashboard    <span style="color:#75715e">; a nifty splash screen for Emacs</span>
+</span></span><span style="display:flex;"><span>       doom-quit         <span style="color:#75715e">; DOOM quit-message prompts when you quit Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(emoji +unicode)  ; 🙂</span>
+</span></span><span style="display:flex;"><span>       hl-todo           <span style="color:#75715e">; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;hydra</span>
+</span></span><span style="display:flex;"><span>       indent-guides     <span style="color:#75715e">; highlighted indent columns</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ligatures         ; ligatures and symbols to make your code pretty again</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;minimap           ; show a map of the code on the side</span>
+</span></span><span style="display:flex;"><span>       modeline          <span style="color:#75715e">; snazzy, Atom-inspired modeline, plus API</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;nav-flash         ; blink cursor line after big motions</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;neotree           ; a project drawer, like NERDTree for vim</span>
+</span></span><span style="display:flex;"><span>       ophints           <span style="color:#75715e">; highlight the region an operation acts on</span>
+</span></span><span style="display:flex;"><span>       (popup +defaults)   <span style="color:#75715e">; tame sudden yet inevitable temporary windows</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;tabs              ; a tab bar for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; treemacs          ; a project drawer, like neotree but cooler</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;unicode           ; extended unicode support for various languages</span>
+</span></span><span style="display:flex;"><span>       vc-gutter         <span style="color:#75715e">; vcs diff in the fringe</span>
+</span></span><span style="display:flex;"><span>       vi-tilde-fringe   <span style="color:#75715e">; fringe tildes to mark beyond EOB</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;window-select     ; visually switch windows</span>
+</span></span><span style="display:flex;"><span>       workspaces        <span style="color:#75715e">; tab emulation, persistence &amp; separate workspaces</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;zen               ; distraction-free coding or writing</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; (tabs +centaur-tabs)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :editor
+</span></span><span style="display:flex;"><span>       (evil +everywhere)<span style="color:#75715e">; come to the dark side, we have cookies</span>
+</span></span><span style="display:flex;"><span>       file-templates    <span style="color:#75715e">; auto-snippets for empty files</span>
+</span></span><span style="display:flex;"><span>       fold              <span style="color:#75715e">; (nigh) universal code folding</span>
+</span></span><span style="display:flex;"><span>       (<span style="color:#a6e22e">format</span> +onsave)  <span style="color:#75715e">; automated prettiness</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;god               ; run Emacs commands without modifier keys</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;lispy             ; vim for lisp, for people who don&#39;t like vim</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;multiple-cursors  ; editing in many places at once</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;objed             ; text object editing for the innocent</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;parinfer          ; turn lisp into python, sort of</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rotate-text       ; cycle region at point between text candidates</span>
+</span></span><span style="display:flex;"><span>       snippets          <span style="color:#75715e">; my elves. They type so I don&#39;t have to</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;word-wrap         ; soft wrapping with language-aware indent</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :emacs
+</span></span><span style="display:flex;"><span>       dired             <span style="color:#75715e">; making dired pretty [functional]</span>
+</span></span><span style="display:flex;"><span>       electric          <span style="color:#75715e">; smarter, keyword-based electric-indent</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ibuffer         ; interactive buffer management</span>
+</span></span><span style="display:flex;"><span>       undo              <span style="color:#75715e">; persistent, smarter undo for your inevitable mistakes</span>
+</span></span><span style="display:flex;"><span>       vc                <span style="color:#75715e">; version-control and Emacs, sitting in a tree</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :term
+</span></span><span style="display:flex;"><span>       eshell            <span style="color:#75715e">; the elisp shell that works everywhere</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;shell             ; simple shell REPL for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;term              ; basic terminal emulator for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;vterm             ; the best terminal emulation in Emacs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :checkers
+</span></span><span style="display:flex;"><span>       syntax              <span style="color:#75715e">; tasing you for every semicolon you forget</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(spell +flyspell) ; tasing you for misspelling mispelling</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;grammar           ; tasing grammar mistake every you make</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :tools
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ansible</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;debugger          ; FIXME stepping through code, to help you add bugs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;direnv</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;docker</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;editorconfig      ; let someone else argue about tabs vs spaces</span>
+</span></span><span style="display:flex;"><span>       ein               <span style="color:#75715e">; tame Jupyter notebooks with emacs</span>
+</span></span><span style="display:flex;"><span>       (<span style="color:#a6e22e">eval</span> +overlay)     <span style="color:#75715e">; run code, run (also, repls)</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;gist              ; interacting with github gists</span>
+</span></span><span style="display:flex;"><span>       lookup              <span style="color:#75715e">; navigate your code and its documentation</span>
+</span></span><span style="display:flex;"><span>       lsp               <span style="color:#75715e">; M-x vscode</span>
+</span></span><span style="display:flex;"><span>       magit             <span style="color:#75715e">; a git porcelain for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;make              ; run make tasks from Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;pass              ; password manager for nerds</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;pdf               ; pdf enhancements</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;prodigy           ; FIXME managing external services &amp; code builders</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rgb               ; creating color strings</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;taskrunner        ; taskrunner for all your projects</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;terraform         ; infrastructure as code</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;tmux              ; an API for interacting with tmux</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;upload            ; map local to remote projects via ssh/ftp</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :os
+</span></span><span style="display:flex;"><span>       (:if IS-MAC macos)  <span style="color:#75715e">; improve compatibility with macOS</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;tty               ; improve the terminal Emacs experience</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :lang
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;agda              ; types of types of types of types...</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;beancount         ; mind the GAAP</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;cc                ; C &gt; C++ == 1</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;clojure           ; java with a lisp</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;common-lisp       ; if you&#39;ve seen one lisp, you&#39;ve seen them all</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;coq               ; proofs-as-programs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;crystal           ; ruby at the speed of c</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;csharp            ; unity, .NET, and mono shenanigans</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;data              ; config/data formats</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(dart +flutter)   ; paint ui and not much else</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;dhall</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;elixir            ; erlang done right</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;elm               ; care for a cup of TEA?</span>
+</span></span><span style="display:flex;"><span>       emacs-lisp        <span style="color:#75715e">; drown in parentheses</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;erlang            ; an elegant language for a more civilized age</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ess               ; emacs speaks statistics</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;factor</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;faust             ; dsp, but you get to keep your soul</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;fsharp            ; ML stands for Microsoft&#39;s Language</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;fstar             ; (dependent) types and (monadic) effects and Z3</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;gdscript          ; the language you waited for</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(go +lsp)         ; the hipster dialect</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(haskell +dante)  ; a language that&#39;s lazier than I am</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;hy                ; readability of scheme w/ speed of python</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;idris             ; a language you can depend on</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;json              ; At least it ain&#39;t XML</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(java +meghanada) ; the poster child for carpal tunnel syndrome</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;javascript        ; all(hope(abandon(ye(who(enter(here))))))</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;julia             ; a better, faster MATLAB</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;kotlin            ; a better, slicker Java(Script)</span>
+</span></span><span style="display:flex;"><span>       latex             <span style="color:#75715e">; writing papers in Emacs has never been so fun</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;lean              ; for folks with too much to prove</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ledger            ; be audit you can be</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;lua               ; one-based indices? one-based indices</span>
+</span></span><span style="display:flex;"><span>       markdown          <span style="color:#75715e">; writing docs for people to ignore</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;nim               ; python + lisp at the speed of c</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;nix               ; I hereby declare &#34;nix geht mehr!&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ocaml             ; an objective camel</span>
+</span></span><span style="display:flex;"><span>       org               <span style="color:#75715e">; organize your plain life in plain text</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;php               ; perl&#39;s insecure younger brother</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;plantuml          ; diagrams for confusing people more</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;purescript        ; javascript, but functional</span>
+</span></span><span style="display:flex;"><span>       (python
+</span></span><span style="display:flex;"><span>        +lsp
+</span></span><span style="display:flex;"><span>        +conda
+</span></span><span style="display:flex;"><span>        +pyright)          <span style="color:#75715e">;beautiful is better than ugly</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;qt                ; the &#39;cutest&#39; gui framework ever</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;racket            ; a DSL for DSLs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;raku              ; the artist formerly known as perl6</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rest              ; Emacs as a REST client</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rst               ; ReST in peace</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(ruby +rails)     ; 1.step {|i| p &#34;Ruby is #{i.even? ? &#39;love&#39; : &#39;life&#39;}&#34;}</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;scala             ; java, but good</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(scheme +guile)   ; a fully conniving family of lisps</span>
+</span></span><span style="display:flex;"><span>       sh                <span style="color:#75715e">; she sells {ba,z,fi}sh shells on the C xor</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;sml</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;solidity          ; do you need a blockchain? No.</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;swift             ; who asked for emoji variables?</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;terra             ; Earth and Moon in alignment for performance.</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;web               ; the tubes</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;yaml              ; JSON, but readable</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;zig               ; C, but simpler</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :email
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(mu4e +org +gmail)</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;notmuch</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(wanderlust +gmail)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :app
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;calendar</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;emms</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;everywhere        ; *leave* Emacs!? You must be joking</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;irc               ; how neckbeards socialize</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(rss +org)        ; emacs as an RSS reader</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;twitter           ; twitter client https://twitter.com/vnought</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :config
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;literate</span>
+</span></span><span style="display:flex;"><span>       (default +bindings +smartparens)
+</span></span><span style="display:flex;"><span>       )</span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
+General configuration
+</h2>
+<div id="outline-text-headline-9" class="outline-text-2">
+<p>
+My user information. Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq <span style="color:#a6e22e">user-full-name</span> <span style="color:#e6db74">&#34;Tintingo&#34;</span>
+</span></span><span style="display:flex;"><span>      user-mail-address <span style="color:#e6db74">&#34;norery@163.com&#34;</span>)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq doom-font (<span style="color:#a6e22e">font-spec</span> :family <span style="color:#e6db74">&#34;Source Code Pro&#34;</span> :size <span style="color:#ae81ff">14</span>))</span></span></code></pre></div>
+</div>
+<p>
+make &#34;starting &#34;look&#34; progress&#34; disappear</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(advice-add <span style="color:#e6db74">&#39;ispell-lookup-words</span> :around
+</span></span><span style="display:flex;"><span>            (lambda (orig <span style="color:#66d9ef">&amp;rest</span> args)
+</span></span><span style="display:flex;"><span>              (shut-up (<span style="color:#a6e22e">apply</span> orig args))))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+Visual, session and window settings
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+Basic UI settings
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq doom-theme <span style="color:#e6db74">&#39;doom-solarized-light</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(setq display-line-numbers-type <span style="color:#e6db74">&#39;relative</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(setq ein:output-area-inlined-images <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq initial-frame-alist (quote ((fullscreen . maximized))))   ;; 默认全屏</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; 修改当前行的高亮背景色。 M-x 运行describe-char -&gt; Face: h1-line -&gt; Background: #0D343E 可以看到这个值。通过(customize this face) 修改，被保存在 ~/.emacs.d/.local/custom.el 文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&#39;</span>(hl-line ((<span style="color:#66d9ef">t</span> (:background <span style="color:#e6db74">&#34;#0D343E&#34;</span> ))))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; ;;光标在括号内时就高亮包含内容的两个括号</span>
+</span></span><span style="display:flex;"><span>(defadvice show-paren-function (around fix-show-paren-function activate)
+</span></span><span style="display:flex;"><span>  (cond ((looking-at-p <span style="color:#e6db74">&#34;\\s(&#34;</span>) ad-do-it)
+</span></span><span style="display:flex;"><span>        (<span style="color:#66d9ef">t</span> (save-excursion
+</span></span><span style="display:flex;"><span>             (ignore-errors (backward-up-list))
+</span></span><span style="display:flex;"><span>             ad-do-it)))
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+Dashborad settngs
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<p>
+I made a super simple set of Doom-Emacs custom splash screens by combining <a href="http://www.thedreamcastjunkyard.co.uk/2018/03/cross-platform-online-multiplayer-added.html">a Doom logo</a> with the word &#34;Emacs&#34; rendered in the <a href="https://fontmeme.com/doom-font/">Doom Font</a>. You can see them at <a href="https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash">https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash</a> (you can also see one of them at the top of this file). I configure it to be used instead of the default splash screen. It took me all of 5 minutes to make, so improvements are welcome!</p>
+<p>
+If you want to choose at random among a few different splash images, you can list them in <code class="verbatim">alternatives</code>.</p>
+<p>
+You can find other splash images at the <a href="https://github.com/jeetelongname/doom-banners">jeetelongname/doom-banners</a> GitHub repository.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; (let ((alternatives &#39;(&#34;doom-emacs-bw-light.svg&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                       ;; &#34;doom-emacs-flugo-slant_out_purple-small.png&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                       ;; &#34;doom-emacs-flugo-slant_out_bw-small.png&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                       )))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   (setq fancy-splash-image</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;         (concat doom-private-dir &#34;splash/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                 (nth (random (length alternatives)) alternatives))))</span></span></span></code></pre></div>
+</div>
+<p>
+I eliminate all but the first two items in the dashboard menu, since those are the only ones I still use sometimes.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; (setq +doom-dashboard-menu-sections (cl-subseq +doom-dashboard-menu-sections 0 2))</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
+nayn-mode
+</h4>
+<div id="outline-text-headline-13" class="outline-text-4">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! nyan-mode)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; 彩虹猫进度条</span>
+</span></span><span style="display:flex;"><span>(use-package nyan-mode
+</span></span><span style="display:flex;"><span>  :if (not (<span style="color:#a6e22e">boundp</span> <span style="color:#e6db74">&#39;awesome-tray-mode</span>))
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :hook (after-init <span style="color:#f92672">.</span> nyan-mode)
+</span></span><span style="display:flex;"><span>  :config
+</span></span><span style="display:flex;"><span>  (setq nyan-wavy-trail <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>		nyan-animate-nyancat <span style="color:#66d9ef">t</span>))</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+Customize KeyBinding
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>Install an evil tutorial package and use <code class="verbatim">M-x</code> and <code class="verbatim">evil-tutor-start</code> to open it. Can We find some new tips which can help us using Emacs more efficiently?</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! evil-tutor)</span></span></code></pre></div>
+</div>
+<ul>
+<li>use <code class="verbatim">jj</code> to exit the evil insert mode, default is <code class="verbatim">jk</code>.</li>
+</ul>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package! evil-escape
+</span></span><span style="display:flex;"><span>        :init
+</span></span><span style="display:flex;"><span>        (setq evil-escape-key-sequence <span style="color:#e6db74">&#34;jj&#34;</span>)
+</span></span><span style="display:flex;"><span>        )</span></span></code></pre></div>
+</div>
+<ul>
+<li>use <code class="verbatim">SPC b j/k</code> to move to the next/previous buffer, the default is <code class="verbatim">SPC b n/p</code>.</li>
+</ul>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(map! :leader
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;Like M-x&#34;</span>          :n        <span style="color:#e6db74">&#34;SPC&#34;</span>   <span style="color:#a6e22e">#&#39;</span>execute-extended-command
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;Next buffer&#34;</span>       :n        <span style="color:#e6db74">&#34;bj&#34;</span>    <span style="color:#a6e22e">#&#39;</span>next-buffer
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;Previous-buffer&#34;</span>   :n        <span style="color:#e6db74">&#34;bk&#34;</span>    <span style="color:#a6e22e">#&#39;</span>previous-buffer
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; Switch to TAB + number</span>
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;switch to TAB 1&#34;</span>   :n        <span style="color:#e6db74">&#34;1&#34;</span>       <span style="color:#a6e22e">#&#39;</span>+workspace/switch-to-0
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;switch to TAB 2&#34;</span>   :n        <span style="color:#e6db74">&#34;2&#34;</span>       <span style="color:#a6e22e">#&#39;</span>+workspace/switch-to-1
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;switch to TAB 3&#34;</span>   :n        <span style="color:#e6db74">&#34;3&#34;</span>       <span style="color:#a6e22e">#&#39;</span>+workspace/switch-to-2
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; kill shortcuts key bindings.</span>
+</span></span><span style="display:flex;"><span>      :nv <span style="color:#e6db74">&#34;b[&#34;</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>      :nv <span style="color:#e6db74">&#34;b]&#34;</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>      )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(map! :map org-mode-map
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;org previous heading&#34;</span>      :n      <span style="color:#e6db74">&#34;SPC k&#34;</span>    <span style="color:#a6e22e">#&#39;</span>org-previous-visible-heading
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; can not use &#34;SPC-j&#34;</span>
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;org next headng&#34;</span>           :n      <span style="color:#e6db74">&#34;SPC j&#34;</span>    <span style="color:#a6e22e">#&#39;</span>org-next-visible-heading
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; 以当前文件的可视行为单位进行移动.</span>
+</span></span><span style="display:flex;"><span>(evil-global-set-key <span style="color:#e6db74">&#39;motion</span> <span style="color:#e6db74">&#34;j&#34;</span> <span style="color:#e6db74">&#39;evil-next-visual-line</span>)
+</span></span><span style="display:flex;"><span>(evil-global-set-key <span style="color:#e6db74">&#39;motion</span> <span style="color:#e6db74">&#34;k&#34;</span> <span style="color:#e6db74">&#39;evil-previous-visual-line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; use =command k=  to move five lines up</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; use =command j= to move five lines down</span>
+</span></span><span style="display:flex;"><span>(map!
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;move next 5 line&#34;</span>       :nvi          <span style="color:#e6db74">&#34;C-j&#34;</span>    <span style="color:#a6e22e">#&#39;</span>(lambda () (interactive) (<span style="color:#a6e22e">forward-line</span> <span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;move previous 5 line&#34;</span>   :nvi          <span style="color:#e6db74">&#34;C-k&#34;</span>    <span style="color:#a6e22e">#&#39;</span>(lambda () (interactive) (<span style="color:#a6e22e">forward-line</span> <span style="color:#ae81ff">-5</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;;;;;;; Ein KeyBinding</span>
+</span></span><span style="display:flex;"><span>(map! :map ein:notebook-mode-map
+</span></span><span style="display:flex;"><span>      :leader
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:insert above&#34;</span>         :n    <span style="color:#e6db74">&#34;ea&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-insert-cell-above-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:insert below&#34;</span>         :n    <span style="color:#e6db74">&#34;eb&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-insert-cell-next-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:Run all&#34;</span>              :n    <span style="color:#e6db74">&#34;ell&#34;</span>       <span style="color:#a6e22e">#&#39;</span>ein:worksheet-execute-all-cells
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:To next cell&#34;</span>         :n    <span style="color:#e6db74">&#34;ej&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-goto-next-input-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:To prev cell&#34;</span>         :n    <span style="color:#e6db74">&#34;ek&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-goto-prev-input-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:Change cell type&#34;</span>     :n    <span style="color:#e6db74">&#34;eu&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-change-cell-type-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:Restart session&#34;</span>      :n    <span style="color:#e6db74">&#34;err&#34;</span>       <span style="color:#a6e22e">#&#39;</span>ein:notebook-restart-session-command-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:kill cell&#34;</span>            :n    <span style="color:#e6db74">&#34;ed&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-kill-cell-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:interrupt kernel&#34;</span>     :n    <span style="color:#e6db74">&#34;ez&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:notebook-kernel-interrupt-command-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:toggle output&#34;</span>        :n    <span style="color:#e6db74">&#34;et&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-toggle-output-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:show output&#34;</span>          :n    <span style="color:#e6db74">&#34;ev&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-set-output-visibility-all-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:login&#34;</span>                :n    <span style="color:#e6db74">&#34;el&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:login
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:stop&#34;</span>                 :n    <span style="color:#e6db74">&#34;ep&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:stop
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:open notebook&#34;</span>        :n    <span style="color:#e6db74">&#34;eo&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:notebook-open-km
+</span></span><span style="display:flex;"><span>      )</span></span></code></pre></div>
+</div>
+<p>
+ Now, The describability of <code class="verbatim">SPC bk</code> is not update in Which-Key, How to update it?</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-2">
+<h2 id="headline-15">
+Org mode
+</h2>
+<div id="outline-text-headline-15" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq org-directory <span style="color:#e6db74">&#34;~/Documents/OrgType/&#34;</span>)</span></span></code></pre></div>
+</div>
+<p>
+Doom Emacs&#39;s org module already install many packages about org mode, and we can check them in <a href="~/.emacs.d/modules/lang/org/README.org::85">org/README.org</a>.</p>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+UI Settings
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+org-superstar
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! org-superstar)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package org-superstar
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :after org
+</span></span><span style="display:flex;"><span>  :hook (org-mode <span style="color:#f92672">.</span> org-superstar-mode)
+</span></span><span style="display:flex;"><span>  :custom
+</span></span><span style="display:flex;"><span>    ( with-eval-after-load  <span style="color:#e6db74">&#39;org-superstar</span>)
+</span></span><span style="display:flex;"><span>    (org-superstar-headline-bullets-list <span style="color:#f92672">&#39;</span>(<span style="color:#e6db74">&#34;☰&#34;</span> <span style="color:#e6db74">&#34;☷&#34;</span> <span style="color:#e6db74">&#34;✿&#34;</span> <span style="color:#e6db74">&#34;☭&#34;</span>))
+</span></span><span style="display:flex;"><span>    (org-superstar-cycle-headline-bullets <span style="color:#66d9ef">nil</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; This is usually the default, but keep in mind it must be nil</span>
+</span></span><span style="display:flex;"><span>    (setq org-hide-leading-stars <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; This line is necessary.</span>
+</span></span><span style="display:flex;"><span>    (setq org-superstar-leading-bullet <span style="color:#e6db74">?\s</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; If you use Org Indent you also need to add this, otherwise the</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; above has no effect while Indent is enabled.</span>
+</span></span><span style="display:flex;"><span>    (setq org-indent-mode-turns-on-hiding-stars <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+org-appear
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<p>
+<a href="https://orgmode.org/">Org mode</a> provides a way to toggle visibility of hidden elements such as emphasis markers, links, etc. by customising specific variables, e.g., <code>org-hide-emphasis-markers</code>. However, it is currently not possible to do this interactively and on an element-by-element basis. This package, inspired by <a href="https://github.com/io12/org-fragtog">org-fragtog</a>, enables automatic visibility toggling depending on cursor position. Hidden element parts appear when the cursor enters an element and disappear when it leaves.</p>
+<p>
+Install <a href="https://github.com/awth13/org-appear">org-appear</a> in package.el file:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! org-appear)</span></span></code></pre></div>
+</div>
+<p>
+The package can be enabled interactively or automatically on org-mode start-up:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package org-appear
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :after org
+</span></span><span style="display:flex;"><span>  :hook (org-mode <span style="color:#f92672">.</span> org-appear-mode)
+</span></span><span style="display:flex;"><span>  :custom
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; allow to toggle links</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autolinks <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; allow to toggle subscripts and superscripts</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autosubmarkers <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; toggle Org entitites</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autoentities <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; toggle keywords in org-hidden-keywords</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autokeywords <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; if greater than 0, toggle with an idle delay</span>
+</span></span><span style="display:flex;"><span>    (org-appear-delay <span style="color:#ae81ff">0.5</span>)
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (add-hook &#39;org-mode-hook &#39;org-appear-mode)</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+org-ol-tree
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<p>
+Speaking of headlines, a nice package for viewing and managing the heading structure has come to my attention – <a href="https://github.com/Townk/org-ol-tree">org-ol-tree</a>.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! org-ol-tree
+</span></span><span style="display:flex;"><span>  :recipe (:host github :repo <span style="color:#e6db74">&#34;Townk/org-ol-tree&#34;</span>)
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+<p>
+We can use -Spc m O- to open the org-ol-tree.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package! org-ol-tree
+</span></span><span style="display:flex;"><span>  :commands org-ol-tree)
+</span></span><span style="display:flex;"><span>(map! :map org-mode-map
+</span></span><span style="display:flex;"><span>      :after org
+</span></span><span style="display:flex;"><span>      :localleader
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;open org-ol-tree&#34;</span> <span style="color:#e6db74">&#34;O&#34;</span> <span style="color:#a6e22e">#&#39;</span>org-ol-tree)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-2">
+<h2 id="headline-20">
+Chinese support
+</h2>
+<div id="outline-text-headline-20" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! rime)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package rime
+</span></span><span style="display:flex;"><span>        :init
+</span></span><span style="display:flex;"><span>        :custom
+</span></span><span style="display:flex;"><span>        (default-input-method <span style="color:#e6db74">&#34;rime&#34;</span>)
+</span></span><span style="display:flex;"><span>        (rime-librime-root <span style="color:#e6db74">&#34;~/.emacs.d/librime/dist&#34;</span>) )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>** 简介
+</span></span><span style="display:flex;"><span>pyim-basedict 是 pyim 输入法的默认词库<span style="color:#960050;background-color:#1e0010">，</span>词库数据来源为 libpinyin 项目<span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> https://github.com/libpinyin/libpinyin/releases (Data files we need is in release tarball)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>注意<span style="color:#960050;background-color:#1e0010">：</span>这个词库的词条量大概在 <span style="color:#ae81ff">10</span> 万左右<span style="color:#960050;background-color:#1e0010">，</span>是一个 *比较小* 的词库<span style="color:#960050;background-color:#1e0010">，</span>只能确保 pyim
+</span></span><span style="display:flex;"><span>可以正常工作<span style="color:#960050;background-color:#1e0010">，</span>如果用户想让 pyim 更加顺手<span style="color:#960050;background-color:#1e0010">，</span>需要添加其它附加词库<span style="color:#960050;background-color:#1e0010">，</span>具体添加词库的
+</span></span><span style="display:flex;"><span>方式可以参考 pyim 的 README.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>** 安装和使用
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.</span> 配置 melpa 源<span style="color:#960050;background-color:#1e0010">，</span>参考<span style="color:#960050;background-color:#1e0010">：</span>http://melpa.org/#/getting-started
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2.</span> M-x package-install RET pyim-basedict RET
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3.</span> 在 Emacs 配置文件中<span style="color:#960050;background-color:#1e0010">（</span>比如: ~/.emacs<span style="color:#960050;background-color:#1e0010">）</span>添加如下代码<span style="color:#960050;background-color:#1e0010">：</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#960050;background-color:#1e0010">#</span>+BEGIN_EXAMPLE
+</span></span><span style="display:flex;"><span>   (pyim-basedict-enable)
+</span></span><span style="display:flex;"><span>   <span style="color:#960050;background-color:#1e0010">#</span>+END_EXAMPLE
+</span></span><span style="display:flex;"><span>st<span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-user-data-dir &#34;</span>~/Library/Rime/<span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        ;;; 具体参考 mode-line-mule-info 默认值，其中可能有其它有用信息
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq mode-line-mule-info &#39;((:eval (rime-lighter))))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-show-candidate &#39;posframe)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (rime-posframe-properties
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                (list :background-color &#34;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">073642</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                 :foreground-color &#34;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">839496</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                 :internal-border-width 1))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-cursor &#34;</span><span style="color:#960050;background-color:#1e0010">˰</span><span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-disable-predicates
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              &#39;(rime-predicate-evil-mode-p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                rime-predicate-after-alphabet-char-p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                rime-predicate-prog-in-code-p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                ))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        )</span></span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+pangu-spacing
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<p>
+<a href="https://github.com/coldnew/pangu-spacing">PanGu-Spcing</a> 方便地解决了我在中英文混杂输入的一个痛点，它会自动在中英文之间插入空格。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! pangu-spacing)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(require <span style="color:#e6db74">&#39;pangu-spacing</span>)
+</span></span><span style="display:flex;"><span>(global-pangu-spacing-mode <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>(setq pangu-spacing-real-insert-separtor <span style="color:#66d9ef">t</span>)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-2">
+<h2 id="headline-22">
+Python
+</h2>
+<div id="outline-text-headline-22" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package conda
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :init
+</span></span><span style="display:flex;"><span>  (setq conda-anaconda-home (<span style="color:#a6e22e">expand-file-name</span> <span style="color:#e6db74">&#34;~/opt/anaconda3&#34;</span>))
+</span></span><span style="display:flex;"><span>  (setq conda-env-home-directory (<span style="color:#a6e22e">expand-file-name</span> <span style="color:#e6db74">&#34;~/opt/anaconda3&#34;</span>)))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+Emacs Ipython Notebook
+</h3>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-2">
+<h2 id="headline-24">
+load-path
+</h2>
+<div id="outline-text-headline-24" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; 递归遍历加载路径 test</span>
+</span></span><span style="display:flex;"><span>  (defun add-subdirs-to-load-path(dir)
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Recursive add directories to `load-path`.&#34;</span>
+</span></span><span style="display:flex;"><span>    (let ((default-directory (<span style="color:#a6e22e">file-name-as-directory</span> dir)))
+</span></span><span style="display:flex;"><span>      (add-to-list <span style="color:#e6db74">&#39;load-path</span> dir)
+</span></span><span style="display:flex;"><span>      (normal-top-level-add-subdirs-to-load-path)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (let ((gc-cons-threshold most-positive-fixnum)
+</span></span><span style="display:flex;"><span>        (file-name-handler-alist <span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; 将配置文件添加进load-path</span>
+</span></span><span style="display:flex;"><span>    (add-subdirs-to-load-path <span style="color:#e6db74">&#34;~/.doom.d/etc/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;     ;; (unless (file-exists-p &#34;~/.config/.evan-emacs.d/&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;     ;;   (mkdir &#34;~/.config/.evan-emacs.d&#34;))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;     ;; (add-subdirs-to-load-path &#34;~/.config/.evan-emacs.d/&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    )</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; 所有配置自带的模块</span>
+</span></span><span style="display:flex;"><span>(require <span style="color:#e6db74">&#39;init-config</span>)</span></span></code></pre></div>
+</div>
+<ul>
+<li>Test</li>
+</ul>
+</div>
+</div>
+
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>本博客的建立及部署 -- 使用 blogdown &#43; Vercel 快速建立博客</title>
+      <link>http://localhost:4321/blogs/establish-blog-hugo/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/establish-blog-hugo/</guid>
+      <description>
+        <![CDATA[
+        
+<p>
+本篇文章来讲一下我建立本博客的过程以及撰写博客的工作流程，希望对那些与我一样想拥有自己的个人博客的朋友一些帮助。
+首先说明一下建立本博客所需的最简工具流程：</p>
+<ol>
+<li>在 Rstudio 中使用 <code class="verbatim">blogdown</code> 包，可以轻松建立一个本地的 hugo 博客。</li>
+<li>将文件上传至个人的 github 仓库并使用 Vercel 发布到网上。</li>
+<li>如果想使用自己的域名的话，就申请一个域名并备案，将域名 DNS 解析到 Vercel 给你指定的网址上。</li>
+</ol>
+<p>在我尝试的建立个人博客的方法中，这是成本最低、最方便的一个了。甚至不需要花钱租服务器，不需要 hugo、前端知识，就可以建立一个在国内访问速度还不错的网站了。此外，该流程还具有以下的优势：</p>
+<ol>
+<li>由 hugo 静态博客框架所带来的 <code class="verbatim">速度快</code> , <code class="verbatim">文章本地化</code> 等优势；</li>
+<li>与 github 结合所带来的 <code class="verbatim">版本控制</code> 等优势；</li>
+<li>hugo 竟然支持 org 格式的文件，这意味着可以使用 Emacs 方便地写博客了。</li>
+</ol>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+使用 blogdown + Vercel 快速建立博客
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>在将博客迁移到 hugo 之前，我还尝试过 wordpress、typoche 等动态博客框架，并分别使用了很长一段时间。但是在使用动态博客框架的时候，我从来没有感觉到博客是真正属于自己的，因为文章都在云上，难以给人安全感。后来我无意中看了谢益辉博士在 <a href="https://www.bilibili.com/video/BV1ZK4y1s7ir?from=search&amp;seid=9394683960598560609&amp;spm_id_from=333.337.0.0">CGM</a> 上有关 <code class="verbatim">blogdown</code> 的讲座，才发现静态博客才是我真正需要的。并且有了 <code class="verbatim">blogdown</code> 这个工具，使得搭建 hugo 静态博客的流程变得非常简单。因此下定决心将博客迁移到 hugo 中。</p>
+<p>
+本来我想从头说一下建博客的过程，后来觉得这个过程实在太简单，也没有什么记录下来的必要。网上有几篇文章也说的很清楚了，跟着做应该不会踩雷，因此详细安装过程见下面的链接吧。</p>
+<ol>
+<li><a href="https://www.bilibili.com/video/BV1ZK4y1s7ir?from=search&amp;seid=9394683960598560609&amp;spm_id_from=333.337.0.0">谢益辉博士讲座的B站视频《用 blogdown 搭建一个静态网站》</a></li>
+<li><a href="https://cloud.tencent.com/developer/article/1851491">R沟通｜使用 Blogdown 构建个人博客</a></li>
+</ol>
+<p>简单说来就是以下几点：</p>
+<ol>
+<li>安装 <a href="https://www.r-project.org/">R语言</a> 及 <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>，还有 git.</li>
+<li>
+<p>安装 <code class="verbatim">blogdown</code> 包</p>
+<div class="src src-r">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#a6e22e">install.packages</span>(<span style="color:#e6db74">&#34;blogdown&#34;</span>)</span></span></code></pre></div>
+</div>
+</li>
+<li>
+<p>创建一个 <code class="verbatim">Website using blogdown</code> 项目并启动；</p>
+<div class="src src-shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span> <span style="color:#75715e"># 编译 server</span>
+</span></span><span style="display:flex;"><span> blogdown:::build_site<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># 启动server</span>
+</span></span><span style="display:flex;"><span> blogdown:::serve_site<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span> <span style="color:#75715e"># 停止server</span>
+</span></span><span style="display:flex;"><span> blogdown::stop_server<span style="color:#f92672">()</span></span></span></code></pre></div>
+</div>
+</li>
+</ol>
+<p>到这里大家应该就可以在本地预览到生成的网站的样子了。这里显示的是 blogdown 自带的默认模板，可以去网上找一个 <a href="https://hugothemesfree.com/tag/blog/">hugo模板</a> 先用着。一开始切记不要在挑主题换主题上花太多时间，将网站建好并创作出足够多的文章后，再考虑折腾主题，不然容易在形形色色的主题中浪费太多时间。</p>
+<p>
+注意很有可能你在网上找到的文章，在发布博客的时候选择的都是使用 netlify 发布。我一开始使用的也使 netlify，但在体验了几天后，发现 netlify 托管的网站，在国外访问的速度是比较快的，但是国内打开速度很慢。</p>
+<p>
+因此我目前的方案是使用 Vercel 进行发布，使用过程与 netlify 挺像的，都是使用 github 登陆后授权个人仓库，自动部署网站并提供随机生成的域名，我们就可以直接使用这个域名访问博客了。如果想拥有自己的个性域名的话，需要购买一个域名并备案（如果购买的是国内的域名的话）。我购买的是 <a href="https://wanwang.aliyun.com/domain/">阿里云万网</a> 的域名，不同域名的价格不同，输入域名之后会有个报价，觉得合适的话可以选择购买。</p>
+</div>
+</div>
+
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>探索 Doom Emacs 的快捷键命令</title>
+      <link>http://localhost:4321/blogs/doom-emacs-shortcuts-org/</link>
+      <pubDate>Tue, 15 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/doom-emacs-shortcuts-org/</guid>
+      <description>
+        <![CDATA[
+        
+<p>
+Doom Emacs 的快捷键逻辑一直被很多使用者称赞，在使用了一段时间后，我也觉得很顺手，决定在此套按键逻辑的基础上进行扩展。在 Hack 的过程中，发现还是有不少问题需要注意的，在本文中做一些记录。</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+参考文章
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p><a href="https://www.youtube.com/watch?v=xaZMwNELaJY">The Video of System Crafters</a> and <a href="https://github.com/hlissner/doom-emacs/blob/develop/core/core-keybinds.el">His Configuration: core-keybinds.el</a></p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+快捷键类型
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+1. 全局快捷键
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p><code class="verbatim">global-set-key</code> 设置的是全局快捷键，它不会被绑定到任何 Major mode 或 minor mode 中，优先级是最低的。可以将其理解为一个基础的键位设定，当启用的 Major mode 或 minor mode 中对该快捷键设置了其他的功能时，使用 <code class="verbatim">global-set-key</code> 设置的功能就不会表现出来。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(global-set-key (kbd <span style="color:#e6db74">&#34;key&#34;</span>) <span style="color:#e6db74">&#39;command</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; for a real example</span>
+</span></span><span style="display:flex;"><span>(global-set-key (kbd <span style="color:#e6db74">&#34;s-k&#34;</span>)
+</span></span><span style="display:flex;"><span>    (lambda () (interactive) (evil-previous-line <span style="color:#ae81ff">5</span>)))</span></span></code></pre></div>
+</div>
+<p>
+上面的例子中，我们将 <code class="verbatim">s-k</code> 键（s 在 macOS 中为 Command 键）设置为光标往上移动五行。</p>
+<p>
+设置成功以后，可以使用 <code class="verbatim">SPC hk</code> 查看 <code class="verbatim">s-k</code> 快捷键，发现它的 Key Bindings 描述为 <code class="verbatim">global-map s-k</code> , 说明该快捷键绑定在 <code class="verbatim">global map</code> 中。使用 <code class="verbatim">SPC h b k</code> 打开 <code class="verbatim">which-key-show-map</code> 搜索 <code class="verbatim">global map</code> 就可以找到刚才定义的快捷键了,或者使用 <code class="verbatim">SPC h v</code> 查找 <code class="verbatim">global map</code> 这个变量,也可以找到该快捷键.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+2. 基于 Major-Mode 的局部快捷键
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(local-set-key (kbd <span style="color:#e6db74">&#34;key&#34;</span>) <span style="color:#e6db74">&#39;command</span>)</span></span></code></pre></div>
+</div>
+<p>
+使用 <code class="verbatim">SPC hf</code> 查看 <code class="verbatim">local-set-key</code> 的说明，发现：</p>
+<blockquote>
+<p>The binding goes in the current buffer&#39;s local map, which in most cases is shared with all other buffers in the same major mode.</p>
+</blockquote>
+<p>
+发现这个绑定被放到了 the current buffer&#39;s local map 中，这个 map 会被该 buffer 相同的 major mode 所使用。所以说 local-set-key 也可以被记忆为基于 Major-Mode 的局部快捷键设置命令。</p>
+<p>
+在下面的例子中，我们将快捷键绑定到 <code class="verbatim">Org Mode</code> 中，当 major mode 为 Org Mode 时，按下 <code class="verbatim">s-k</code> 快捷键时，光标将会跳转到上一个 heading 上。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; for a real example</span>
+</span></span><span style="display:flex;"><span>(add-hook <span style="color:#e6db74">&#39;org-mode-hook</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#39;</span>(lambda ()
+</span></span><span style="display:flex;"><span>             (local-set-key (kbd <span style="color:#e6db74">&#34;s-k&#34;</span>) <span style="color:#e6db74">&#39;org-previous-visible-heading</span>)))</span></span></code></pre></div>
+</div>
+<p>
+这里结合 <code class="verbatim">add-hook</code> ，使用 <code class="verbatim">local-set-key</code> 设置了仅在 org-mode（必须为一个 major mode） 中生效的 local 快捷键，不会影响到其他 major-mode 中。设置成功后，使用 <code class="verbatim">SPC h b m</code> 可以在当前的 Major mode key map 中找到 <code class="verbatim">s-k</code> 快捷键，当然这需要当前的 major mode 为 org-mode。</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+3. 基于 mode-map 的局部快捷键
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+使用 <code class="verbatim">define-key</code> 定义的局部快捷键绑定在特定的 KEYMAP 中，仅在 major or minor-mode 启用该  KEYMAP 时生效。这使我们可以精确地对快捷键进行控制。相比起前两种定义，这种方式范围最精确，优先级也最高。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; example in SPC hf -&gt; define-key</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">define-key</span> evil-motion-state-map (kbd <span style="color:#e6db74">&#34;s-k&#34;</span>) <span style="color:#e6db74">&#39;emacs-version</span>)</span></span></code></pre></div>
+</div>
+<p>
+这个例子我们使用了 <code class="verbatim">define-key</code> 对 <code class="verbatim">s-k</code> 快捷键绑定在 <code class="verbatim">evil-motion-state-map</code> 中，当 这个 KEYMAP 被启用时，按下 <code class="verbatim">s-k</code> 将会在底部打印 Emacs 的版本信息。</p>
+<p>
+但是实际我们用的最多的是 <a href="https://github.com/noctuid/general.el/tree/a0b17d207badf462311b2eef7c065b884462cb7c">general package</a> 提供的 <code class="verbatim">general-define-key</code> 命令来创建绑定在 KEYMAP 的局部快捷键，它可以提供更为强大的功能。接下来我们使用 <code class="verbatim">general-define-key</code> 来实现与上面的 <code class="verbatim">define-key</code> 相同的功能。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(general-define-key :keymaps
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&#39;</span>(evil-motion-state-map)
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;s-k&#34;</span>
+</span></span><span style="display:flex;"><span>                    (<span style="color:#a6e22e">list</span> :def <span style="color:#e6db74">&#39;emacs-version</span> :which-key <span style="color:#e6db74">&#34;show emacs-version&#34;</span>))</span></span></code></pre></div>
+</div>
+<p>
+Doom Emacs 中还提供了一个 <code class="verbatim">map!</code> 命令，使用 <code class="verbatim">SPC hf map!</code> 可以看到：</p>
+<blockquote>
+<p>A convenience macro for defining keybinds, powered by general.</p>
+</blockquote>
+<p>
+当光标位于 <code class="verbatim">map!</code> 之上时，可以使用 <code class="verbatim">M-x macrostep expend</code> 对其进行展开，下面的 <code class="verbatim">map!</code> 代码块展开即为上文中的 <code class="verbatim">general-define-key</code> 代码块。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(map! :map evil-motion-state-map
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;show emacs-version&#34;</span> <span style="color:#e6db74">&#34;s-k&#34;</span>  <span style="color:#e6db74">&#39;emacs-version</span>
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+<p>
+这里先对 <code class="verbatim">general</code> 以及 <code class="verbatim">map!</code> 的基本概念有个大致了解，后续将对它们的用法和写法做详细介绍。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+三种快捷键的优先度测试
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>上面我们使用了三种方式分别对 <code class="verbatim">s-k</code> 快捷键做了定义，分别为：</p>
+<ol>
+<li>CASE1 –&gt; <code class="verbatim">global-set-key</code> -&gt; 将光标往上移动五行，若不被覆盖则会全局生效。</li>
+<li>CASE2 –&gt; <code class="verbatim">local-set-key</code> -&gt; 移动到上一个 org heading. 若不被覆盖则会在 Org Mode 这个 Major Mode 被启用时生效。</li>
+<li>CASE3 –&gt; <code class="verbatim">define-key</code> or <code class="verbatim">general-define-key</code> or <code class="verbatim">map!</code> -&gt; 打印当前 Emacs 版本信息。</li>
+</ol>
+<p>这三种方式的优先度顺序为: <code class="verbatim">define-key</code> &gt; <code class="verbatim">local-set-key</code> &gt; <code class="verbatim">global-set-key</code> , 下面设计了两组试验对优先度顺序进行演示：</p>
+<ul>
+<li>
+<p>实验一:将三个 CASE 的代码均放在配置文件中，为排除代码顺序的可能影响，三个 CASE 在配置文件中的放置顺序为： CASE3, CASE2, CASE1</p>
+<ul>
+<li>实验结果：只有 CASE3 生效。说明三种 CASE 同时存在时，CASE3 将其余两种均覆盖掉了。</li>
+</ul>
+</li>
+<li>
+<p>实验二:将前两个 CASE 按照 CASE2, CASE1 的顺序放置在配置文件中</p>
+<ul>
+<li>实验结果:在 Org 文件中,CASE2 生效, 这说明当 Major Mode 为 Org Mode 时, CASE2 将 CASE1 覆盖掉了; 而在非 Org 文件中, CASE1 生效,因为此时 CASE2 没有生效,就无法覆盖 CASE1.</li>
+</ul>
+</li>
+</ul>
+<p>三种方式中,第二种方式在日常中基本没有应用,不必在意.当需实现更为精细的控制时,可使用第三种方式定义快捷键;如果确定该快捷键不会在某种情况下被覆盖(比较冷门或使用快捷键前缀)时,使用第三种方式也是比较简单和快速的.</p>
+<p>
+总结设置快捷键的工作流程：</p>
+<ol>
+<li>
+<p>寻找实现功能的 command 名称。</p>
+<ul>
+<li>如果已有一个比较复杂的快捷键可实现该功能，可使用 <code class="verbatim">SPC hk</code> 查找该 command 名称，然后使用 <code class="verbatim">SPC hf</code> 查找定义它的函数的详细说明。</li>
+<li>如果没有已定义的快捷键，就只能通过搜索文档查找有无已定义的功能，或自己写代码实现该功能。</li>
+<li>思考该快捷键的使用场景，要绑定到哪个 KEYMAP 中(可以使用 <code class="verbatim">SPC h b k</code> 或 <code class="verbatim">SPC h v</code> 查看 KEYMAP 变量)? 又或者直接定义一个 global map？</li>
+</ul>
+</li>
+</ol>
+<p>在绑定快捷键时需要用到的查找命令及快捷键汇总如下:</p>
+<table>
+<thead>
+<tr>
+<th>Doom shortcut key</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPC h k</td>
+<td>helpful-key KEY-SEQUENCE</td>
+<td>Show help for interactive command bound to KEY-SEQUENCE</td>
+</tr>
+<tr>
+<td>SPC h f</td>
+<td>helpful-callable SYMBOL</td>
+<td>Show help for function, macro or special form named SYMBOL</td>
+</tr>
+<tr>
+<td>SPC h v</td>
+<td>helpful-variable SYMBOL</td>
+<td>Show help for variable named SYMBOL</td>
+</tr>
+<tr>
+<td>SPC h b k</td>
+<td>which-key-show-keymap KEYMAP &amp;optional NO-PAGING</td>
+<td>Show the top-level bindings in KEYMAP using which-key</td>
+</tr>
+<tr>
+<td>SPC h b m</td>
+<td>which-key-show-major-mode &amp;optional ALL</td>
+<td>Show top-level bindings in the map of the current major mode</td>
+</tr>
+<tr>
+<td>SPC h m</td>
+<td>describe-mode &amp;optional BUFFER</td>
+<td>Display documentation of current major mode and minor modes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>MacOS中的平铺式桌面 -- yabai</title>
+      <link>http://localhost:4321/blogs/mac-window-manage/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/mac-window-manage/</guid>
+      <description>
+        <![CDATA[
+        <h2 id="前言">前言</h2>
+<p>这篇文章是本人对于 MacOS 的键盘流窗口管理的一些总结和心得。由于很早之前使用 Linux 的 i3 等平铺式桌面的经历，我对于窗口以及桌面的键盘控制流一直很喜欢。因此，自从换了mac以后，我一直在寻找 MacOS 上键盘流桌面管理的方法，最近这段时间觉得逐渐形成了一套稳定的流程，遂写文记录。</p>
+<p>MacOS 中平铺式桌面的替代方案我选择的是 <a href="https://github.com/koekeishiya/yabai">yabai</a>，yabai 中快捷键操作是使用 <a href="https://github.com/koekeishiya/skhd">skhd</a>实现的，因此我们需要同时安装yabai以及skhd，安装方法就不再赘述了，可以查看项目的 github。另外有关 yabai 的更多说明参见<a href="https://github.com/koekeishiya/yabai/wiki/">官方wiki</a>。</p>
+<p>值得一提的是，安装完成以后想要实现开机启动以及后台运行，需要将它们加入到 <code>brew</code> 的 <code>service</code> 中：</p>
+<pre><code class="language-shell">brew services start yabai
+brew services start skhd
+# 停止运行
+brew services stop yabai
+brew services stop skhd
+</code></pre>
+<p>yabai 和 skhd 都是需要我们使用配置文件进行配置的，配置文件的默认位置为: <code>~/.yabairc</code>以及<code>~/.skhdrc</code>。修改了 <code>~/.skhdrc</code> 之后配置文件可立刻生效，而修改了 <code>~/.yabairc</code> 以后需要重启 yabai 方能生效，因此在 <code>~/.skhdrc</code> 中加入以下命令，可以使用快捷键重启 yabai。</p>
+<pre><code class="language-shell"># Restart Yabai
+ctrl + cmd + alt - r :
+    /usr/bin/env osascript &lt;&lt;&lt; \
+        &quot;display notification \&quot;Restarting Yabai\&quot; with title \&quot;Yabai\&quot;&quot;; \
+    launchctl kickstart -k &quot;gui/${UID}/homebrew.mxcl.yabai&quot;
+</code></pre>
+<blockquote>
+<p>我在刚开始使用 yabai 的时候，看了网上其他的文章推荐后，也对 <a href="https://github.com/Jean-Tinland/simple-bar">simple-bar</a> 和 <a href="https://github.com/AdamWagner/stackline">stack-line</a> 作了尝试，用了很长时间以后觉得实际用处并不大，现在已经弃用了，因此不作讲解。</p>
+</blockquote>
+<h3 id="浮动式桌面-or-平铺式桌面">浮动式桌面 or 平铺式桌面？</h3>
+<p>yabai 中默认的是平铺式布局，如果不习惯使用平铺式布局，可以改为浮动式布局（大多数用户习惯的方式）。本篇文章接下来将对以平铺式布局的配置方式进行说明。</p>
+<pre><code class="language-shell">yabai -m config layout                       bsp #默认使用平铺式布局
+# yabai -m config layout                       float #默认使用浮动式布局
+# 对特定的space指定布局方式
+yabai -m config --space 2 layout float
+</code></pre>
+<h2 id="窗口的美化">窗口的美化</h2>
+<h3 id="半透明效果的实现">半透明效果的实现</h3>
+<p>具有半透明效果的窗口可能在视觉上给人一种更美观的感觉。幸运的是在 yabai 中我们可以使用很简单的方式实现窗口的半透明效果，而且可以为聚焦窗口和非聚焦窗口设置不同的透明度，以起到简单区分聚焦窗口的效果。在 <code>~/.yabairc</code> 中进行如下设置：</p>
+<pre><code class="language-shell"># window opacity (default: off)
+yabai -m config window_opacity on
+yabai -m config active_window_opacity 0.95  #为聚焦窗口设置95%的透明度
+yabai -m config normal_window_opacity 0.9   #为非聚焦窗口设置90%的透明度
+</code></pre>
+<p>利用 skhd 可以使用快捷键快速为当前聚焦窗口切换透明度，比如在 <code>~/.skhdrc</code> 中的如下实现：</p>
+<pre><code class="language-shell"># toggle window transparency
+ctrl + alt - p : yabai -m window --opacity 1.0
+ctrl + alt - l : yabai -m window --opacity 0.95
+</code></pre>
+<h3 id="窗口边框border的实现">窗口边框(border)的实现</h3>
+<p>在我截图中大家可以发现在窗口的周围有一圈深红色边框，这是 yabai 自带的 border。我们可以自己配置聚焦窗口的边框颜色与非聚焦窗口的边框颜色，这样就可以对聚焦窗口进行非常明显的区分了。在 <code>~/.yabairc</code> 中进行如下配置：</p>
+<pre><code class="language-shell"># ====== Border settings =======================
+yabai -m config window_border                on
+yabai -m config window_border_width          6
+# red or gray
+yabai -m config active_window_border_color   0xfac23541
+yabai -m config normal_window_border_color   0x7f6123A
+yabai -m config insert_window_border_color   0xffCF515C
+</code></pre>
+<p>在实际使用时，发现有一个 bug 就是在移动窗口时有时会出现 border 不随之移动的情况，非常影响体验，这时可以使用快捷键取消窗口的边框，再打开边框即可。在 <code>~/.skhdrc</code> 中设置 <code>alt b</code> 对边框进行打开或关闭。</p>
+<pre><code class="language-shell"># toggle window border
+alt - b : yabai -m window --toggle border
+</code></pre>
+<h2 id="space-的基础操作">space 的基础操作</h2>
+<p>MacOS 在系统级别中为我们提供了 10 个 Space（即桌面1-10），通过 &lt;系统偏好设置-快捷键-调度中心&gt; 对切换桌面的快捷键进行配置，默认是<code>ctrl 1/9 0</code>。在这个页面也可以查看MacOS自带的快捷键列表并自行配置，也方便我们查看冲突的快捷键或取消不需要的快捷键（以免不小心触发）。</p>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/2022/02/11/16445595603091.jpg" alt="-w668"></p>
+<p>在 yabai 中，我们可以充分利用这10个桌面，对窗口进行统一的管理。首先建议对每个桌面分配不同的工作属性，例如在桌面2中显示终端；在桌面7打开 matlab、pycharm 等代码编辑工具；在桌面9打开网易云、INNA 视频播放器等影音娱乐程序等等。接下来对这部分在配置文件<code>~/.yabai</code>中的设置进行说明。</p>
+<pre><code class="language-shell"># 可以从左上角苹果符号 () 旁边的 macOS 菜单栏中检查应用程序名称。
+# workd after open a new software or restart yabai
+##### space 1 -- main
+yabai -m space 1 --label main
+yabai -m rule --add label=zotero app=&quot;^Zotero$&quot; space=main
+
+##### space 2 -- Shell
+yabai -m space 2 --label shell 
+yabai -m rule --add label=iterm app=&quot;^iTerm2$&quot; space=shell
+
+##### space 3
+# 1. chrome -- browser
+yabai -m space 3 --label surf
+yabai -m rule --add label=chrome app=&quot;^Google Chrome$&quot; space=surf
+# 2. Safari 
+yabai -m rule --add label=safari app=&quot;^Safari浏览器$&quot; space=surf
+</code></pre>
+<p>限于篇幅，使用前三个 space 的配置进行示例。我们可以使用 <code>--label</code> 对每一个 space 进行命名，并将应用程序指定到该 space 中。</p>
+<blockquote>
+<p>上述配置的作用是当打开应用程序或重启 yabai 时，自动将该应用程序移动到指定的 space 中。</p>
+</blockquote>
+<p>清楚了效果以后，我们可以想像一下应用场景。我的使用方式是将功能划分很明显的应用分配到固定的 space 中，一般不会改变它的 space；对于可能在多个 space 中打开的应用（例如 Finder），不设置它的固定 space。</p>
+<p>然而有些情况我们还是需要将某个应用程序移动到别的 space 中的，并且我们需要很频繁地在多个 space 中切换。为了解决以上两个问题，我们可以在 <code>~/.skhdrc</code> 中进行如下配置：</p>
+<pre><code class="language-shell"># 使用 alt - 1/2/3 进行space的快速切换
+alt - 1 : yabai -m space --focus main
+alt - 2 : yabai -m space --focus shell
+alt - 3 : yabai -m space --focus surf
+# 使用 ctrl+alt-1/2/3 将当前聚焦的应用程序移动到 space 1/2/3 中
+ctrl + alt - 1 : yabai -m window --space main
+ctrl + alt - 2 : yabai -m window --space shell
+ctrl + alt - 3 : yabai -m window --space surf
+</code></pre>
+<h2 id="window-的基础操作">window 的基础操作</h2>
+<p>window（窗口）的基础操作大致可以分为三类，为了方便记忆，我为其分配了不同的快捷键前缀：</p>
+<ol>
+<li>聚焦到某一窗口：<code>ctrl + alt</code></li>
+<li>窗口的移动、旋转：<code>shift + alt</code></li>
+<li>窗口的大小调整：<code>shift + cmd</code></li>
+</ol>
+<p>这部分没什么特别需要讲解的，大家可以自行构想出方便使用的快捷键，直接看 <code>~/.skhdrc</code> 中的代码吧！</p>
+<pre><code class="language-shell"># =======================  window focus ==========================
+# 只在平铺的窗口上生效，浮动的窗口之间移动实现起来比较麻烦
+# focus window in direction of focused window (options: north, east, south, west)
+ctrl + alt - l : yabai -m window --focus east
+ctrl + alt - h : yabai -m window --focus west
+ctrl + alt - j : yabai -m window --focus south
+ctrl + alt - k : yabai -m window --focus north
+#
+# focus window that was previously focused
+ctrl + alt - b : yabai -m window --focus recent
+</code></pre>
+<pre><code class="language-shell"># =======================  window layout ==========================
+# 将窗口移动到上/下/左/右
+shift + alt - h : yabai -m window --warp west
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+shift + alt - l : yabai -m window --warp east
+
+# toggle window split type-水平排列转为垂直排列
+shift + alt - g : yabai -m window --toggle split
+
+# 窗口顺时针旋转 90 度,一开始垂直的半边屏幕总是一个总体,用的少
+shift + alt - r : yabai -m space --rotate 270
+# 窗口逆时针旋转 90 度
+# shift + alt - r : yabai -m space --rotate 90
+
+# Rotate on X and Y Axis
+shift + alt - x : yabai -m space --mirror x-axis
+shift + alt - y : yabai -m space --mirror y-axis
+
+# Float and center window-bsp/float
+# The grid format is &lt;rows&gt;:&lt;cols&gt;:&lt;start-x&gt;:&lt;start-y&gt;:&lt;width&gt;:&lt;height&gt;
+shift + alt - c : yabai -m window --toggle float;\
+                  yabai -m window --grid 6:6:1:1:4:4
+# 更小的浮动窗口
+shift + alt - s : yabai -m window --toggle float;\
+                  yabai -m window --grid 4:4:1:1:2:2
+</code></pre>
+<pre><code class="language-shell"># =======================  window resize ==========================
+# Make window native fullscreen-float
+alt - f : yabai -m window --toggle zoom-fullscreen
+# Resize windows
+shift+ cmd - h : \
+    yabai -m window --resize left:-20:0 ; \
+    yabai -m window --resize right:-20:0
+
+shift + cmd - j : \
+    yabai -m window --resize bottom:0:20 ; \
+    yabai -m window --resize top:0:20
+
+shift + cmd - k : 
+    yabai -m window --resize top:0:-20 ; \
+    yabai -m window --resize bottom:0:-20
+
+shift + cmd - l : \
+    yabai -m window --resize right:20:0 ; \
+    yabai -m window --resize left:20:0
+
+# Equalize size of windows
+shift + cmd - 0 : yabai -m space --balance
+
+</code></pre>
+<h2 id="快速打开应用">快速打开应用</h2>
+<p>在 MacOS 中有很多种方式快速打开应用（如果已经打开则会聚焦到该应用窗口），目前是使用 Hammerspoon 来定义快速打开应用的快捷键。有关 Hammerspoon 的使用方法和 Case，我估计会专门出一篇文章介绍，这里只列出快速打开应用的代码。在 <code>~/.hammerspoon/init.lua</code> 文件中加入以下代码段，就可以使用 <code>alt</code> 加对应的按键快速打开应用程序了。</p>
+<pre><code class="language-shell">--- 快捷键小写大写等效
+hs.hotkey.bind({&quot;alt&quot;}, &quot;E&quot;, open(&quot;Microsoft Word&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;W&quot;, open(&quot;WeChat&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;C&quot;, open(&quot;Google Chrome&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;I&quot;, open(&quot;iTerm&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;M&quot;, open(&quot;NeteaseMusic&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;P&quot;, open(&quot;PDF Expert&quot;))
+-- hs.hotkey.bind({&quot;alt&quot;}, &quot;S&quot;, open(&quot;Emacs&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;L&quot;, open(&quot;Notion&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;S&quot;, open(&quot;Logseq&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;R&quot;, open(&quot;Mweb&quot;))
+</code></pre>
+<p>这里应用程序的名称可以在 <code>/Applications</code> 目录下找到，找到对应的应用程序后，去掉 <code>.app</code> 后缀即可。</p>
+
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>python Tips</title>
+      <link>http://localhost:4321/blogs/python-tips/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/blogs/python-tips/</guid>
+      <description>
+        <![CDATA[
+        <h2 id="1-函数式编程">1. 函数式编程</h2>
+<p>函数式编程（Functional Programming），又称泛函编程，是一种编程范型。简单来讲，函数式编程是一种“广播式”的编程，用于科学计算中，会显得特别简洁方便。
+在 Python 中，函数式编程主要通过以下几个函数来实现：</p>
+<ul>
+<li><code>lambda()</code></li>
+<li><code>map()</code></li>
+<li><code>reduce()</code></li>
+<li><code>filter()</code></li>
+</ul>
+<p>在泛函编程之前，让我们先来看一看好用的“列表解析”功能(也叫做推导式)。它能够简化我们对列表内元素逐一进行操作的代码：</p>
+<pre><code class="language-python">a = [1,2,3]
+b = []
+for i in a:
+    b.append(i + 2)
+b
+
+Out: [3, 4, 5]
+</code></pre>
+<p>使用“列表解析”，上面的代码可以简化成：</p>
+<pre><code class="language-python">a = [1,2,3]
+b = [i + 2 for i in a];    b
+
+Out:[3, 4, 5]
+</code></pre>
+<p>使用这样的方式可以让我们的代码很直观，看起来也更优雅可读了。接下来进行函数式编程的讲解。</p>
+<h3 id="11-匿名函数lambda">1.1 匿名函数（Lambda）</h3>
+<p>匿名函数是一种通过单个语句生成函数的方式，其结果是返回值。匿名函数使用 lambda 关键字定义，该关键字仅表达“我们声明一个匿名函数”的意思。</p>
+<p>使用 lambda 表达式的时候，在心里默念：输入 x（: 左边的变量），输出 x + 2（: 右边的表达式）：</p>
+<pre><code class="language-python">y = lambda x: x+2
+</code></pre>
+<h4 id="a-案例-1">a. 案例 1:</h4>
+<p>匿名函数在数据分析中非常方便，因为在很多案例中 <strong>数据变形函数</strong> 都可以作为函数的参数。匿名函数代码量小（也更为清晰），将它作为参数进行传值， 比写一个完整的函数或者 <strong>将匿名函数赋值给局部变量</strong> 更好：</p>
+<pre><code class="language-python">def apply_to_list(some_list, f):
+    return [f(x) for x in some_list]
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+
+Out: [8, 0, 2, 10, 12]
+</code></pre>
+<p>值得一说的是，以上函数也可以用“列表解析”简单实现，但是使用上面的方法，我们能够简单地将一个自定义操作符传递给 apply_to_list 函数。</p>
+<pre><code class="language-python">y = [x * 2 for x in ints];    y
+
+Out: [8, 0, 2, 10, 12]
+</code></pre>
+<p>通过这个例子，知道了我们可以把 lambda 表达式定义为 f，然后用 f(x) 将 x 作为参数传入到匿名函数中。</p>
+<h4 id="b-案例-2">b. 案例 2:</h4>
+<p>假如想要根据字符串中不同字母的数量对一个字符串集合进行排序，可以将一个匿名函数传给列表的 sort 方法：</p>
+<pre><code class="language-python">strings = ['foo','card','bareo','aaaaa','abab']
+strings.sort(key=lambda x:len(set(list(x))))
+strings
+
+Out: ['aaaaa', 'foo', 'abab', 'card', 'bareo']
+</code></pre>
+<p>输入一个 <code>x</code>，将输出的 <code>len(set(list(x)))</code> 作为参数输入到 <code>strings</code> 的 <code>sort</code> 方法中。</p>
+<p>Q：输入一个 <code>x</code>，但是这个 <code>x</code> 是什么，在哪里输入了？看样子 <code>x</code> 是 <code>strings</code> 的每一个元素。</p>
+<p>A：原因出在 <code>sort</code> 的 <code>key</code> 上面：</p>
+<blockquote>
+<p>key 指定一个具有一个参数的函数，用于从每个列表元素中提取比较键(例如，key=str.lower)。与列表中每个项对应的键计算一次，然后用于整个排序过程。</p>
+</blockquote>
+<p>也就是说 <code>key</code> 会把 <code>strings</code> 的每一个元素拿到 <code>key</code> 的函数里进行运算，然后将计算的结果用于排序。</p>
+<p>到这里我们明确了，lambda 表达式就是一个没有显式的 <code>__name__</code> 属性的函数，如果没有给它传参，那么这个函数是不会有什么效果的。</p>
+<p>接下来，我们将 lambda 和 map 函数结合，写出高效的代码。</p>
+<h3 id="12-map-序列遍历函数">1.2 map() 序列遍历函数</h3>
+<p>一句话概括：对于 <code>map(f,sequence)</code>, map 函数可以将一个函数 (f) 应用到一个序列 (sequence) 上，使这个函数对这个序列的元素分别生效。</p>
+<p>如果将 lambda 匿名函数作为 map 里的这个函数 f，那么就可以将这两个强大的工具相结合了。</p>
+<h4 id="a-案例-1-1">a. 案例 1</h4>
+<p>需求：将 list 的每一个元素都加上 2，得到新的列表：</p>
+<pre><code class="language-python">a = [1, 2, 3]
+#### 方法一：将 map 函数与 lambda 表达式相结合
+b = map(lambda x: x + 2, a);
+# 在 python3 里，map 函数仅仅是创建一个带运行的命令容器，只有在其他函数调用它的时候才返回结果，所以需要再次转换成序列才行
+b = tuple(b) ; b
+
+Out: (3, 4, 5)
+</code></pre>
+<h4 id="b-案例-2-1">b. 案例 2:</h4>
+<p><code>map()</code> 也接受多参数的函数，如：将 <code>a</code>，<code>b</code> 两个列表对应的元素相乘，把结果返回给列表 <code>c</code>：</p>
+<pre><code class="language-python">c = list(map(lambda x,y: x*y,a,b)); c
+
+Out: [3, 8, 15]
+</code></pre>
+<p>值得一提的是，上面 map 和 lambda 组合的功能，用“列表解析”也是可以完成的：</p>
+<pre><code class="language-python">b = [i + 2 for i in a];  
+c = [i * j for i,j in zip(a,b)];  
+print('b:',b)
+print('c:',c)
+
+Out: b:  [3, 4, 5]
+     c:  [3, 8, 15]
+</code></pre>
+<p>Q：有了列表解析，为什么还要有 map() 命令呢？</p>
+<p>A：其实列表解析虽然代码简短，但是本质上还是 for 命令，而 python 的 for 命令效率不高。但是 map() 函数实现了相同的功能，并且效率更高。原则上来说，它的循环命令相当于 C 语言。</p>
+<h3 id="13-reduce-序列递归函数">1.3 reduce() 序列递归函数</h3>
+<p>它有点像 map()函数，但是 map() 函数是逐一遍历，而 reduce() 函数用于递归计算。</p>
+<h4 id="a-案例-1-2">a. 案例 1</h4>
+<p>计算 n 的阶乘：</p>
+<pre><code class="language-python">from functools import reduce
+n = 5
+reduce(lambda x,y: x*y, range(1, n+1))
+
+Out:  120
+</code></pre>
+<p>让我们来分析一下发生了什么：</p>
+<ul>
+<li><code>range(1, n+1)</code> 相当于给出了一个列表，元素是 1～n 这 n 个整数。</li>
+<li><code>lambda x,y: x*y</code> 构造了一个二元函数，返回两个参数的乘积。</li>
+<li><code>reduce()</code> 命令先将列表的前两个元素作为函数的参数进行运算，然后将运算结果与第三个数字作为函数的参数 &hellip; 再将运算结果和第四个数字作为函数的参数&hellip; 直到列表最后，返回最终结果。</li>
+</ul>
+<p>如果用循环命令，那就要这样写：</p>
+<pre><code class="language-python">s = 1
+n = 5
+for i in range(1, n+1):
+    s = s * i
+s
+
+Out: 120
+</code></pre>
+<h3 id="14-filter-列表过滤器函数">1.4 filter() 列表过滤器函数</h3>
+<p>顾名思义，它是一个过滤器，用来筛选出列表中符合条件的元素。 &mdash; 这个在做列表筛选的时候是很有用的!</p>
+<p>先来看一个案例演示：</p>
+<h4 id="a-案例-1过滤出列表中大于-5-小于-8-的数字">a. 案例 1：过滤出列表中大于 5 小于 8 的数字</h4>
+<pre><code class="language-python">b = filter(lambda x: x &gt; 5 and x &lt; 8, range(10))
+b = list(b)  # python3.x 需要转换一下，理由同 map()
+b
+
+Out: [6, 7]
+</code></pre>
+<p>我们来看看发生了什么：</p>
+<ul>
+<li>使用 <code>filter()</code> 函数首先需要一个返回值为 bool 型的函数，如 <code>lambda x: x &gt; 5 and x &lt; 8</code> 定义了一个函数，判断 x 是否大于 5 且小于 8。</li>
+<li>然后将这个函数作用到 <code>range(10)</code> 的每一个元素中，如果为 True，则“挑出那个元素”，最后将满足条件的所有元素组成一个列表返回。</li>
+</ul>
+<p>如果使用列表解析，则写成：</p>
+<pre><code class="language-python">b = [i for i in range(10) if i &gt; 5 and i &lt; 8]
+b 
+
+Out: [6, 7]
+</code></pre>
+<p>可以看到列表解析也并不比 <code>filter()</code> 函数复杂，但是后者的运算速度要比 python 内置的循环快得多。</p>
+<h2 id="2-python-小技巧">2. python 小技巧</h2>
+<h3 id="21-f-strings">2.1 F-Strings</h3>
+<p>在 python3.6 以上，F-Strings 提供了一种简便的方法，可以将 Python 表达式嵌入字符串文本中进行格式化。</p>
+<p>只需在大括号内有变量或表达式的字符串前面加一个小写或大写的 &lsquo;f&rsquo; 即可。</p>
+<pre><code class="language-python">name = 'vde'
+age = '25'
+print(f'my name is {name}, and I am {age} years old')
+
+Out: my name is vde, and I am 25 years old
+</code></pre>
+<p>F-Strings 是一种很棒的格式化字符串新方法，此法得出的结果可读性更强，更简洁，不易出错。</p>
+<h3 id="22-enumerate-追踪序列索引">2.2 enumerate 追踪序列索引</h3>
+<p>在遍历一个序列时，我们往往需要在知道它的每个元素值的同时，知道当前元素的索引。此时我们就可以用 <code>enumerate</code> 追踪序列的索引。</p>
+<h4 id="用法示意">用法示意</h4>
+<pre><code class="language-python">for i, value in enumerate(collection):
+    # 使用值做点事
+</code></pre>
+<p>接下来我们使用 <code>enumerate</code> 构建一个字典，将元素值作为字典的键，索引值作为字典的值（当然也可以反过来）。</p>
+<pre><code class="language-python">li = ['one', 'two', 'three']
+mapping = {}
+for i, v in enumerate(li):
+    mapping[v] = i
+mapping
+
+Out: {'one': 0, 'two': 1, 'three': 2}
+</code></pre>
+<h3 id="23-柯里化部分参数应用">2.3 柯里化：部分参数应用</h3>
+<p>柯里化指的是通过部分参数应用的方式<strong>从已有的函数中衍生出新的函数</strong>。</p>
+<p>例如我们有一个不重要的函数，其功能是将两个数加在一起：</p>
+<pre><code class="language-python">def add_numbers(x, y):
+	return x + y
+</code></pre>
+<p>使用这个函数，我们可以衍生出一个只有一个变量的新函数，<code>add_five</code>, 可以给 x 参数加上 5。</p>
+<p><code>add_five = lambda y: add_numbers(x, 5)</code></p>
+<p>第一个参数对于函数 <code>add_numbers</code> 就是柯里化了（部分参数应用了）。</p>
+<ul>
+<li>内建的 functools 模块可以使用 <code>pratial</code> 函数简化这种处理：</li>
+</ul>
+<pre><code class="language-python">from functools import partial
+add_five = partial(add_numbers, b = 5)  ## 也可以通过 a=5 来指定固定值到底是哪个
+</code></pre>
+<h3 id="24-zip">2.4 zip()</h3>
+<p><code>zip()</code> 将列表、元组或其他序列的元素配对，新建一个<strong>元组构成的列表</strong>：</p>
+<pre><code class="language-python">In [9]: seq1 = [1, 2, 3]
+   ...: seq2 = ['one', 'two', 'three']
+   ...: zipped = zip(seq1, seq2)
+
+In [10]: zipped  ## 先生成的是一个 zip 对象，要 list 以后才能转换成列表显示出来。
+Out[10]: &lt;zip at 0x2070ad95b88&gt;
+
+In [11]: list(zipped)
+Out[11]: [(1, 'one'), (2, 'two'), (3, 'three')]
+</code></pre>
+<p>zip() 可以处理任意长度的序列，不等长的话，生成列表的长度由最短的序列决定，多出来的部分就直接舍弃了。</p>
+<pre><code class="language-python">In [13]: list(zip(seq1,seq2,seq3))
+Out[13]: [(1, 'one', False), (2, 'two', True)]  #3 和 'three' 直接被舍弃了
+</code></pre>
+<h4 id="应用场景">应用场景：</h4>
+<ol>
+<li>
+<p>同时遍历多个序列，有时会和<code>enumerate()</code>同时使用:</p>
+<pre><code class="language-python">In [14]: for i , (a, b) in enumerate(zip(seq1, seq2)):
+    ...:     print('{0}: {1}, {2}'.format(i, a, b))
+    ...:
+0: 1, one
+1: 2, two
+2: 3, three
+</code></pre>
+</li>
+<li>
+<p>从序列生成字典：</p>
+<p>如果有两个序列想在字典中按元素配对，以下两种方式均可以实现，但明显第二种更简单：</p>
+<p>a) 使用 zip 遍历两个序列进行配对</p>
+<pre><code class="language-python">In [20]: mapping = {}
+
+In [21]: for key, value in zip(tup1, tup2):
+    ...:     mapping[key] = value
+    ...:
+
+In [22]: mapping
+Out[22]: {'one': 1, 'two': 2, 'three': 3}
+</code></pre>
+<p>b) 直接生成</p>
+<p>由于字典本质上是 2- 元组（含有 2 个元素的元组）的集合，字典是可以接受一个 2- 元组的列表作为参数的：</p>
+<pre><code class="language-python">In [23]: mapping = dict(zip(range(5), reversed(range(5))));  mapping
+Out[24]: {0: 4, 1: 3, 2: 2, 3: 1, 4: 0}
+</code></pre>
+</li>
+</ol>
+<h2 id="3-参数解包">3. 参数解包</h2>
+<p>首先要知道，解包的方式是：</p>
+<ul>
+<li>在列表或元组变量前，加一个 <code>*</code></li>
+<li>在字典变量前，加两个 <code>*</code></li>
+</ul>
+<p>当需要对列表或元组中的参数进行解包以进行需要单独位置参数的函数调用时，Splat 或 Scatter 运算符 * 有时能发挥作用。</p>
+<pre><code class="language-python">## 理解何为解包：解包运算符接受了列表中的所有元素，并将它们作为参数传递。
+a = [1,2]  # 列表或元组
+b = {&quot;name&quot;:'vde', 'age':25}  # 字典
+print(*a)
+# 但是不可直接 print(**b)，---- TypeError: 'name' is an invalid keyword argument for print()# print(**b)
+
+Out: 1 2
+</code></pre>
+<p>以上代码打印出列表 a 中的每个元素，这些元素以空格分隔。等效于代码：<code>print(1,2,3,4,5,6)</code></p>
+<h3 id="31-参数解包应用于函数的参数传递">3.1 参数解包应用于函数的参数传递</h3>
+<p>参数解包在函数中经常使用，以将方法调用接收到的所有参数‘打包’到单个变量中。一个简单的例子：</p>
+<pre><code class="language-python">def f1(*argsss):
+    print(argsss)
+f1(1,2)
+f1('one','two','three','four')
+
+Out: (1, 2)
+     ('one', 'two', 'three', 'four')
+</code></pre>
+<p><code>*args</code> 可以将 args 中的所有参数解包并传递到函数中，所以可以接收无限量的参数。再来看一个综合的例子：</p>
+<pre><code class="language-python">def f2(*args, **kwargs):
+    print(f'args: {args}')print(f'kwargs: {kwargs}')
+</code></pre>
+<pre><code class="language-python"># 会把 a 和 b 一起作为一个元组传递给 *args，而 **kwargs 就接收不到参数了，所以输出为空。
+f2(a,b)
+
+Out: args: ([1, 2], {'name': 'vde', 'age': 25})
+     kwargs: {}
+</code></pre>
+<pre><code class="language-python"># 将 a 传递给 *args, 将 b 传递给 **kwargs，分别进行解包：
+f2(*a,**b)
+
+Out: args: (1, 2)
+     kwargs: {'name': 'vde', 'age': 25}
+</code></pre>
+<pre><code class="language-python">## 还原解包的过程，其实就相当于把参数分解以后，传入了函数中。
+def f3(one, two, name, age):
+    print(f'one: {one}')
+    print(f'two: {two}')
+    print(f'name: {name}')
+    print(f'age: {age}')f3(*a,**b)
+
+Out: one: 1
+     two: 2
+     name: vde
+     age: 25
+</code></pre>
+<h3 id="32-与-zip-配合对已配对的序列进行拆分">3.2 与 zip 配合对已”配对“的序列进行拆分</h3>
+<p>接下来详细讲解这个过程：</p>
+<pre><code class="language-python">aa = [('one',1),('two',2),('tree',3),('four',4)]  ;aa
+
+Out: [('one', 1), ('two', 2), ('tree', 3), ('four', 4)]
+</code></pre>
+<ol>
+<li>
+<p>先用 <code>*</code> 对 aa 进行解包，解包为四个序列：</p>
+<pre><code class="language-python">print(*aa)
+
+Out: ('one', 1) ('two', 2) ('tree', 3) ('four', 4)
+</code></pre>
+</li>
+<li>
+<p>然后传递给 zip 函数，分别取四个序列的第一个元素拼在一起，再分别取四个序列的第二个元素拼在一起：</p>
+<pre><code class="language-python">ab = list(zip(*aa))   ;ab
+
+Out: [('one', 'two', 'tree', 'four'), (1, 2, 3, 4)]
+</code></pre>
+</li>
+<li>
+<p>用将列表 ab 的第一个元素和第二个元素的值分别传给 a 和 b：</p>
+<pre><code class="language-python">a, b = ab
+print(f'a: {a}')
+print(f'b: {b}')
+Out: a: ('one', 'two', 'tree', 'four')
+     b: (1, 2, 3, 4)
+</code></pre>
+</li>
+</ol>
+<blockquote>
+<p>这个方法的思路是使用 zip(*aa) 将 aa 的行和列进行转置。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>aa 本来 size 为 (4*2)，第 1 列为 one, two, three, four，第二列为 1, 2, 3, 4。</li>
+<li>而经过转置以后，size 变成 (2*4) 的了。第一行为 one, two, three, four，第二行为 1, 2, 3, 4。</li>
+</ul>
+</blockquote>
+<h2 id="4-列表集合和字典的推导式">4. 列表、集合和字典的推导式</h2>
+<h3 id="41-列表推导式">4.1 列表推导式</h3>
+<ul>
+<li>
+<p>列表推导式是最受欢迎的 python 语言特性之一。</p>
+</li>
+<li>
+<p>它允许你过滤一个容器 (collection) 的元素 (val)，用一种简明的表达式转换(expr) 传递给过滤器 (if condition) 的元素，从而生成一个新的列表。转换前的每个元素为 val，转换后为 expr。</p>
+</li>
+</ul>
+<p>列表推导式的基本形式为：</p>
+<p><code>list_comp = [expr for val in collection if condition]</code></p>
+<p>这与下面的 for 循环是等价的：</p>
+<pre><code class="language-python">result = []
+for val in collection:
+    if condition:
+        result.append(expr)
+</code></pre>
+<p><strong>举例 1：</strong> 例如给定一个字符串列表，我们可以过滤出长度大于 2 的，并且将字母改为大写：</p>
+<pre><code class="language-python">In [25]: strings = ['a', 'as', 'bat', 'car', 'dove', 'python']
+
+In [26]: [x.upper() for x in strings if len(x) &gt; 2]
+Out[26]: ['BAT', 'CAR', 'DOVE', 'PYTHON']
+</code></pre>
+<h3 id="42-集合和字典的推导式">4.2 集合和字典的推导式</h3>
+<p>集合与字典的推导式是列表推导式的自然扩展，用相似的方式生成集合与字典。</p>
+<ul>
+<li>
+<p>字典推导式如下所示：</p>
+<p><code>dict_comp = {key-expr : value-expr for value in collection if condition}</code></p>
+</li>
+</ul>
+<p><strong>举例 2：</strong> 创建一个将字符串与其位置相匹配的字典作为字典推导式：</p>
+<pre><code class="language-python">In [29]: loc_mapping = {val:index for index, val in enumerate(strings)}
+
+In [30]: loc_mapping
+Out[30]: {'a': 0, 'as': 1, 'bat': 2, 'car': 3, 'dove': 4, 'python': 5}
+</code></pre>
+<ul>
+<li>
+<p>字典推导式如下所示：</p>
+<p><code>set_comp = {expr for value in collection if condition}</code></p>
+</li>
+</ul>
+<p>集合推导式看起来很像列表推导式，只是中括号变成了大括号。</p>
+<p><strong>举例 3：</strong> 如果有一个字符串的列表，假设我们想要一个集合，集合里包含列表中字符串的长度：</p>
+<pre><code class="language-python">In [27]: unique_len = {len(x) for x in strings}
+
+In [28]: unique_len
+Out[28]: {1, 2, 3, 4, 6}
+</code></pre>
+<p>我们也可以使用 <code>map</code> 函数进行更函数化、更简洁地表达：</p>
+<pre><code class="language-python">In [31]: set(map(len, strings))
+Out[31]: {1, 2, 3, 4, 6}
+</code></pre>
+<h2 id="5-生成器">5. 生成器</h2>
+<h3 id="51-迭代器对象">5.1 迭代器对象</h3>
+<h4 id="511-迭代的概念">5.1.1 迭代的概念</h4>
+<p>上一次输出的结果为下一次输入的初始值，重复的过程称为迭代, 每次重复即<strong>一次迭代</strong>，并且每次迭代的结果是下一次迭代的初始值，注意循环不是迭代。</p>
+<ul>
+<li>
+<p>为什么要有迭代器？</p>
+<p>对于没有索引的数据类型，必须提供一种不依赖索引的迭代方式。</p>
+</li>
+</ul>
+<h4 id="512-迭代器实现原理">5.1.2 迭代器实现原理</h4>
+<p>通过一致的方式遍历序列的这个特性是通过 ** 迭代器协议 ** 来实现的。迭代器协议是一种令对象可遍历的通用方式。</p>
+<p>迭代器就是一种用于上下文中（比如 for 循环）<strong>向 python 解释器生成对象</strong>的<strong>对象</strong>。</p>
+<pre><code class="language-python">In [74]: for i in dict1:
+    ...:     print(i)
+    ...:
+a
+b
+c
+</code></pre>
+<p>在写下 <code>for i in dict1</code> 时，Python 的解释器就会首先尝试根据 dict1 生成一个<strong>迭代器对象</strong>。</p>
+<p>其实在后台 for 语句对容器对象调用了 <code> __iter()__</code> 函数, 该函数用于生成迭代器对象。<code>__iter__()</code> 会返回一个定义了 <code> __next__()</code> 方法的迭代器对象，它在容器中逐个访问容器内元素，并在你调用 <code>next()</code> 方法的时候返回容器中的下一个值——迭代器通过 next()不断产出下一个元素直到迭代器耗尽。</p>
+<p>任何实现了 <code>__iter__</code> 和 <code>__next__()</code> 方法的对象都是迭代器，<code>__iter__</code> 返回迭代器自身，<code>__next__</code> 返回容器中的下一个值，如果容器中没有更多元素了，则抛出 <code>StopIteration</code> 异常。</p>
+<h4 id="513-判断对象是否可迭代">5.1.3 判断对象是否可迭代：</h4>
+<p>原生函数 iter(instance) 可以判断某个对象是否可迭代，它的工作流程大概分为以下 3 个步骤：</p>
+<ul>
+<li>检查对象 instance 是否实现了 <code>__iter__</code> 方法，并调用它获取返回的迭代器(iterator)。</li>
+<li>如果对象没有实现 <code>__iter__</code> 方法，但是实现了 <code>__getitem__</code> 方法，Python 会生成一个迭代器。</li>
+<li>如果上述都失败，则编译器则抛出 <code>TypeErro</code>r 错误，<code>‘xxx' Object is not iterable</code>。</li>
+</ul>
+<pre><code class="language-python">In [75]: dict_iterator = iter(dict1)
+
+In [76]: dict_iterator
+Out[76]: &lt;dict_keyiterator at 0x2070b1dd4f8&gt;
+</code></pre>
+<h4 id="514-接收迭代器对象的函数和方法">5.1.4 接收迭代器对象的函数和方法</h4>
+<p>大多数以列表或列表型对象为参数的方法都可以接收任意的迭代器对象。</p>
+<ol>
+<li>内建方法：<code>min, max, sum</code></li>
+<li>类型构造函数（工厂函数）：<code>list(), str(), tuple()</code></li>
+</ol>
+<h3 id="52-生成器">5.2 生成器</h3>
+<p>生成器（Generator）是创建迭代器的简单而强大的工具。它们写起来就像是正规的函数，会自动创建 <code>iter()</code> 和 <code>next()</code> 方法，只是在需要返回数据的时候使用 <code>yield </code> 语句。每次 <code>next()</code> 被调用时，生成器会返回它脱离的位置（它记忆语句最后一次执行的位置和所有的数据值）。</p>
+<p>Python 中的生成器主要分为两种类型：</p>
+<ol>
+<li>
+<p>生成器函数 (generator function) 返回得到的生成器(包含 yield 关键字的函数)。</p>
+</li>
+<li>
+<p>生成器表达式 (generator expression) 返回得到的生成器。</p>
+</li>
+</ol>
+<h4 id="521-生成器函数">5.2.1 生成器函数</h4>
+<p>如需创建一个生成器，只需要在函数中返回关键字 return 替换为 yield 关键字：</p>
+<pre><code class="language-python">def squares(n = 10):
+    for i in range(1, n+1):
+        yield i*2
+</code></pre>
+<p>当你实际调用生成器时，代码并不会立即执行，它只是返回了得到的生成器：</p>
+<pre><code class="language-python">In [77]: gen = squares()In [78]: gen
+Out[78]: &lt;generator object squares at Ox7fbbd5ab4570&gt;
+</code></pre>
+<p>直到你请求生成器中的元素时，它才会执行它的代码：</p>
+<pre><code class="language-python">In [79]: for x in gen:
+  .....: print(x, end = ' ')
+Out[79]: 1 4 9 16 25 36 49 64 81 100
+</code></pre>
+<h4 id="522-生成器表达式">5.2.2 生成器表达式</h4>
+<p>使用生成器表达式来创建生成器更为简单，只需要将列表推导式中的中括号替换成小括号即可。</p>
+<pre><code class="language-python">In [80]: gen = (x ** 2 for x in range(100)); gen
+Out[81]: &lt;generator object &lt;genexpr&gt; at 0x000002070B168E58&gt;
+</code></pre>
+<p>上面的代码和下面的更为复杂的生成器是等价的：</p>
+<pre><code class="language-python">In [82]: def make_gen():
+    ...:     for x in range(100):
+    ...:         yield x ** 2
+In [83]: gen = make_gen(); gen
+Out[84]: &lt;generator object make_gen at 0x000002070AF4E570&gt;
+</code></pre>
+<p>在很多情况下，生成器表达式可以作为函数参数用于替代列表推导式：</p>
+<pre><code class="language-python">In [85]: sum([x ** 2 for x in range(100)])  ### 列表推导式作为 sum()的参数
+Out[85]: 328350  
+
+In [86]: sum(x ** 2 for x in range(100))	### 生成器表达式作为 sum()的参数
+Out[86]: 328350
+
+In [87]: dict([(i , i**2) for i in range(5)])	### 列表推导式作为 dict()的参数
+Out[87]: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+In [88]: dict((i , i**2) for i in range(5))		### 生成器表达式作为 dict()的参数
+Out[88]: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+</code></pre>
+<h3 id="53-itertools-模块">5.3 <code>itertools</code> 模块</h3>
+<p>标准库中的 <code>itertools</code> 模块是适用于大多数数据算法的生成器集合。</p>
+<h4 id="531-groupby-函数">5.3.1 groupby 函数</h4>
+<p><code>groupby</code> 可以根据任意的序列和一个函数，通过函数的返回值对序列中连续的元素进行分组。</p>
+<p>根据每一个独一的 key 生成 <code>（key, sub-iterator）</code> 元组</p>
+<pre><code class="language-python">In [89]: import itertools
+
+In [90]: first_letter_func = lambda x : x[0]
+
+In [91]: names = ['Alan', 'Adam', 'Wes', 'Will', 'Albert', 'Steven']
+
+In [93]: for letter, names in itertools.groupby(names, first_letter_func):
+    ...:     print(letter, list(names))     ## names is a generator
+    ...:
+A ['Alan', 'Adam']
+W ['Wes', 'Will']
+A ['Albert']
+S ['Steven']
+</code></pre>
+
+        ]]>
+      </description>
+    </item>
+    
+  </channel>
+</rss>

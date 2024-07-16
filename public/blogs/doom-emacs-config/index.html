@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+        <title>My Doom Emacs configuration file -- org version - Tintingo | 丁毅</title>
+
+    <meta name="referrer" content="no-referrer">
+    
+    <meta property="og:title" content="My Doom Emacs configuration file -- org version - Tintingo | 丁毅">
+    <meta name="description" property="og:description" content="Doom Emacs configuration 在使用了 Doom Emacs 一段时间后，我将自己积累的配置文件集合到这个 org 文件中，以便进行统一管理。接触过 Doom Emacs 的朋友肯定知道，在 Doom Emacs 中，用户配置文件主">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tintingo | 丁毅">
+    <meta property="og:url" content="http://localhost:4321/blogs/doom-emacs-config/">
+
+    
+    
+    
+    
+    <meta name="author" property="article:author" content="Tintingo">
+    
+    
+    
+    <meta name="date" property="article:published_time" content="2022-02-16" scheme="YYYY-MM-DD">
+    
+    
+    <meta name="date" property="article:modified_time" content="2022-02-16" scheme="YYYY-MM-DD">
+    
+
+    
+    <meta name="keywords" property="article:tag" content ="MacOS,Emacs,Doom Emacs,效率工具">
+    
+    
+    <meta name="theme-color" content="#0d0d0d">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/web/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/web/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/web/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="62x62" href="/images/web/favicon-62x62.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/web/favicon-192x192.png">
+    <link rel="apple-touch-icon" size="192x192" href="/images/web/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+        
+    
+
+    
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://localhost:4321/blogs"
+        },
+        "name": "My Doom Emacs configuration file -- org version",
+        "headline": "My Doom Emacs configuration file -- org version",
+        "description" : "Doom Emacs configuration 在使用了 Doom Emacs 一段时间后，我将自己积累的配置文件集合到这个 org 文件中，以便进行统一管理。接触过 Doom Emacs 的朋友肯定知道，在 Doom Emacs 中，用户配置文件主",
+        "genre": [
+            "Emacs"
+        ],
+        "datePublished": "2022-02-16",
+        "dateModified": "2022-02-16",
+        "wordCount": "4216",
+        "keywords": [
+            "MacOS", "Emacs", "Doom Emacs", "效率工具"
+        ],
+        "image": [
+            
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Tintingo"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Tintingo",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://localhost:4321/images/web/publisher-logo.png"
+            }
+        },
+        "url": "http://localhost:4321/blogs/doom-emacs-config/"
+    }
+    </script>
+    
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.0/js.cookie.min.js'></script>
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.5.95/css/materialdesignicons.min.css">
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism.min.css">
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-.min.css">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJC7CCKE67"></script>
+<script>
+if (window.location.hostname != "127.0.0.1" && window.location.hostname != "localhost") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJC7CCKE67');
+}
+</script>
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/light.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" id="dark-mode-style" disabled="disabled">
+<link rel="stylesheet" type="text/css" href="/css/icons.css">
+<link rel="stylesheet" type="text/css" href="/css/print.css">
+
+  </head>
+
+  
+  <body class="blogs">
+    <header class="masthead">
+      
+
+<div class="logo"></div>
+<p class="slogan">Tintingoo&#39;s Blog</p>
+      <nav class="menu">
+  <ul>
+  
+  
+  
+    
+  
+  
+    <li><a href="/">Home</a></li>
+  
+    <li><a href="/blogs/">Blog</a></li>
+  
+    <li><a href="/categories/">Categories</a></li>
+  
+    <li><a href="/photography/">Photography</a></li>
+  
+  
+
+
+<li class="menu-separator"><span>&nbsp;</span></li>
+
+<li><a href="/blogs/index.xml" target="_blank" type="application/rss+xml" title="RSS feed">Subscribe</a></li>
+
+<li><a href="https://github.com/norery/tintingoo.com/blob/main/LICENSE" target="_blank" title="Attribution-NonCommercial-ShareAlike 4.0 International">License</a></li>
+
+
+  <li class="light-dark-mode no-border-bottom"><a id="light-dark-mode-action"><span id="light-dark-mode-icon" class="mdi mdi-weather-night"></span></a></li>
+  </ul>
+</nav>
+
+      <script src="/js/toggle-theme.js"></script>
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>My Doom Emacs configuration file -- org version</h1>
+
+
+
+
+
+
+
+<h3>Tintingo / 
+2022-02-16</h3>
+
+
+
+<h3 class="post-meta">
+
+
+<strong>Categories: </strong>
+<a href="/categories/emacs">Emacs</a>
+
+
+
+
+/
+
+
+
+
+<strong>Tags: </strong>
+<span>MacOS</span>, <span>Emacs</span>, <span>Doom Emacs</span>, <span>效率工具</span>
+
+
+
+
+/
+
+
+<strong>Word Count: </strong>
+4216
+</h3>
+
+
+
+<hr>
+
+
+      </header>
+
+
+
+<div class="toc-depth-3" ><nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">References</a>
+</li>
+<li><a href="#headline-2">Doom config file overview</a>
+<ul>
+<li><a href="#headline-3">Config file headers</a>
+<ul>
+<li><a href="#headline-4">generate init.el file headers</a>
+</li>
+<li><a href="#headline-5">generate package.el file headers</a>
+</li>
+<li><a href="#headline-6">generate config.el file headers</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-7">Customized variables</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-8">Doom modules</a>
+</li>
+<li><a href="#headline-9">General configuration</a>
+<ul>
+<li><a href="#headline-10">Visual, session and window settings</a>
+<ul>
+<li><a href="#headline-11">Basic UI settings</a>
+</li>
+<li><a href="#headline-12">Dashborad settngs</a>
+</li>
+<li><a href="#headline-13">nayn-mode</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-14">Customize KeyBinding</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-15">Org mode</a>
+<ul>
+<li><a href="#headline-16">UI Settings</a>
+<ul>
+<li><a href="#headline-17">org-superstar</a>
+</li>
+<li><a href="#headline-18">org-appear</a>
+</li>
+<li><a href="#headline-19">org-ol-tree</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#headline-20">Chinese support</a>
+<ul>
+<li><a href="#headline-21">pangu-spacing</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-22">Python</a>
+<ul>
+<li><a href="#headline-23">Emacs Ipython Notebook</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-24">load-path</a>
+</li>
+</ul>
+</nav></div> 
+
+
+<h1 class="title">Doom Emacs configuration</h1>
+
+<img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/doom-emacs-bw-light.svg" alt="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/doom-emacs-bw-light.svg" title="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/doom-emacs-bw-light.svg" style="max-width:100%;"/>
+<p>
+在使用了 Doom Emacs 一段时间后，我将自己积累的配置文件集合到这个 org 文件中，以便进行统一管理。接触过 Doom Emacs 的朋友肯定知道，在 Doom Emacs 中，用户配置文件主要可以分为三个：</p>
+<dl>
+<dt>
+<code class="verbatim">init.el</code>
+</dt>
+<dd>defines which of the existing Doom <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#modules">modules</a> are loaded. A Doom module is a bundle of packages, configuration and commands, organized into a unit that can be toggled easily from this file.</dd>
+<dt>
+<code class="verbatim">packages.el</code>
+</dt>
+<dd>defines which <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#package-management">packages</a> should be installed, beyond those that are installed and loaded as part of the enabled modules.</dd>
+<dt>
+<code class="verbatim">config.el</code>
+</dt>
+<dd>contains all <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configuring-doom">custom configuration</a> and code.</dd>
+</dl>
+<blockquote>
+<p>由于一些信息在网页中无法显示，可以对比我的 dotfiles 中的 <a href="https://github.com/norery/dotfiles/blob/master/.doom.d/DoomConfig.org">DoomConfig.org</a> 文件进行查看。主要有两点，在此进行说明：</p>
+</blockquote>
+<p>
+<strong><strong>1. 开头的信息</strong></strong></p>
+<div class="src src-shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>:DOC-CONFIG:
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Tangle by default to config.el, which is the most common case</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#+property: header-args:emacs-lisp :tangle config.el</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#+property: header-args :mkdirp yes :comments no</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#+startup: fold</span>
+</span></span><span style="display:flex;"><span>:END:</span></span></code></pre></div>
+</div>
+<p>加上此信息后，emacs 就知道此文件中的 elisp 代码默认发送到 <code class="verbatim">config.el</code> 文件中去。</p>
+<p>
+<strong><strong>2. 代码块中的信息</strong></strong></p>
+<div class="src src-shell">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>; <span style="color:#75715e">#+begin_src emacs-lisp :tangle packages.el</span>
+</span></span><span style="display:flex;"><span>; <span style="color:#f92672">(</span>package! rime<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>; <span style="color:#75715e">#+end_src</span></span></span></code></pre></div>
+</div>
+<p>
+其中的 <code class="verbatim">emacs-lisp :tangle packages.el</code> 的作用就是当执行 <code class="verbatim">org-babel-tangle</code> 命令之后将代码块中的内容发送到 <code class="verbatim">packages.el</code> 文件中。</p>
+<p>
+当我们修改完此org文件并保存后，执行以下两个步骤可以将elisp代码块发送到对应的文件中：</p>
+<ol>
+<li>光标位于 <code class="verbatim">#+property: header-args:emacs-lisp :tangle config.el</code> 行，按下 <code class="verbatim">C-c C-c</code></li>
+<li><code class="verbatim">M-x org-babel-tangle</code></li>
+</ol>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+References
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p>
+Emacs config is an art, and I have learned a lot by reading through other people&#39;s config files, and from many other resources. These are some of the best ones (several are also written in org mode). You will find snippets from all of these (and possibly others) throughout my config.</p>
+<ul>
+<li><a href="https://github.com/zzamboni/dot-doom">Diego Zamboni&#39;s Emacs config</a></li>
+<li><a href="http://pages.sachachua.com/.emacs.d/Sacha.html">Sacha Chua&#39;s Emacs Configuration</a></li>
+<li><a href="https://github.com/daedreth/UncleDavesEmacs#user-content-ido-and-why-i-started-using-helm">Uncle Dave&#39;s Emacs config</a></li>
+<li><a href="https://github.com/PythonNut/emacs-config">PythonNut&#39;s Emacs config</a></li>
+<li><a href="https://www.masteringemacs.org/">Mastering Emacs</a></li>
+<li><a href="https://tecosaur.github.io/emacs-config/config.html">Tecosaur&#39;s Emacs config</a></li>
+</ul>
+<p>Note: a lot of manual configuration has been rendered moot by using Emacs Doom, which aggregates a well-maintained and organized collection of common configuration settings for performance optimization, package management, commonly used packages (e.g. Org) and much more.</p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+Doom config file overview
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<p>
+Doom Emacs uses three config files:</p>
+<ul>
+<li><code class="verbatim">init.el</code> defines which of the existing Doom <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#modules">modules</a> are loaded. A Doom module is a bundle of packages, configuration and commands, organized into a unit that can be toggled easily from this file.</li>
+<li><code class="verbatim">packages.el</code> defines which <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#package-management">packages</a> should be installed, beyond those that are installed and loaded as part of the enabled modules.</li>
+<li><code class="verbatim">config.el</code> contains all <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configuring-doom">custom configuration</a> and code.</li>
+</ul>
+<p>There are other files that can be loaded, but theses are the main ones. The load order of different files is <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#load-order">defined depending on the type of session</a> being started.</p>
+<p>
+All the config files are generated from this Org file, to try and make its meaning as clear as possible. All <code class="verbatim">package!</code> declarations are written to <code class="verbatim">packages.el</code>, all other LISP code is written to <code class="verbatim">config.el</code>.</p>
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+Config file headers
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p>
+We start by simply defining the standard headers used by the three files. These headers come from the initial files generated by <code class="verbatim">doom install</code>, and contain either some Emacs-LISP relevant indicators like <code class="verbatim">lexical-binding</code>, or instructions about the contents of the file.</p>
+<div id="outline-container-headline-4" class="outline-4">
+<h4 id="headline-4">
+generate init.el file headers
+</h4>
+<div id="outline-text-headline-4" class="outline-text-4">
+<details><summary>init.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;;; init.el -*- lexical-binding: t; -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; DO NOT EDIT THIS FILE DIRECTLY</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is a file generated from a literate programing source file located at</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You should make any changes there and regenerate it from Emacs org-mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; using org-babel-tangle (C-c C-v t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This file controls what Doom modules are enabled and what order they load</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; in. Remember to run &#39;doom sync&#39; after modifying it!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; NOTE Press &#39;SPC h d h&#39; (or &#39;C-h d h&#39; for non-vim users) to access Doom&#39;s</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      documentation. There you&#39;ll find a &#34;Module Index&#34; link where you&#39;ll find</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      a comprehensive list of Doom&#39;s modules and what flags they support.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; NOTE Move your cursor over a module&#39;s name (or its flags) and press &#39;K&#39; (or</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      &#39;C-c c k&#39; for non-vim users) to view its documentation. This works on</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      flags as well (those symbols that start with a plus).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      Alternatively, press &#39;gd&#39; (or &#39;C-c c d&#39;) on a module to browse its</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      directory (for easy access to its source code).</span></span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-4">
+<h4 id="headline-5">
+generate package.el file headers
+</h4>
+<div id="outline-text-headline-5" class="outline-text-4">
+<details><summary>packages.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; -*- no-byte-compile: t; -*-</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;; $DOOMDIR/packages.el</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; DO NOT EDIT THIS FILE DIRECTLY</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is a file generated from a literate programing source file located at</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You should make any changes there and regenerate it from Emacs org-mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; using org-babel-tangle (C-c C-v t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To install a package with Doom you must declare them here and run &#39;doom sync&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; on the command line, then restart Emacs for the changes to take effect -- or</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; use &#39;M-x doom/reload&#39;.</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! some-package)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To install a package directly from a remote git repo, you must specify a</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; `:recipe&#39;. You&#39;ll find documentation on what `:recipe&#39; accepts here:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://github.com/raxod502/straight.el#the-recipe-format</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! another-package</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;  :recipe (:host github :repo &#34;username/repo&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; If the package you are trying to install does not contain a PACKAGENAME.el</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; file, or is located in a subdirectory of the repo, you&#39;ll need to specify</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; `:files&#39; in the `:recipe&#39;:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! this-package</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;  :recipe (:host github :repo &#34;username/repo&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;           :files (&#34;some-file.el&#34; &#34;src/lisp/*.el&#34;)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; If you&#39;d like to disable a package included with Doom, you can do so here</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; with the `:disable&#39; property:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :disable t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You can override the recipe of a built in package without having to specify</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; all the properties for `:recipe&#39;. These will inherit the rest of its recipe</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; from Doom or MELPA/ELPA/Emacsmirror:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :recipe (:nonrecursive t))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package-2 :recipe (:repo &#34;myfork/package&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Specify a `:branch&#39; to install a package from a particular branch or tag.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is required for some packages whose default branch isn&#39;t &#39;master&#39; (which</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; our package manager can&#39;t deal with; see raxod502/straight.el#279)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :recipe (:branch &#34;develop&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Use `:pin&#39; to specify a particular commit to install.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(package! builtin-package :pin &#34;1a2b3c4d5e&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Doom&#39;s packages are pinned to a specific commit and updated from release to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; release. The `unpin!&#39; macro allows you to unpin single packages...</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(unpin! pinned-package)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; ...or multiple packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(unpin! pinned-package another-pinned-package)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;(unpin! t)</span></span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-4">
+<h4 id="headline-6">
+generate config.el file headers
+</h4>
+<div id="outline-text-headline-6" class="outline-text-4">
+<details><summary>config.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; DO NOT EDIT THIS FILE DIRECTLY</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This is a file generated from a literate programing source file located at</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; https://gitlab.com/zzamboni/dot-doom/-/blob/master/doom.org</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You should make any changes there and regenerate it from Emacs org-mode</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; using org-babel-tangle (C-c C-v t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Place your private configuration here! Remember, you do not need to run &#39;doom</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; sync&#39; after modifying this file!</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Some functionality uses this to identify you, e.g. GPG configuration, email</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; clients, file templates and snippets.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq user-full-name &#34;John Doe&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;      user-mail-address &#34;john@doe.com&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Doom exposes five (optional) variables for controlling fonts in Doom. Here</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; are the three important ones:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; + `doom-font&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; + `doom-variable-pitch-font&#39;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; + `doom-big-font&#39; -- used for `doom-big-font-mode&#39;; use this for</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   presentations or streaming.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; They all accept either a font-spec, font string (&#34;Input Mono-12&#34;), or xlfd</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; font string. You generally only need these two:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq doom-font (font-spec :family &#34;monospace&#34; :size 12 :weight &#39;semi-light)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;       doom-variable-pitch-font (font-spec :family &#34;sans&#34; :size 13))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; There are two ways to load a theme. Both assume the theme is installed and</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; available. You can either set `doom-theme&#39; or manually load a theme with the</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; `load-theme&#39; function. This is the default:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq doom-theme &#39;doom-one)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; If you use `org&#39; and don&#39;t want your org files in the default location below,</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; change `org-directory&#39;. It must be set before org loads!</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq org-directory &#34;~/org/&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This determines the style of line numbers in effect. If set to `nil&#39;, line</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; numbers are disabled. For relative line numbers, set this to `relative&#39;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq display-line-numbers-type t)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; Here are some additional functions/macros that could help you configure Doom:</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `load!&#39; for loading external *.el files relative to this one</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `use-package!&#39; for configuring packages</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `after!&#39; for running code after a package has loaded</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `add-load-path!&#39; for adding directories to the `load-path&#39;, relative to</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   this file. Emacs searches the `load-path&#39; when you load packages with</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   `require&#39; or `use-package&#39;.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; - `map!&#39; for binding new keys</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; To get information about any of these functions/macros, move the cursor over</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; the highlighted symbol at press &#39;K&#39; (non-evil users must press &#39;C-c c k&#39;).</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; This will open documentation for it, including demos of how they are used.</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; You can also try &#39;gd&#39; (or &#39;C-c c d&#39;) to jump to their definition and see how</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; they are implemented.</span></span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-7" class="outline-3">
+<h3 id="headline-7">
+Customized variables
+</h3>
+<div id="outline-text-headline-7" class="outline-text-3">
+<p>
+Doom <a href="https://github.com/hlissner/doom-emacs/blob/develop/docs/getting_started.org#configure">does not recommend the Emacs <code class="verbatim">customize</code> mechanism</a>:</p>
+<blockquote>
+<p><em>Note: do not use M-x customize or the customize API in general. Doom is designed to be configured programmatically from your config.el, which can conflict with Customize’s way of modifying variables.</em></p>
+</blockquote>
+<p>
+All necessary settings are therefore set by hand as part of this configuration file. The only exceptions are &#34;safe variable&#34; and &#34;safe theme&#34; settings, which are automatically saved by Emacs in <code class="verbatim">custom.el</code>, but this is OK as they don&#39;t conflict with anything else from the config.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-8" class="outline-2">
+<h2 id="headline-8">
+Doom modules
+</h2>
+<div id="outline-text-headline-8" class="outline-text-2">
+<p>
+This code is written to the <code class="verbatim">init.el</code> to select which modules to load. Written here as-is for now, as it is quite well structured and clear.</p>
+<details><summary>packages.el</summary>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(doom! :input
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;chinese</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;japanese</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;layout            ; auie,ctsrnm is the superior home row</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :completion
+</span></span><span style="display:flex;"><span>       company           <span style="color:#75715e">; the ultimate code completion backend</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;helm              ; the *other* search engine for love and life</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ido               ; the other *other* search engine...</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ivy               ; a search engine for love and life</span>
+</span></span><span style="display:flex;"><span>       vertico           <span style="color:#75715e">; the search engine of the future</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :ui
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;deft              ; notational velocity for Emacs</span>
+</span></span><span style="display:flex;"><span>       doom              <span style="color:#75715e">; what makes DOOM look the way it does</span>
+</span></span><span style="display:flex;"><span>       doom-dashboard    <span style="color:#75715e">; a nifty splash screen for Emacs</span>
+</span></span><span style="display:flex;"><span>       doom-quit         <span style="color:#75715e">; DOOM quit-message prompts when you quit Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(emoji +unicode)  ; 🙂</span>
+</span></span><span style="display:flex;"><span>       hl-todo           <span style="color:#75715e">; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;hydra</span>
+</span></span><span style="display:flex;"><span>       indent-guides     <span style="color:#75715e">; highlighted indent columns</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ligatures         ; ligatures and symbols to make your code pretty again</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;minimap           ; show a map of the code on the side</span>
+</span></span><span style="display:flex;"><span>       modeline          <span style="color:#75715e">; snazzy, Atom-inspired modeline, plus API</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;nav-flash         ; blink cursor line after big motions</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;neotree           ; a project drawer, like NERDTree for vim</span>
+</span></span><span style="display:flex;"><span>       ophints           <span style="color:#75715e">; highlight the region an operation acts on</span>
+</span></span><span style="display:flex;"><span>       (popup +defaults)   <span style="color:#75715e">; tame sudden yet inevitable temporary windows</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;tabs              ; a tab bar for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; treemacs          ; a project drawer, like neotree but cooler</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;unicode           ; extended unicode support for various languages</span>
+</span></span><span style="display:flex;"><span>       vc-gutter         <span style="color:#75715e">; vcs diff in the fringe</span>
+</span></span><span style="display:flex;"><span>       vi-tilde-fringe   <span style="color:#75715e">; fringe tildes to mark beyond EOB</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;window-select     ; visually switch windows</span>
+</span></span><span style="display:flex;"><span>       workspaces        <span style="color:#75715e">; tab emulation, persistence &amp; separate workspaces</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;zen               ; distraction-free coding or writing</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; (tabs +centaur-tabs)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :editor
+</span></span><span style="display:flex;"><span>       (evil +everywhere)<span style="color:#75715e">; come to the dark side, we have cookies</span>
+</span></span><span style="display:flex;"><span>       file-templates    <span style="color:#75715e">; auto-snippets for empty files</span>
+</span></span><span style="display:flex;"><span>       fold              <span style="color:#75715e">; (nigh) universal code folding</span>
+</span></span><span style="display:flex;"><span>       (<span style="color:#a6e22e">format</span> +onsave)  <span style="color:#75715e">; automated prettiness</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;god               ; run Emacs commands without modifier keys</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;lispy             ; vim for lisp, for people who don&#39;t like vim</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;multiple-cursors  ; editing in many places at once</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;objed             ; text object editing for the innocent</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;parinfer          ; turn lisp into python, sort of</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rotate-text       ; cycle region at point between text candidates</span>
+</span></span><span style="display:flex;"><span>       snippets          <span style="color:#75715e">; my elves. They type so I don&#39;t have to</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;word-wrap         ; soft wrapping with language-aware indent</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :emacs
+</span></span><span style="display:flex;"><span>       dired             <span style="color:#75715e">; making dired pretty [functional]</span>
+</span></span><span style="display:flex;"><span>       electric          <span style="color:#75715e">; smarter, keyword-based electric-indent</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ibuffer         ; interactive buffer management</span>
+</span></span><span style="display:flex;"><span>       undo              <span style="color:#75715e">; persistent, smarter undo for your inevitable mistakes</span>
+</span></span><span style="display:flex;"><span>       vc                <span style="color:#75715e">; version-control and Emacs, sitting in a tree</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :term
+</span></span><span style="display:flex;"><span>       eshell            <span style="color:#75715e">; the elisp shell that works everywhere</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;shell             ; simple shell REPL for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;term              ; basic terminal emulator for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;vterm             ; the best terminal emulation in Emacs</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :checkers
+</span></span><span style="display:flex;"><span>       syntax              <span style="color:#75715e">; tasing you for every semicolon you forget</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(spell +flyspell) ; tasing you for misspelling mispelling</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;grammar           ; tasing grammar mistake every you make</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :tools
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ansible</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;debugger          ; FIXME stepping through code, to help you add bugs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;direnv</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;docker</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;editorconfig      ; let someone else argue about tabs vs spaces</span>
+</span></span><span style="display:flex;"><span>       ein               <span style="color:#75715e">; tame Jupyter notebooks with emacs</span>
+</span></span><span style="display:flex;"><span>       (<span style="color:#a6e22e">eval</span> +overlay)     <span style="color:#75715e">; run code, run (also, repls)</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;gist              ; interacting with github gists</span>
+</span></span><span style="display:flex;"><span>       lookup              <span style="color:#75715e">; navigate your code and its documentation</span>
+</span></span><span style="display:flex;"><span>       lsp               <span style="color:#75715e">; M-x vscode</span>
+</span></span><span style="display:flex;"><span>       magit             <span style="color:#75715e">; a git porcelain for Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;make              ; run make tasks from Emacs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;pass              ; password manager for nerds</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;pdf               ; pdf enhancements</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;prodigy           ; FIXME managing external services &amp; code builders</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rgb               ; creating color strings</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;taskrunner        ; taskrunner for all your projects</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;terraform         ; infrastructure as code</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;tmux              ; an API for interacting with tmux</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;upload            ; map local to remote projects via ssh/ftp</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :os
+</span></span><span style="display:flex;"><span>       (:if IS-MAC macos)  <span style="color:#75715e">; improve compatibility with macOS</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;tty               ; improve the terminal Emacs experience</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :lang
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;agda              ; types of types of types of types...</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;beancount         ; mind the GAAP</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;cc                ; C &gt; C++ == 1</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;clojure           ; java with a lisp</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;common-lisp       ; if you&#39;ve seen one lisp, you&#39;ve seen them all</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;coq               ; proofs-as-programs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;crystal           ; ruby at the speed of c</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;csharp            ; unity, .NET, and mono shenanigans</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;data              ; config/data formats</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(dart +flutter)   ; paint ui and not much else</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;dhall</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;elixir            ; erlang done right</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;elm               ; care for a cup of TEA?</span>
+</span></span><span style="display:flex;"><span>       emacs-lisp        <span style="color:#75715e">; drown in parentheses</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;erlang            ; an elegant language for a more civilized age</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ess               ; emacs speaks statistics</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;factor</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;faust             ; dsp, but you get to keep your soul</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;fsharp            ; ML stands for Microsoft&#39;s Language</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;fstar             ; (dependent) types and (monadic) effects and Z3</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;gdscript          ; the language you waited for</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(go +lsp)         ; the hipster dialect</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(haskell +dante)  ; a language that&#39;s lazier than I am</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;hy                ; readability of scheme w/ speed of python</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;idris             ; a language you can depend on</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;json              ; At least it ain&#39;t XML</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(java +meghanada) ; the poster child for carpal tunnel syndrome</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;javascript        ; all(hope(abandon(ye(who(enter(here))))))</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;julia             ; a better, faster MATLAB</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;kotlin            ; a better, slicker Java(Script)</span>
+</span></span><span style="display:flex;"><span>       latex             <span style="color:#75715e">; writing papers in Emacs has never been so fun</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;lean              ; for folks with too much to prove</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ledger            ; be audit you can be</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;lua               ; one-based indices? one-based indices</span>
+</span></span><span style="display:flex;"><span>       markdown          <span style="color:#75715e">; writing docs for people to ignore</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;nim               ; python + lisp at the speed of c</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;nix               ; I hereby declare &#34;nix geht mehr!&#34;</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;ocaml             ; an objective camel</span>
+</span></span><span style="display:flex;"><span>       org               <span style="color:#75715e">; organize your plain life in plain text</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;php               ; perl&#39;s insecure younger brother</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;plantuml          ; diagrams for confusing people more</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;purescript        ; javascript, but functional</span>
+</span></span><span style="display:flex;"><span>       (python
+</span></span><span style="display:flex;"><span>        +lsp
+</span></span><span style="display:flex;"><span>        +conda
+</span></span><span style="display:flex;"><span>        +pyright)          <span style="color:#75715e">;beautiful is better than ugly</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;qt                ; the &#39;cutest&#39; gui framework ever</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;racket            ; a DSL for DSLs</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;raku              ; the artist formerly known as perl6</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rest              ; Emacs as a REST client</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rst               ; ReST in peace</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(ruby +rails)     ; 1.step {|i| p &#34;Ruby is #{i.even? ? &#39;love&#39; : &#39;life&#39;}&#34;}</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;rust              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;scala             ; java, but good</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(scheme +guile)   ; a fully conniving family of lisps</span>
+</span></span><span style="display:flex;"><span>       sh                <span style="color:#75715e">; she sells {ba,z,fi}sh shells on the C xor</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;sml</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;solidity          ; do you need a blockchain? No.</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;swift             ; who asked for emoji variables?</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;terra             ; Earth and Moon in alignment for performance.</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;web               ; the tubes</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;yaml              ; JSON, but readable</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;zig               ; C, but simpler</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :email
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(mu4e +org +gmail)</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;notmuch</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(wanderlust +gmail)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :app
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;calendar</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;emms</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;everywhere        ; *leave* Emacs!? You must be joking</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;irc               ; how neckbeards socialize</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;(rss +org)        ; emacs as an RSS reader</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;twitter           ; twitter client https://twitter.com/vnought</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>       :config
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;;literate</span>
+</span></span><span style="display:flex;"><span>       (default +bindings +smartparens)
+</span></span><span style="display:flex;"><span>       )</span></span></code></pre></div>
+</div>
+</details>
+</div>
+</div>
+<div id="outline-container-headline-9" class="outline-2">
+<h2 id="headline-9">
+General configuration
+</h2>
+<div id="outline-text-headline-9" class="outline-text-2">
+<p>
+My user information. Some functionality uses this to identify you, e.g. GPG configuration, email clients, file templates and snippets.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq <span style="color:#a6e22e">user-full-name</span> <span style="color:#e6db74">&#34;Tintingo&#34;</span>
+</span></span><span style="display:flex;"><span>      user-mail-address <span style="color:#e6db74">&#34;norery@163.com&#34;</span>)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq doom-font (<span style="color:#a6e22e">font-spec</span> :family <span style="color:#e6db74">&#34;Source Code Pro&#34;</span> :size <span style="color:#ae81ff">14</span>))</span></span></code></pre></div>
+</div>
+<p>
+make &#34;starting &#34;look&#34; progress&#34; disappear</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(advice-add <span style="color:#e6db74">&#39;ispell-lookup-words</span> :around
+</span></span><span style="display:flex;"><span>            (lambda (orig <span style="color:#66d9ef">&amp;rest</span> args)
+</span></span><span style="display:flex;"><span>              (shut-up (<span style="color:#a6e22e">apply</span> orig args))))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-10" class="outline-3">
+<h3 id="headline-10">
+Visual, session and window settings
+</h3>
+<div id="outline-text-headline-10" class="outline-text-3">
+<div id="outline-container-headline-11" class="outline-4">
+<h4 id="headline-11">
+Basic UI settings
+</h4>
+<div id="outline-text-headline-11" class="outline-text-4">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq doom-theme <span style="color:#e6db74">&#39;doom-solarized-light</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(setq display-line-numbers-type <span style="color:#e6db74">&#39;relative</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(setq ein:output-area-inlined-images <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (setq initial-frame-alist (quote ((fullscreen . maximized))))   ;; 默认全屏</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; 修改当前行的高亮背景色。 M-x 运行describe-char -&gt; Face: h1-line -&gt; Background: #0D343E 可以看到这个值。通过(customize this face) 修改，被保存在 ~/.emacs.d/.local/custom.el 文件</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">&#39;</span>(hl-line ((<span style="color:#66d9ef">t</span> (:background <span style="color:#e6db74">&#34;#0D343E&#34;</span> ))))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; ;;光标在括号内时就高亮包含内容的两个括号</span>
+</span></span><span style="display:flex;"><span>(defadvice show-paren-function (around fix-show-paren-function activate)
+</span></span><span style="display:flex;"><span>  (cond ((looking-at-p <span style="color:#e6db74">&#34;\\s(&#34;</span>) ad-do-it)
+</span></span><span style="display:flex;"><span>        (<span style="color:#66d9ef">t</span> (save-excursion
+</span></span><span style="display:flex;"><span>             (ignore-errors (backward-up-list))
+</span></span><span style="display:flex;"><span>             ad-do-it)))
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-12" class="outline-4">
+<h4 id="headline-12">
+Dashborad settngs
+</h4>
+<div id="outline-text-headline-12" class="outline-text-4">
+<p>
+I made a super simple set of Doom-Emacs custom splash screens by combining <a href="http://www.thedreamcastjunkyard.co.uk/2018/03/cross-platform-online-multiplayer-added.html">a Doom logo</a> with the word &#34;Emacs&#34; rendered in the <a href="https://fontmeme.com/doom-font/">Doom Font</a>. You can see them at <a href="https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash">https://gitlab.com/zzamboni/dot-doom/-/tree/master/splash</a> (you can also see one of them at the top of this file). I configure it to be used instead of the default splash screen. It took me all of 5 minutes to make, so improvements are welcome!</p>
+<p>
+If you want to choose at random among a few different splash images, you can list them in <code class="verbatim">alternatives</code>.</p>
+<p>
+You can find other splash images at the <a href="https://github.com/jeetelongname/doom-banners">jeetelongname/doom-banners</a> GitHub repository.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; (let ((alternatives &#39;(&#34;doom-emacs-bw-light.svg&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                       ;; &#34;doom-emacs-flugo-slant_out_purple-small.png&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                       ;; &#34;doom-emacs-flugo-slant_out_bw-small.png&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                       )))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;   (setq fancy-splash-image</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;         (concat doom-private-dir &#34;splash/&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;                 (nth (random (length alternatives)) alternatives))))</span></span></span></code></pre></div>
+</div>
+<p>
+I eliminate all but the first two items in the dashboard menu, since those are the only ones I still use sometimes.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; (setq +doom-dashboard-menu-sections (cl-subseq +doom-dashboard-menu-sections 0 2))</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-13" class="outline-4">
+<h4 id="headline-13">
+nayn-mode
+</h4>
+<div id="outline-text-headline-13" class="outline-text-4">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! nyan-mode)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; 彩虹猫进度条</span>
+</span></span><span style="display:flex;"><span>(use-package nyan-mode
+</span></span><span style="display:flex;"><span>  :if (not (<span style="color:#a6e22e">boundp</span> <span style="color:#e6db74">&#39;awesome-tray-mode</span>))
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :hook (after-init <span style="color:#f92672">.</span> nyan-mode)
+</span></span><span style="display:flex;"><span>  :config
+</span></span><span style="display:flex;"><span>  (setq nyan-wavy-trail <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>		nyan-animate-nyancat <span style="color:#66d9ef">t</span>))</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-14" class="outline-3">
+<h3 id="headline-14">
+Customize KeyBinding
+</h3>
+<div id="outline-text-headline-14" class="outline-text-3">
+<p>Install an evil tutorial package and use <code class="verbatim">M-x</code> and <code class="verbatim">evil-tutor-start</code> to open it. Can We find some new tips which can help us using Emacs more efficiently?</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! evil-tutor)</span></span></code></pre></div>
+</div>
+<ul>
+<li>use <code class="verbatim">jj</code> to exit the evil insert mode, default is <code class="verbatim">jk</code>.</li>
+</ul>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package! evil-escape
+</span></span><span style="display:flex;"><span>        :init
+</span></span><span style="display:flex;"><span>        (setq evil-escape-key-sequence <span style="color:#e6db74">&#34;jj&#34;</span>)
+</span></span><span style="display:flex;"><span>        )</span></span></code></pre></div>
+</div>
+<ul>
+<li>use <code class="verbatim">SPC b j/k</code> to move to the next/previous buffer, the default is <code class="verbatim">SPC b n/p</code>.</li>
+</ul>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(map! :leader
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;Like M-x&#34;</span>          :n        <span style="color:#e6db74">&#34;SPC&#34;</span>   <span style="color:#a6e22e">#&#39;</span>execute-extended-command
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;Next buffer&#34;</span>       :n        <span style="color:#e6db74">&#34;bj&#34;</span>    <span style="color:#a6e22e">#&#39;</span>next-buffer
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;Previous-buffer&#34;</span>   :n        <span style="color:#e6db74">&#34;bk&#34;</span>    <span style="color:#a6e22e">#&#39;</span>previous-buffer
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; Switch to TAB + number</span>
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;switch to TAB 1&#34;</span>   :n        <span style="color:#e6db74">&#34;1&#34;</span>       <span style="color:#a6e22e">#&#39;</span>+workspace/switch-to-0
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;switch to TAB 2&#34;</span>   :n        <span style="color:#e6db74">&#34;2&#34;</span>       <span style="color:#a6e22e">#&#39;</span>+workspace/switch-to-1
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;switch to TAB 3&#34;</span>   :n        <span style="color:#e6db74">&#34;3&#34;</span>       <span style="color:#a6e22e">#&#39;</span>+workspace/switch-to-2
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;; kill shortcuts key bindings.</span>
+</span></span><span style="display:flex;"><span>      :nv <span style="color:#e6db74">&#34;b[&#34;</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>      :nv <span style="color:#e6db74">&#34;b]&#34;</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>      )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>(map! :map org-mode-map
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;org previous heading&#34;</span>      :n      <span style="color:#e6db74">&#34;SPC k&#34;</span>    <span style="color:#a6e22e">#&#39;</span>org-previous-visible-heading
+</span></span><span style="display:flex;"><span>       <span style="color:#75715e">;; can not use &#34;SPC-j&#34;</span>
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;org next headng&#34;</span>           :n      <span style="color:#e6db74">&#34;SPC j&#34;</span>    <span style="color:#a6e22e">#&#39;</span>org-next-visible-heading
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; 以当前文件的可视行为单位进行移动.</span>
+</span></span><span style="display:flex;"><span>(evil-global-set-key <span style="color:#e6db74">&#39;motion</span> <span style="color:#e6db74">&#34;j&#34;</span> <span style="color:#e6db74">&#39;evil-next-visual-line</span>)
+</span></span><span style="display:flex;"><span>(evil-global-set-key <span style="color:#e6db74">&#39;motion</span> <span style="color:#e6db74">&#34;k&#34;</span> <span style="color:#e6db74">&#39;evil-previous-visual-line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; use =command k=  to move five lines up</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; use =command j= to move five lines down</span>
+</span></span><span style="display:flex;"><span>(map!
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;move next 5 line&#34;</span>       :nvi          <span style="color:#e6db74">&#34;C-j&#34;</span>    <span style="color:#a6e22e">#&#39;</span>(lambda () (interactive) (<span style="color:#a6e22e">forward-line</span> <span style="color:#ae81ff">5</span>))
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;move previous 5 line&#34;</span>   :nvi          <span style="color:#e6db74">&#34;C-k&#34;</span>    <span style="color:#a6e22e">#&#39;</span>(lambda () (interactive) (<span style="color:#a6e22e">forward-line</span> <span style="color:#ae81ff">-5</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;;;;;;; Ein KeyBinding</span>
+</span></span><span style="display:flex;"><span>(map! :map ein:notebook-mode-map
+</span></span><span style="display:flex;"><span>      :leader
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:insert above&#34;</span>         :n    <span style="color:#e6db74">&#34;ea&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-insert-cell-above-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:insert below&#34;</span>         :n    <span style="color:#e6db74">&#34;eb&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-insert-cell-next-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:Run all&#34;</span>              :n    <span style="color:#e6db74">&#34;ell&#34;</span>       <span style="color:#a6e22e">#&#39;</span>ein:worksheet-execute-all-cells
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:To next cell&#34;</span>         :n    <span style="color:#e6db74">&#34;ej&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-goto-next-input-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:To prev cell&#34;</span>         :n    <span style="color:#e6db74">&#34;ek&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-goto-prev-input-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:Change cell type&#34;</span>     :n    <span style="color:#e6db74">&#34;eu&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-change-cell-type-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:Restart session&#34;</span>      :n    <span style="color:#e6db74">&#34;err&#34;</span>       <span style="color:#a6e22e">#&#39;</span>ein:notebook-restart-session-command-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:kill cell&#34;</span>            :n    <span style="color:#e6db74">&#34;ed&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-kill-cell-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:interrupt kernel&#34;</span>     :n    <span style="color:#e6db74">&#34;ez&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:notebook-kernel-interrupt-command-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:toggle output&#34;</span>        :n    <span style="color:#e6db74">&#34;et&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-toggle-output-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:show output&#34;</span>          :n    <span style="color:#e6db74">&#34;ev&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:worksheet-set-output-visibility-all-km
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:login&#34;</span>                :n    <span style="color:#e6db74">&#34;el&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:login
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:stop&#34;</span>                 :n    <span style="color:#e6db74">&#34;ep&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:stop
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;ein:open notebook&#34;</span>        :n    <span style="color:#e6db74">&#34;eo&#34;</span>        <span style="color:#a6e22e">#&#39;</span>ein:notebook-open-km
+</span></span><span style="display:flex;"><span>      )</span></span></code></pre></div>
+</div>
+<p>
+ Now, The describability of <code class="verbatim">SPC bk</code> is not update in Which-Key, How to update it?</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-15" class="outline-2">
+<h2 id="headline-15">
+Org mode
+</h2>
+<div id="outline-text-headline-15" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(setq org-directory <span style="color:#e6db74">&#34;~/Documents/OrgType/&#34;</span>)</span></span></code></pre></div>
+</div>
+<p>
+Doom Emacs&#39;s org module already install many packages about org mode, and we can check them in <a href="~/.emacs.d/modules/lang/org/README.org::85">org/README.org</a>.</p>
+<div id="outline-container-headline-16" class="outline-3">
+<h3 id="headline-16">
+UI Settings
+</h3>
+<div id="outline-text-headline-16" class="outline-text-3">
+<div id="outline-container-headline-17" class="outline-4">
+<h4 id="headline-17">
+org-superstar
+</h4>
+<div id="outline-text-headline-17" class="outline-text-4">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! org-superstar)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package org-superstar
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :after org
+</span></span><span style="display:flex;"><span>  :hook (org-mode <span style="color:#f92672">.</span> org-superstar-mode)
+</span></span><span style="display:flex;"><span>  :custom
+</span></span><span style="display:flex;"><span>    ( with-eval-after-load  <span style="color:#e6db74">&#39;org-superstar</span>)
+</span></span><span style="display:flex;"><span>    (org-superstar-headline-bullets-list <span style="color:#f92672">&#39;</span>(<span style="color:#e6db74">&#34;☰&#34;</span> <span style="color:#e6db74">&#34;☷&#34;</span> <span style="color:#e6db74">&#34;✿&#34;</span> <span style="color:#e6db74">&#34;☭&#34;</span>))
+</span></span><span style="display:flex;"><span>    (org-superstar-cycle-headline-bullets <span style="color:#66d9ef">nil</span> )
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; This is usually the default, but keep in mind it must be nil</span>
+</span></span><span style="display:flex;"><span>    (setq org-hide-leading-stars <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; This line is necessary.</span>
+</span></span><span style="display:flex;"><span>    (setq org-superstar-leading-bullet <span style="color:#e6db74">?\s</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; If you use Org Indent you also need to add this, otherwise the</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; above has no effect while Indent is enabled.</span>
+</span></span><span style="display:flex;"><span>    (setq org-indent-mode-turns-on-hiding-stars <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-18" class="outline-4">
+<h4 id="headline-18">
+org-appear
+</h4>
+<div id="outline-text-headline-18" class="outline-text-4">
+<p>
+<a href="https://orgmode.org/">Org mode</a> provides a way to toggle visibility of hidden elements such as emphasis markers, links, etc. by customising specific variables, e.g., <code>org-hide-emphasis-markers</code>. However, it is currently not possible to do this interactively and on an element-by-element basis. This package, inspired by <a href="https://github.com/io12/org-fragtog">org-fragtog</a>, enables automatic visibility toggling depending on cursor position. Hidden element parts appear when the cursor enters an element and disappear when it leaves.</p>
+<p>
+Install <a href="https://github.com/awth13/org-appear">org-appear</a> in package.el file:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! org-appear)</span></span></code></pre></div>
+</div>
+<p>
+The package can be enabled interactively or automatically on org-mode start-up:</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package org-appear
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :after org
+</span></span><span style="display:flex;"><span>  :hook (org-mode <span style="color:#f92672">.</span> org-appear-mode)
+</span></span><span style="display:flex;"><span>  :custom
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; allow to toggle links</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autolinks <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; allow to toggle subscripts and superscripts</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autosubmarkers <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; toggle Org entitites</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autoentities <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; toggle keywords in org-hidden-keywords</span>
+</span></span><span style="display:flex;"><span>    (org-appear-autokeywords <span style="color:#66d9ef">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; if greater than 0, toggle with an idle delay</span>
+</span></span><span style="display:flex;"><span>    (org-appear-delay <span style="color:#ae81ff">0.5</span>)
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; (add-hook &#39;org-mode-hook &#39;org-appear-mode)</span></span></span></code></pre></div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-19" class="outline-4">
+<h4 id="headline-19">
+org-ol-tree
+</h4>
+<div id="outline-text-headline-19" class="outline-text-4">
+<p>
+Speaking of headlines, a nice package for viewing and managing the heading structure has come to my attention – <a href="https://github.com/Townk/org-ol-tree">org-ol-tree</a>.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! org-ol-tree
+</span></span><span style="display:flex;"><span>  :recipe (:host github :repo <span style="color:#e6db74">&#34;Townk/org-ol-tree&#34;</span>)
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+<p>
+We can use -Spc m O- to open the org-ol-tree.</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package! org-ol-tree
+</span></span><span style="display:flex;"><span>  :commands org-ol-tree)
+</span></span><span style="display:flex;"><span>(map! :map org-mode-map
+</span></span><span style="display:flex;"><span>      :after org
+</span></span><span style="display:flex;"><span>      :localleader
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;open org-ol-tree&#34;</span> <span style="color:#e6db74">&#34;O&#34;</span> <span style="color:#a6e22e">#&#39;</span>org-ol-tree)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-20" class="outline-2">
+<h2 id="headline-20">
+Chinese support
+</h2>
+<div id="outline-text-headline-20" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! rime)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package rime
+</span></span><span style="display:flex;"><span>        :init
+</span></span><span style="display:flex;"><span>        :custom
+</span></span><span style="display:flex;"><span>        (default-input-method <span style="color:#e6db74">&#34;rime&#34;</span>)
+</span></span><span style="display:flex;"><span>        (rime-librime-root <span style="color:#e6db74">&#34;~/.emacs.d/librime/dist&#34;</span>) )
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>** 简介
+</span></span><span style="display:flex;"><span>pyim-basedict 是 pyim 输入法的默认词库<span style="color:#960050;background-color:#1e0010">，</span>词库数据来源为 libpinyin 项目<span style="color:#960050;background-color:#1e0010">。</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> https://github.com/libpinyin/libpinyin/releases (Data files we need is in release tarball)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>注意<span style="color:#960050;background-color:#1e0010">：</span>这个词库的词条量大概在 <span style="color:#ae81ff">10</span> 万左右<span style="color:#960050;background-color:#1e0010">，</span>是一个 *比较小* 的词库<span style="color:#960050;background-color:#1e0010">，</span>只能确保 pyim
+</span></span><span style="display:flex;"><span>可以正常工作<span style="color:#960050;background-color:#1e0010">，</span>如果用户想让 pyim 更加顺手<span style="color:#960050;background-color:#1e0010">，</span>需要添加其它附加词库<span style="color:#960050;background-color:#1e0010">，</span>具体添加词库的
+</span></span><span style="display:flex;"><span>方式可以参考 pyim 的 README.
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>** 安装和使用
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1.</span> 配置 melpa 源<span style="color:#960050;background-color:#1e0010">，</span>参考<span style="color:#960050;background-color:#1e0010">：</span>http://melpa.org/#/getting-started
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2.</span> M-x package-install RET pyim-basedict RET
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3.</span> 在 Emacs 配置文件中<span style="color:#960050;background-color:#1e0010">（</span>比如: ~/.emacs<span style="color:#960050;background-color:#1e0010">）</span>添加如下代码<span style="color:#960050;background-color:#1e0010">：</span>
+</span></span><span style="display:flex;"><span>   <span style="color:#960050;background-color:#1e0010">#</span>+BEGIN_EXAMPLE
+</span></span><span style="display:flex;"><span>   (pyim-basedict-enable)
+</span></span><span style="display:flex;"><span>   <span style="color:#960050;background-color:#1e0010">#</span>+END_EXAMPLE
+</span></span><span style="display:flex;"><span>st<span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-user-data-dir &#34;</span>~/Library/Rime/<span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        ;;; 具体参考 mode-line-mule-info 默认值，其中可能有其它有用信息
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq mode-line-mule-info &#39;((:eval (rime-lighter))))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-show-candidate &#39;posframe)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (rime-posframe-properties
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                (list :background-color &#34;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">073642</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                 :foreground-color &#34;</span><span style="color:#960050;background-color:#1e0010">#</span><span style="color:#ae81ff">839496</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                 :internal-border-width 1))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-cursor &#34;</span><span style="color:#960050;background-color:#1e0010">˰</span><span style="color:#e6db74">&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        (setq rime-disable-predicates
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">              &#39;(rime-predicate-evil-mode-p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                rime-predicate-after-alphabet-char-p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                rime-predicate-prog-in-code-p
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                ))
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">        )</span></span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-21" class="outline-3">
+<h3 id="headline-21">
+pangu-spacing
+</h3>
+<div id="outline-text-headline-21" class="outline-text-3">
+<p>
+<a href="https://github.com/coldnew/pangu-spacing">PanGu-Spcing</a> 方便地解决了我在中英文混杂输入的一个痛点，它会自动在中英文之间插入空格。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(package! pangu-spacing)</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(require <span style="color:#e6db74">&#39;pangu-spacing</span>)
+</span></span><span style="display:flex;"><span>(global-pangu-spacing-mode <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>(setq pangu-spacing-real-insert-separtor <span style="color:#66d9ef">t</span>)</span></span></code></pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-22" class="outline-2">
+<h2 id="headline-22">
+Python
+</h2>
+<div id="outline-text-headline-22" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(use-package conda
+</span></span><span style="display:flex;"><span>  :ensure <span style="color:#66d9ef">t</span>
+</span></span><span style="display:flex;"><span>  :init
+</span></span><span style="display:flex;"><span>  (setq conda-anaconda-home (<span style="color:#a6e22e">expand-file-name</span> <span style="color:#e6db74">&#34;~/opt/anaconda3&#34;</span>))
+</span></span><span style="display:flex;"><span>  (setq conda-env-home-directory (<span style="color:#a6e22e">expand-file-name</span> <span style="color:#e6db74">&#34;~/opt/anaconda3&#34;</span>)))</span></span></code></pre></div>
+</div>
+<div id="outline-container-headline-23" class="outline-3">
+<h3 id="headline-23">
+Emacs Ipython Notebook
+</h3>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-24" class="outline-2">
+<h2 id="headline-24">
+load-path
+</h2>
+<div id="outline-text-headline-24" class="outline-text-2">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; 递归遍历加载路径 test</span>
+</span></span><span style="display:flex;"><span>  (defun add-subdirs-to-load-path(dir)
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Recursive add directories to `load-path`.&#34;</span>
+</span></span><span style="display:flex;"><span>    (let ((default-directory (<span style="color:#a6e22e">file-name-as-directory</span> dir)))
+</span></span><span style="display:flex;"><span>      (add-to-list <span style="color:#e6db74">&#39;load-path</span> dir)
+</span></span><span style="display:flex;"><span>      (normal-top-level-add-subdirs-to-load-path)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  (let ((gc-cons-threshold most-positive-fixnum)
+</span></span><span style="display:flex;"><span>        (file-name-handler-alist <span style="color:#66d9ef">nil</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">;; 将配置文件添加进load-path</span>
+</span></span><span style="display:flex;"><span>    (add-subdirs-to-load-path <span style="color:#e6db74">&#34;~/.doom.d/etc/&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;     ;; (unless (file-exists-p &#34;~/.config/.evan-emacs.d/&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;     ;;   (mkdir &#34;~/.config/.evan-emacs.d&#34;))</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;;     ;; (add-subdirs-to-load-path &#34;~/.config/.evan-emacs.d/&#34;))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    )</span></span></code></pre></div>
+</div>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; 所有配置自带的模块</span>
+</span></span><span style="display:flex;"><span>(require <span style="color:#e6db74">&#39;init-config</span>)</span></span></code></pre></div>
+</div>
+<ul>
+<li>Test</li>
+</ul>
+</div>
+</div>
+
+
+
+<link rel="stylesheet" href="/css/donate.css" />
+
+
+<div class="donate">
+  <div class="donate-header"></div>
+  <div class="donate-slug" id="donate-slug">doom-emacs-config</div>
+  <button class="donate-button">DONATE</button>
+  <div class="donate-footer">「Donation Given, Fragrance in Hand」</div>
+</div>
+<div class="donate-modal-wrapper">
+  <div class="donate-modal">
+    <div class="donate-box">
+      <div class="donate-box-content">
+        <div class="donate-box-content-inner">
+          <div class="donate-box-header">「Donation Given, Fragrance in Hand」</div>
+          <div class="donate-box-body">
+            <div class="donate-box-money">
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-2" data-v="2" data-unchecked="￥ 2" data-checked="2 元">￥ 2</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-5" data-v="5" data-unchecked="￥ 5" data-checked="5 元">￥ 5</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-10" data-v="10" data-unchecked="￥ 10" data-checked="10 元">￥ 10</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-50" data-v="50" data-unchecked="￥ 50" data-checked="50 元">￥ 50</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-100" data-v="100" data-unchecked="￥ 100" data-checked="100 元">￥ 100</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-custom" data-v="custom" data-unchecked="任意金额" data-checked="任意金额">任意金额</button>
+            </div>
+            <div class="donate-box-pay">
+              <img class="donate-box-pay-qrcode" id="donate-box-pay-qrcode" src=""/>
+            </div>
+          </div>
+          <div class="donate-box-footer">
+            <div class="donate-box-pay-method donate-box-pay-method-checked" data-v="wechat-pay">
+              <img class="donate-box-pay-method-image" id="donate-box-pay-method-image-wechat-pay" src=""/>
+            </div>
+            <div class="donate-box-pay-method" data-v="alipay">
+              <img class="donate-box-pay-method-image"  id="donate-box-pay-method-image-alipay" src=""/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="donate-box-close-button">
+      <svg class="donate-box-close-button-icon" fill="#fff" viewBox="0 0 24 24" width="24" height="24"><path d="M13.486 12l5.208-5.207a1.048 1.048 0 0 0-.006-1.483 1.046 1.046 0 0 0-1.482-.005L12 10.514 6.793 5.305a1.048 1.048 0 0 0-1.483.005 1.046 1.046 0 0 0-.005 1.483L10.514 12l-5.208 5.207a1.048 1.048 0 0 0 .006 1.483 1.046 1.046 0 0 0 1.482.005L12 13.486l5.207 5.208a1.048 1.048 0 0 0 1.483-.006 1.046 1.046 0 0 0 .005-1.482L13.486 12z" fill-rule="evenodd"></path></svg>
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/donate.js"></script>
+</script>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/blogs/establish-blog-hugo/">本博客的建立及部署 -- 使用 blogdown &#43; Vercel 快速建立博客</a></span>
+  <span class="nav-next"><a href="/blogs/fdm-waveequation-taylor/">从泰勒展开推导弹性波动方程的有限差分近似</a> &rarr;</span>
+</nav>
+<script type="text/javascript">
+document.addEventListener('keyup', function(e) {
+  if (e.target.nodeName.toUpperCase() != 'BODY') return;
+  var url = false;
+  if (e.which == 37) {  
+    
+    url = '\/blogs\/establish-blog-hugo\/';
+    
+  } else if (e.which == 39) {  
+    
+    url = '\/blogs\/fdm-waveequation-taylor\/';
+    
+  }
+  if (url) window.location = url;
+});
+</script>
+
+
+
+
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2608165017777396"
+     data-ad-slot="1261604535"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+<section class="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+    this.page.url = "https:\/\/tintingoo.com" + location.pathname;
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var disqus_js = '//Tintingo.disqus.com/embed.js';
+    var d = document, s = d.createElement('script');
+    s.src = disqus_js; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    var t = d.getElementById('disqus_thread');
+    var b = false, l = function(scroll) {
+      if (b) return;
+      (d.head || d.body).appendChild(s); b = true;
+      if (scroll) t.scrollIntoView();
+    }
+    s.onerror = function(e) {
+      if (sessionStorage.getItem('failure-note')) return;
+      t.innerText = 'Sorry, but you cannot make comments because Disqus failed to load for some reason. It is known to be blocked in China. If you are sure it is not blocked in your region, please refresh the page. 中国大陆地区读者需要翻墙才能发表评论。';
+      sessionStorage.setItem('failure-note', true);
+    };
+    
+    if (location.hash.match(/^#comment-[0-9]+$/)) return l(true);
+    var c = function() {
+      if (b) return;
+      var rect = t.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) l();
+    };
+    window.addEventListener('load', c);
+    d.addEventListener('scroll', c);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/show-language/prism-show-language.min.js"></script>
+
+<script>
+    (function() {
+        if (!self.Prism) {
+            return;
+        }
+
+        Prism.languages.dos = Prism.languages.powershell;
+        Prism.languages.gremlin = Prism.languages.groovy;
+
+        var Languages = {
+            'r': 'R', 'python': 'Python', 'xml': 'XML', 'html': 'HTML',
+            'yaml': 'YAML', 'latex': 'LaTeX', 'tex': 'TeX',
+            'powershell': 'PowerShell', 'javascript': 'JavaScript',
+            'dos': 'DOS', 'qml': 'QML', 'json': 'JSON', 'bash': 'Bash',
+            'text': 'Text', 'txt': 'Text', 'sparql': 'SPARQL',
+            'gremlin': 'Gremlin', 'cypher': 'Cypher', 'ngql': 'nGQL',
+            'shell': 'Shell', 'sql': 'SQL', 'apacheconf': 'Apache Configuration'
+        };
+
+        Prism.hooks.add('before-highlight', function(env) {
+        	var language = Languages[env.language] || env.language;
+        	env.element.setAttribute('data-language', language);
+        });
+    })();
+</script>
+
+
+
+
+<script async src="/js/fix-toc.js"></script>
+<script async src="/js/center-img.js"></script>
+<script async src="/js/right-quote.js"></script>
+<script async src="/js/fix-footnote.js"></script>
+<script async src="/js/external-link.js"></script>
+<script async src="/js/alt-title.js"></script>
+<script src="/js/no-highlight.js"></script>
+<script src="/js/math-code.js"></script>
+
+
+<script>
+window.MathJax = {
+  loader: {
+    load: ['[tex]/boldsymbol']
+  },
+  tex: {
+    tags: "all",
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    packages: {
+      '[+]': ['boldsymbol']
+    }
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js" crossorigin></script>
+
+
+
+
+
+
+
+<script async src="/js/load-typekit.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/vanilla-back-to-top@latest/dist/vanilla-back-to-top.min.js"></script>
+<script>
+addBackToTop({
+  diameter: 48
+})
+</script>
+
+
+
+  <hr>
+  <div class="copyright no-border-bottom">
+    <div class="copyright-author-year">
+      <span>&copy; 2021-2024</span>
+    </div>
+    <div class="copyright-links">
+      <a href="https://github.com/norery/tintingoo.com" rel="noreferrer" target="_blank">Github</a>
+      <span> · </span>
+      <a href="https://www.researchgate.net/profile/Yi-Ding-157" rel="noreferrer" target="_blank">ResearchGate</a>
+      <span> · </span>
+      <a href="https://orcid.org/my-orcid?orcid=0000-0003-3443-9313" rel="noreferrer" target="_blank">ORCID</a>
+      <span> · </span>
+      <a href="https://www.scopus.com/authid/detail.uri?authorId=58078994400" rel="noreferrer" target="_blank">Scopus</a>
+    </div>
+  </div>
+  </footer>
+  </article>
+  </body>
+</html>
+

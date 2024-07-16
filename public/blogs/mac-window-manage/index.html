@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+        <title>MacOS中的平铺式桌面 -- yabai - Tintingo | 丁毅</title>
+
+    <meta name="referrer" content="no-referrer">
+    
+    <meta property="og:title" content="MacOS中的平铺式桌面 -- yabai - Tintingo | 丁毅">
+    <meta name="description" property="og:description" content="前言 这篇文章是本人对于 MacOS 的键盘流窗口管理的一些总结和心得。由于很早之前使用 Linux 的 i3 等平铺式桌面的经历，我对于窗口以及桌面的键盘控制流一直很喜欢">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tintingo | 丁毅">
+    <meta property="og:url" content="http://localhost:4321/blogs/mac-window-manage/">
+
+    
+    
+    
+    
+    <meta name="author" property="article:author" content="Tintingo">
+    
+    
+    
+    <meta name="date" property="article:published_time" content="2022-02-11" scheme="YYYY-MM-DD">
+    
+    
+    <meta name="date" property="article:modified_time" content="2022-02-11" scheme="YYYY-MM-DD">
+    
+
+    
+    <meta name="keywords" property="article:tag" content ="MacOS,效率工具">
+    
+    
+    <meta name="theme-color" content="#0d0d0d">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/web/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/web/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/web/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="62x62" href="/images/web/favicon-62x62.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/web/favicon-192x192.png">
+    <link rel="apple-touch-icon" size="192x192" href="/images/web/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+        
+    
+
+    
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://localhost:4321/blogs"
+        },
+        "name": "MacOS中的平铺式桌面 -- yabai",
+        "headline": "MacOS中的平铺式桌面 -- yabai",
+        "description" : "前言 这篇文章是本人对于 MacOS 的键盘流窗口管理的一些总结和心得。由于很早之前使用 Linux 的 i3 等平铺式桌面的经历，我对于窗口以及桌面的键盘控制流一直很喜欢",
+        "genre": [
+            "MacOS"
+        ],
+        "datePublished": "2022-02-11",
+        "dateModified": "2022-02-11",
+        "wordCount": "2731",
+        "keywords": [
+            "MacOS", "效率工具"
+        ],
+        "image": [
+            
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Tintingo"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Tintingo",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://localhost:4321/images/web/publisher-logo.png"
+            }
+        },
+        "url": "http://localhost:4321/blogs/mac-window-manage/"
+    }
+    </script>
+    
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.0/js.cookie.min.js'></script>
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.5.95/css/materialdesignicons.min.css">
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism.min.css">
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-.min.css">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJC7CCKE67"></script>
+<script>
+if (window.location.hostname != "127.0.0.1" && window.location.hostname != "localhost") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJC7CCKE67');
+}
+</script>
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/light.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" id="dark-mode-style" disabled="disabled">
+<link rel="stylesheet" type="text/css" href="/css/icons.css">
+<link rel="stylesheet" type="text/css" href="/css/print.css">
+
+  </head>
+
+  
+  <body class="blogs">
+    <header class="masthead">
+      
+
+<div class="logo"></div>
+<p class="slogan">Tintingoo&#39;s Blog</p>
+      <nav class="menu">
+  <ul>
+  
+  
+  
+    
+  
+  
+    <li><a href="/">Home</a></li>
+  
+    <li><a href="/blogs/">Blog</a></li>
+  
+    <li><a href="/categories/">Categories</a></li>
+  
+    <li><a href="/photography/">Photography</a></li>
+  
+  
+
+
+<li class="menu-separator"><span>&nbsp;</span></li>
+
+<li><a href="/blogs/index.xml" target="_blank" type="application/rss+xml" title="RSS feed">Subscribe</a></li>
+
+<li><a href="https://github.com/norery/tintingoo.com/blob/main/LICENSE" target="_blank" title="Attribution-NonCommercial-ShareAlike 4.0 International">License</a></li>
+
+
+  <li class="light-dark-mode no-border-bottom"><a id="light-dark-mode-action"><span id="light-dark-mode-icon" class="mdi mdi-weather-night"></span></a></li>
+  </ul>
+</nav>
+
+      <script src="/js/toggle-theme.js"></script>
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>MacOS中的平铺式桌面 -- yabai</h1>
+
+
+
+
+
+
+
+<h3>Tintingo / 
+2022-02-11</h3>
+
+
+
+<h3 class="post-meta">
+
+
+<strong>Categories: </strong>
+<a href="/categories/macos">MacOS</a>
+
+
+
+
+/
+
+
+
+
+<strong>Tags: </strong>
+<span>MacOS</span>, <span>效率工具</span>
+
+
+
+
+/
+
+
+<strong>Word Count: </strong>
+2731
+</h3>
+
+
+
+<hr>
+
+
+      </header>
+
+
+
+<div class="toc-depth-3" ><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#前言">前言</a>
+          <ul>
+            <li><a href="#浮动式桌面-or-平铺式桌面">浮动式桌面 or 平铺式桌面？</a></li>
+          </ul>
+        </li>
+        <li><a href="#窗口的美化">窗口的美化</a>
+          <ul>
+            <li><a href="#半透明效果的实现">半透明效果的实现</a></li>
+            <li><a href="#窗口边框border的实现">窗口边框(border)的实现</a></li>
+          </ul>
+        </li>
+        <li><a href="#space-的基础操作">space 的基础操作</a></li>
+        <li><a href="#window-的基础操作">window 的基础操作</a></li>
+        <li><a href="#快速打开应用">快速打开应用</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div> 
+
+
+<h2 id="前言">前言</h2>
+<p>这篇文章是本人对于 MacOS 的键盘流窗口管理的一些总结和心得。由于很早之前使用 Linux 的 i3 等平铺式桌面的经历，我对于窗口以及桌面的键盘控制流一直很喜欢。因此，自从换了mac以后，我一直在寻找 MacOS 上键盘流桌面管理的方法，最近这段时间觉得逐渐形成了一套稳定的流程，遂写文记录。</p>
+<p>MacOS 中平铺式桌面的替代方案我选择的是 <a href="https://github.com/koekeishiya/yabai">yabai</a>，yabai 中快捷键操作是使用 <a href="https://github.com/koekeishiya/skhd">skhd</a>实现的，因此我们需要同时安装yabai以及skhd，安装方法就不再赘述了，可以查看项目的 github。另外有关 yabai 的更多说明参见<a href="https://github.com/koekeishiya/yabai/wiki/">官方wiki</a>。</p>
+<p>值得一提的是，安装完成以后想要实现开机启动以及后台运行，需要将它们加入到 <code>brew</code> 的 <code>service</code> 中：</p>
+<pre><code class="language-shell">brew services start yabai
+brew services start skhd
+# 停止运行
+brew services stop yabai
+brew services stop skhd
+</code></pre>
+<p>yabai 和 skhd 都是需要我们使用配置文件进行配置的，配置文件的默认位置为: <code>~/.yabairc</code>以及<code>~/.skhdrc</code>。修改了 <code>~/.skhdrc</code> 之后配置文件可立刻生效，而修改了 <code>~/.yabairc</code> 以后需要重启 yabai 方能生效，因此在 <code>~/.skhdrc</code> 中加入以下命令，可以使用快捷键重启 yabai。</p>
+<pre><code class="language-shell"># Restart Yabai
+ctrl + cmd + alt - r :
+    /usr/bin/env osascript &lt;&lt;&lt; \
+        &quot;display notification \&quot;Restarting Yabai\&quot; with title \&quot;Yabai\&quot;&quot;; \
+    launchctl kickstart -k &quot;gui/${UID}/homebrew.mxcl.yabai&quot;
+</code></pre>
+<blockquote>
+<p>我在刚开始使用 yabai 的时候，看了网上其他的文章推荐后，也对 <a href="https://github.com/Jean-Tinland/simple-bar">simple-bar</a> 和 <a href="https://github.com/AdamWagner/stackline">stack-line</a> 作了尝试，用了很长时间以后觉得实际用处并不大，现在已经弃用了，因此不作讲解。</p>
+</blockquote>
+<h3 id="浮动式桌面-or-平铺式桌面">浮动式桌面 or 平铺式桌面？</h3>
+<p>yabai 中默认的是平铺式布局，如果不习惯使用平铺式布局，可以改为浮动式布局（大多数用户习惯的方式）。本篇文章接下来将对以平铺式布局的配置方式进行说明。</p>
+<pre><code class="language-shell">yabai -m config layout                       bsp #默认使用平铺式布局
+# yabai -m config layout                       float #默认使用浮动式布局
+# 对特定的space指定布局方式
+yabai -m config --space 2 layout float
+</code></pre>
+<h2 id="窗口的美化">窗口的美化</h2>
+<h3 id="半透明效果的实现">半透明效果的实现</h3>
+<p>具有半透明效果的窗口可能在视觉上给人一种更美观的感觉。幸运的是在 yabai 中我们可以使用很简单的方式实现窗口的半透明效果，而且可以为聚焦窗口和非聚焦窗口设置不同的透明度，以起到简单区分聚焦窗口的效果。在 <code>~/.yabairc</code> 中进行如下设置：</p>
+<pre><code class="language-shell"># window opacity (default: off)
+yabai -m config window_opacity on
+yabai -m config active_window_opacity 0.95  #为聚焦窗口设置95%的透明度
+yabai -m config normal_window_opacity 0.9   #为非聚焦窗口设置90%的透明度
+</code></pre>
+<p>利用 skhd 可以使用快捷键快速为当前聚焦窗口切换透明度，比如在 <code>~/.skhdrc</code> 中的如下实现：</p>
+<pre><code class="language-shell"># toggle window transparency
+ctrl + alt - p : yabai -m window --opacity 1.0
+ctrl + alt - l : yabai -m window --opacity 0.95
+</code></pre>
+<h3 id="窗口边框border的实现">窗口边框(border)的实现</h3>
+<p>在我截图中大家可以发现在窗口的周围有一圈深红色边框，这是 yabai 自带的 border。我们可以自己配置聚焦窗口的边框颜色与非聚焦窗口的边框颜色，这样就可以对聚焦窗口进行非常明显的区分了。在 <code>~/.yabairc</code> 中进行如下配置：</p>
+<pre><code class="language-shell"># ====== Border settings =======================
+yabai -m config window_border                on
+yabai -m config window_border_width          6
+# red or gray
+yabai -m config active_window_border_color   0xfac23541
+yabai -m config normal_window_border_color   0x7f6123A
+yabai -m config insert_window_border_color   0xffCF515C
+</code></pre>
+<p>在实际使用时，发现有一个 bug 就是在移动窗口时有时会出现 border 不随之移动的情况，非常影响体验，这时可以使用快捷键取消窗口的边框，再打开边框即可。在 <code>~/.skhdrc</code> 中设置 <code>alt b</code> 对边框进行打开或关闭。</p>
+<pre><code class="language-shell"># toggle window border
+alt - b : yabai -m window --toggle border
+</code></pre>
+<h2 id="space-的基础操作">space 的基础操作</h2>
+<p>MacOS 在系统级别中为我们提供了 10 个 Space（即桌面1-10），通过 &lt;系统偏好设置-快捷键-调度中心&gt; 对切换桌面的快捷键进行配置，默认是<code>ctrl 1/9 0</code>。在这个页面也可以查看MacOS自带的快捷键列表并自行配置，也方便我们查看冲突的快捷键或取消不需要的快捷键（以免不小心触发）。</p>
+<p><img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/2022/02/11/16445595603091.jpg" alt="-w668"></p>
+<p>在 yabai 中，我们可以充分利用这10个桌面，对窗口进行统一的管理。首先建议对每个桌面分配不同的工作属性，例如在桌面2中显示终端；在桌面7打开 matlab、pycharm 等代码编辑工具；在桌面9打开网易云、INNA 视频播放器等影音娱乐程序等等。接下来对这部分在配置文件<code>~/.yabai</code>中的设置进行说明。</p>
+<pre><code class="language-shell"># 可以从左上角苹果符号 () 旁边的 macOS 菜单栏中检查应用程序名称。
+# workd after open a new software or restart yabai
+##### space 1 -- main
+yabai -m space 1 --label main
+yabai -m rule --add label=zotero app=&quot;^Zotero$&quot; space=main
+
+##### space 2 -- Shell
+yabai -m space 2 --label shell 
+yabai -m rule --add label=iterm app=&quot;^iTerm2$&quot; space=shell
+
+##### space 3
+# 1. chrome -- browser
+yabai -m space 3 --label surf
+yabai -m rule --add label=chrome app=&quot;^Google Chrome$&quot; space=surf
+# 2. Safari 
+yabai -m rule --add label=safari app=&quot;^Safari浏览器$&quot; space=surf
+</code></pre>
+<p>限于篇幅，使用前三个 space 的配置进行示例。我们可以使用 <code>--label</code> 对每一个 space 进行命名，并将应用程序指定到该 space 中。</p>
+<blockquote>
+<p>上述配置的作用是当打开应用程序或重启 yabai 时，自动将该应用程序移动到指定的 space 中。</p>
+</blockquote>
+<p>清楚了效果以后，我们可以想像一下应用场景。我的使用方式是将功能划分很明显的应用分配到固定的 space 中，一般不会改变它的 space；对于可能在多个 space 中打开的应用（例如 Finder），不设置它的固定 space。</p>
+<p>然而有些情况我们还是需要将某个应用程序移动到别的 space 中的，并且我们需要很频繁地在多个 space 中切换。为了解决以上两个问题，我们可以在 <code>~/.skhdrc</code> 中进行如下配置：</p>
+<pre><code class="language-shell"># 使用 alt - 1/2/3 进行space的快速切换
+alt - 1 : yabai -m space --focus main
+alt - 2 : yabai -m space --focus shell
+alt - 3 : yabai -m space --focus surf
+# 使用 ctrl+alt-1/2/3 将当前聚焦的应用程序移动到 space 1/2/3 中
+ctrl + alt - 1 : yabai -m window --space main
+ctrl + alt - 2 : yabai -m window --space shell
+ctrl + alt - 3 : yabai -m window --space surf
+</code></pre>
+<h2 id="window-的基础操作">window 的基础操作</h2>
+<p>window（窗口）的基础操作大致可以分为三类，为了方便记忆，我为其分配了不同的快捷键前缀：</p>
+<ol>
+<li>聚焦到某一窗口：<code>ctrl + alt</code></li>
+<li>窗口的移动、旋转：<code>shift + alt</code></li>
+<li>窗口的大小调整：<code>shift + cmd</code></li>
+</ol>
+<p>这部分没什么特别需要讲解的，大家可以自行构想出方便使用的快捷键，直接看 <code>~/.skhdrc</code> 中的代码吧！</p>
+<pre><code class="language-shell"># =======================  window focus ==========================
+# 只在平铺的窗口上生效，浮动的窗口之间移动实现起来比较麻烦
+# focus window in direction of focused window (options: north, east, south, west)
+ctrl + alt - l : yabai -m window --focus east
+ctrl + alt - h : yabai -m window --focus west
+ctrl + alt - j : yabai -m window --focus south
+ctrl + alt - k : yabai -m window --focus north
+#
+# focus window that was previously focused
+ctrl + alt - b : yabai -m window --focus recent
+</code></pre>
+<pre><code class="language-shell"># =======================  window layout ==========================
+# 将窗口移动到上/下/左/右
+shift + alt - h : yabai -m window --warp west
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+shift + alt - l : yabai -m window --warp east
+
+# toggle window split type-水平排列转为垂直排列
+shift + alt - g : yabai -m window --toggle split
+
+# 窗口顺时针旋转 90 度,一开始垂直的半边屏幕总是一个总体,用的少
+shift + alt - r : yabai -m space --rotate 270
+# 窗口逆时针旋转 90 度
+# shift + alt - r : yabai -m space --rotate 90
+
+# Rotate on X and Y Axis
+shift + alt - x : yabai -m space --mirror x-axis
+shift + alt - y : yabai -m space --mirror y-axis
+
+# Float and center window-bsp/float
+# The grid format is &lt;rows&gt;:&lt;cols&gt;:&lt;start-x&gt;:&lt;start-y&gt;:&lt;width&gt;:&lt;height&gt;
+shift + alt - c : yabai -m window --toggle float;\
+                  yabai -m window --grid 6:6:1:1:4:4
+# 更小的浮动窗口
+shift + alt - s : yabai -m window --toggle float;\
+                  yabai -m window --grid 4:4:1:1:2:2
+</code></pre>
+<pre><code class="language-shell"># =======================  window resize ==========================
+# Make window native fullscreen-float
+alt - f : yabai -m window --toggle zoom-fullscreen
+# Resize windows
+shift+ cmd - h : \
+    yabai -m window --resize left:-20:0 ; \
+    yabai -m window --resize right:-20:0
+
+shift + cmd - j : \
+    yabai -m window --resize bottom:0:20 ; \
+    yabai -m window --resize top:0:20
+
+shift + cmd - k : 
+    yabai -m window --resize top:0:-20 ; \
+    yabai -m window --resize bottom:0:-20
+
+shift + cmd - l : \
+    yabai -m window --resize right:20:0 ; \
+    yabai -m window --resize left:20:0
+
+# Equalize size of windows
+shift + cmd - 0 : yabai -m space --balance
+
+</code></pre>
+<h2 id="快速打开应用">快速打开应用</h2>
+<p>在 MacOS 中有很多种方式快速打开应用（如果已经打开则会聚焦到该应用窗口），目前是使用 Hammerspoon 来定义快速打开应用的快捷键。有关 Hammerspoon 的使用方法和 Case，我估计会专门出一篇文章介绍，这里只列出快速打开应用的代码。在 <code>~/.hammerspoon/init.lua</code> 文件中加入以下代码段，就可以使用 <code>alt</code> 加对应的按键快速打开应用程序了。</p>
+<pre><code class="language-shell">--- 快捷键小写大写等效
+hs.hotkey.bind({&quot;alt&quot;}, &quot;E&quot;, open(&quot;Microsoft Word&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;W&quot;, open(&quot;WeChat&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;C&quot;, open(&quot;Google Chrome&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;I&quot;, open(&quot;iTerm&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;M&quot;, open(&quot;NeteaseMusic&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;P&quot;, open(&quot;PDF Expert&quot;))
+-- hs.hotkey.bind({&quot;alt&quot;}, &quot;S&quot;, open(&quot;Emacs&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;L&quot;, open(&quot;Notion&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;S&quot;, open(&quot;Logseq&quot;))
+hs.hotkey.bind({&quot;alt&quot;}, &quot;R&quot;, open(&quot;Mweb&quot;))
+</code></pre>
+<p>这里应用程序的名称可以在 <code>/Applications</code> 目录下找到，找到对应的应用程序后，去掉 <code>.app</code> 后缀即可。</p>
+
+
+
+<link rel="stylesheet" href="/css/donate.css" />
+
+
+<div class="donate">
+  <div class="donate-header"></div>
+  <div class="donate-slug" id="donate-slug">mac-window-manage</div>
+  <button class="donate-button">DONATE</button>
+  <div class="donate-footer">「Donation Given, Fragrance in Hand」</div>
+</div>
+<div class="donate-modal-wrapper">
+  <div class="donate-modal">
+    <div class="donate-box">
+      <div class="donate-box-content">
+        <div class="donate-box-content-inner">
+          <div class="donate-box-header">「Donation Given, Fragrance in Hand」</div>
+          <div class="donate-box-body">
+            <div class="donate-box-money">
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-2" data-v="2" data-unchecked="￥ 2" data-checked="2 元">￥ 2</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-5" data-v="5" data-unchecked="￥ 5" data-checked="5 元">￥ 5</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-10" data-v="10" data-unchecked="￥ 10" data-checked="10 元">￥ 10</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-50" data-v="50" data-unchecked="￥ 50" data-checked="50 元">￥ 50</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-100" data-v="100" data-unchecked="￥ 100" data-checked="100 元">￥ 100</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-custom" data-v="custom" data-unchecked="任意金额" data-checked="任意金额">任意金额</button>
+            </div>
+            <div class="donate-box-pay">
+              <img class="donate-box-pay-qrcode" id="donate-box-pay-qrcode" src=""/>
+            </div>
+          </div>
+          <div class="donate-box-footer">
+            <div class="donate-box-pay-method donate-box-pay-method-checked" data-v="wechat-pay">
+              <img class="donate-box-pay-method-image" id="donate-box-pay-method-image-wechat-pay" src=""/>
+            </div>
+            <div class="donate-box-pay-method" data-v="alipay">
+              <img class="donate-box-pay-method-image"  id="donate-box-pay-method-image-alipay" src=""/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="donate-box-close-button">
+      <svg class="donate-box-close-button-icon" fill="#fff" viewBox="0 0 24 24" width="24" height="24"><path d="M13.486 12l5.208-5.207a1.048 1.048 0 0 0-.006-1.483 1.046 1.046 0 0 0-1.482-.005L12 10.514 6.793 5.305a1.048 1.048 0 0 0-1.483.005 1.046 1.046 0 0 0-.005 1.483L10.514 12l-5.208 5.207a1.048 1.048 0 0 0 .006 1.483 1.046 1.046 0 0 0 1.482.005L12 13.486l5.207 5.208a1.048 1.048 0 0 0 1.483-.006 1.046 1.046 0 0 0 .005-1.482L13.486 12z" fill-rule="evenodd"></path></svg>
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/donate.js"></script>
+</script>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/blogs/python-tips/">python Tips</a></span>
+  <span class="nav-next"><a href="/blogs/doom-emacs-shortcuts-org/">探索 Doom Emacs 的快捷键命令</a> &rarr;</span>
+</nav>
+<script type="text/javascript">
+document.addEventListener('keyup', function(e) {
+  if (e.target.nodeName.toUpperCase() != 'BODY') return;
+  var url = false;
+  if (e.which == 37) {  
+    
+    url = '\/blogs\/python-tips\/';
+    
+  } else if (e.which == 39) {  
+    
+    url = '\/blogs\/doom-emacs-shortcuts-org\/';
+    
+  }
+  if (url) window.location = url;
+});
+</script>
+
+
+
+
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2608165017777396"
+     data-ad-slot="1261604535"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+<section class="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+    this.page.url = "https:\/\/tintingoo.com" + location.pathname;
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var disqus_js = '//Tintingo.disqus.com/embed.js';
+    var d = document, s = d.createElement('script');
+    s.src = disqus_js; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    var t = d.getElementById('disqus_thread');
+    var b = false, l = function(scroll) {
+      if (b) return;
+      (d.head || d.body).appendChild(s); b = true;
+      if (scroll) t.scrollIntoView();
+    }
+    s.onerror = function(e) {
+      if (sessionStorage.getItem('failure-note')) return;
+      t.innerText = 'Sorry, but you cannot make comments because Disqus failed to load for some reason. It is known to be blocked in China. If you are sure it is not blocked in your region, please refresh the page. 中国大陆地区读者需要翻墙才能发表评论。';
+      sessionStorage.setItem('failure-note', true);
+    };
+    
+    if (location.hash.match(/^#comment-[0-9]+$/)) return l(true);
+    var c = function() {
+      if (b) return;
+      var rect = t.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) l();
+    };
+    window.addEventListener('load', c);
+    d.addEventListener('scroll', c);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/show-language/prism-show-language.min.js"></script>
+
+<script>
+    (function() {
+        if (!self.Prism) {
+            return;
+        }
+
+        Prism.languages.dos = Prism.languages.powershell;
+        Prism.languages.gremlin = Prism.languages.groovy;
+
+        var Languages = {
+            'r': 'R', 'python': 'Python', 'xml': 'XML', 'html': 'HTML',
+            'yaml': 'YAML', 'latex': 'LaTeX', 'tex': 'TeX',
+            'powershell': 'PowerShell', 'javascript': 'JavaScript',
+            'dos': 'DOS', 'qml': 'QML', 'json': 'JSON', 'bash': 'Bash',
+            'text': 'Text', 'txt': 'Text', 'sparql': 'SPARQL',
+            'gremlin': 'Gremlin', 'cypher': 'Cypher', 'ngql': 'nGQL',
+            'shell': 'Shell', 'sql': 'SQL', 'apacheconf': 'Apache Configuration'
+        };
+
+        Prism.hooks.add('before-highlight', function(env) {
+        	var language = Languages[env.language] || env.language;
+        	env.element.setAttribute('data-language', language);
+        });
+    })();
+</script>
+
+
+
+
+<script async src="/js/fix-toc.js"></script>
+<script async src="/js/center-img.js"></script>
+<script async src="/js/right-quote.js"></script>
+<script async src="/js/fix-footnote.js"></script>
+<script async src="/js/external-link.js"></script>
+<script async src="/js/alt-title.js"></script>
+<script src="/js/no-highlight.js"></script>
+<script src="/js/math-code.js"></script>
+
+
+<script>
+window.MathJax = {
+  loader: {
+    load: ['[tex]/boldsymbol']
+  },
+  tex: {
+    tags: "all",
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    packages: {
+      '[+]': ['boldsymbol']
+    }
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-chtml.js" crossorigin></script>
+
+
+
+
+
+
+
+<script async src="/js/load-typekit.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/vanilla-back-to-top@latest/dist/vanilla-back-to-top.min.js"></script>
+<script>
+addBackToTop({
+  diameter: 48
+})
+</script>
+
+
+
+  <hr>
+  <div class="copyright no-border-bottom">
+    <div class="copyright-author-year">
+      <span>&copy; 2021-2024</span>
+    </div>
+    <div class="copyright-links">
+      <a href="https://github.com/norery/tintingoo.com" rel="noreferrer" target="_blank">Github</a>
+      <span> · </span>
+      <a href="https://www.researchgate.net/profile/Yi-Ding-157" rel="noreferrer" target="_blank">ResearchGate</a>
+      <span> · </span>
+      <a href="https://orcid.org/my-orcid?orcid=0000-0003-3443-9313" rel="noreferrer" target="_blank">ORCID</a>
+      <span> · </span>
+      <a href="https://www.scopus.com/authid/detail.uri?authorId=58078994400" rel="noreferrer" target="_blank">Scopus</a>
+    </div>
+  </div>
+  </footer>
+  </article>
+  </body>
+</html>
+

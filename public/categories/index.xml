@@ -1,0 +1,90 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Tintingo | 丁毅</title>
+    <link>http://localhost:4321/categories/</link>
+    <description>Recent content in Categories on Tintingo | 丁毅</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 26 Feb 2022 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:4321/categories/" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>WaveEquation</title>
+      <link>http://localhost:4321/categories/waveequation/</link>
+      <pubDate>Sat, 26 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/categories/waveequation/</guid>
+      <description>
+        <![CDATA[
+        
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>Blog</title>
+      <link>http://localhost:4321/categories/blog/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/categories/blog/</guid>
+      <description>
+        <![CDATA[
+        
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>Emacs</title>
+      <link>http://localhost:4321/categories/emacs/</link>
+      <pubDate>Wed, 16 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/categories/emacs/</guid>
+      <description>
+        <![CDATA[
+        
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>MacOS</title>
+      <link>http://localhost:4321/categories/macos/</link>
+      <pubDate>Fri, 11 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/categories/macos/</guid>
+      <description>
+        <![CDATA[
+        
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>Coding</title>
+      <link>http://localhost:4321/categories/coding/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/categories/coding/</guid>
+      <description>
+        <![CDATA[
+        
+        ]]>
+      </description>
+    </item>
+    
+    <item>
+      <title>Python</title>
+      <link>http://localhost:4321/categories/python/</link>
+      <pubDate>Tue, 08 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://localhost:4321/categories/python/</guid>
+      <description>
+        <![CDATA[
+        
+        ]]>
+      </description>
+    </item>
+    
+  </channel>
+</rss>

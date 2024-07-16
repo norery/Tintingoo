@@ -3,6 +3,9 @@ title: Homepage | 主页
 date: '2022-02-11'
 lastmod: '2022-02-11'
 ---
+
+<img src="https://vde05-1256575153.cos.ap-beijing.myqcloud.com/img/Snipaste_2022-02-12_20-51-06.png" width = "100%" alt="丁毅" align=center />
+
 Hi, I’m **Ding Yi**.  This is a relaxed yet somewhat informative, personal place where I share subjective content. The website may contain:
 
 1. Some content related to earthquake engineering - professional knowledge (probably not many people will read 😑)

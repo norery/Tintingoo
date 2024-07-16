@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+        <title>python Tips - Tintingo | 丁毅</title>
+
+    <meta name="referrer" content="no-referrer">
+    
+    <meta property="og:title" content="python Tips - Tintingo | 丁毅">
+    <meta name="description" property="og:description" content="1. 函数式编程 函数式编程（Functional Programming），又称泛函编程，是一种编程范型。简单来讲，函数式编程是一种“广播式”的编">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tintingo | 丁毅">
+    <meta property="og:url" content="http://localhost:4321/blogs/python-tips/">
+
+    
+    
+    
+    
+    <meta name="author" property="article:author" content="Tintingo">
+    
+    
+    
+    <meta name="date" property="article:published_time" content="2022-02-08" scheme="YYYY-MM-DD">
+    
+    
+    <meta name="date" property="article:modified_time" content="2022-02-08" scheme="YYYY-MM-DD">
+    
+
+    
+    <meta name="keywords" property="article:tag" content ="python">
+    
+    
+    <meta name="theme-color" content="#0d0d0d">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/web/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/web/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/web/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="62x62" href="/images/web/favicon-62x62.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/web/favicon-192x192.png">
+    <link rel="apple-touch-icon" size="192x192" href="/images/web/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+        
+    
+
+    
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://localhost:4321/blogs"
+        },
+        "name": "python Tips",
+        "headline": "python Tips",
+        "description" : "1. 函数式编程 函数式编程（Functional Programming），又称泛函编程，是一种编程范型。简单来讲，函数式编程是一种“广播式”的编",
+        "genre": [
+            "Coding", "Python"
+        ],
+        "datePublished": "2022-02-08",
+        "dateModified": "2022-02-08",
+        "wordCount": "5581",
+        "keywords": [
+            "python"
+        ],
+        "image": [
+            
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Tintingo"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Tintingo",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://localhost:4321/images/web/publisher-logo.png"
+            }
+        },
+        "url": "http://localhost:4321/blogs/python-tips/"
+    }
+    </script>
+    
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.0/js.cookie.min.js'></script>
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.5.95/css/materialdesignicons.min.css">
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism.min.css">
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-.min.css">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJC7CCKE67"></script>
+<script>
+if (window.location.hostname != "127.0.0.1" && window.location.hostname != "localhost") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJC7CCKE67');
+}
+</script>
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/light.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" id="dark-mode-style" disabled="disabled">
+<link rel="stylesheet" type="text/css" href="/css/icons.css">
+<link rel="stylesheet" type="text/css" href="/css/print.css">
+
+  </head>
+
+  
+  <body class="blogs">
+    <header class="masthead">
+      
+
+<div class="logo"></div>
+<p class="slogan">Tintingoo&#39;s Blog</p>
+      <nav class="menu">
+  <ul>
+  
+  
+  
+    
+  
+  
+    <li><a href="/">Home</a></li>
+  
+    <li><a href="/blogs/">Blog</a></li>
+  
+    <li><a href="/categories/">Categories</a></li>
+  
+    <li><a href="/photography/">Photography</a></li>
+  
+  
+
+
+<li class="menu-separator"><span>&nbsp;</span></li>
+
+<li><a href="/blogs/index.xml" target="_blank" type="application/rss+xml" title="RSS feed">Subscribe</a></li>
+
+<li><a href="https://github.com/norery/tintingoo.com/blob/main/LICENSE" target="_blank" title="Attribution-NonCommercial-ShareAlike 4.0 International">License</a></li>
+
+
+  <li class="light-dark-mode no-border-bottom"><a id="light-dark-mode-action"><span id="light-dark-mode-icon" class="mdi mdi-weather-night"></span></a></li>
+  </ul>
+</nav>
+
+      <script src="/js/toggle-theme.js"></script>
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>python Tips</h1>
+
+
+
+
+
+
+
+<h3>Tintingo / 
+2022-02-08</h3>
+
+
+
+<h3 class="post-meta">
+
+
+<strong>Categories: </strong>
+<a href="/categories/coding">Coding</a>, <a href="/categories/python">Python</a>
+
+
+
+
+/
+
+
+
+
+<strong>Tags: </strong>
+<span>python</span>
+
+
+
+
+/
+
+
+<strong>Word Count: </strong>
+5581
+</h3>
+
+
+
+<hr>
+
+
+      </header>
+
+
+
+<div class="toc-depth-3" ><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-函数式编程">1. 函数式编程</a>
+          <ul>
+            <li><a href="#11-匿名函数lambda">1.1 匿名函数（Lambda）</a></li>
+            <li><a href="#12-map-序列遍历函数">1.2 map() 序列遍历函数</a></li>
+            <li><a href="#13-reduce-序列递归函数">1.3 reduce() 序列递归函数</a></li>
+            <li><a href="#14-filter-列表过滤器函数">1.4 filter() 列表过滤器函数</a></li>
+          </ul>
+        </li>
+        <li><a href="#2-python-小技巧">2. python 小技巧</a>
+          <ul>
+            <li><a href="#21-f-strings">2.1 F-Strings</a></li>
+            <li><a href="#22-enumerate-追踪序列索引">2.2 enumerate 追踪序列索引</a></li>
+            <li><a href="#23-柯里化部分参数应用">2.3 柯里化：部分参数应用</a></li>
+            <li><a href="#24-zip">2.4 zip()</a></li>
+          </ul>
+        </li>
+        <li><a href="#3-参数解包">3. 参数解包</a>
+          <ul>
+            <li><a href="#31-参数解包应用于函数的参数传递">3.1 参数解包应用于函数的参数传递</a></li>
+            <li><a href="#32-与-zip-配合对已配对的序列进行拆分">3.2 与 zip 配合对已”配对“的序列进行拆分</a></li>
+          </ul>
+        </li>
+        <li><a href="#4-列表集合和字典的推导式">4. 列表、集合和字典的推导式</a>
+          <ul>
+            <li><a href="#41-列表推导式">4.1 列表推导式</a></li>
+            <li><a href="#42-集合和字典的推导式">4.2 集合和字典的推导式</a></li>
+          </ul>
+        </li>
+        <li><a href="#5-生成器">5. 生成器</a>
+          <ul>
+            <li><a href="#51-迭代器对象">5.1 迭代器对象</a></li>
+            <li><a href="#52-生成器">5.2 生成器</a></li>
+            <li><a href="#53-itertools-模块">5.3 <code>itertools</code> 模块</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div> 
+
+
+<h2 id="1-函数式编程">1. 函数式编程</h2>
+<p>函数式编程（Functional Programming），又称泛函编程，是一种编程范型。简单来讲，函数式编程是一种“广播式”的编程，用于科学计算中，会显得特别简洁方便。
+在 Python 中，函数式编程主要通过以下几个函数来实现：</p>
+<ul>
+<li><code>lambda()</code></li>
+<li><code>map()</code></li>
+<li><code>reduce()</code></li>
+<li><code>filter()</code></li>
+</ul>
+<p>在泛函编程之前，让我们先来看一看好用的“列表解析”功能(也叫做推导式)。它能够简化我们对列表内元素逐一进行操作的代码：</p>
+<pre><code class="language-python">a = [1,2,3]
+b = []
+for i in a:
+    b.append(i + 2)
+b
+
+Out: [3, 4, 5]
+</code></pre>
+<p>使用“列表解析”，上面的代码可以简化成：</p>
+<pre><code class="language-python">a = [1,2,3]
+b = [i + 2 for i in a];    b
+
+Out:[3, 4, 5]
+</code></pre>
+<p>使用这样的方式可以让我们的代码很直观，看起来也更优雅可读了。接下来进行函数式编程的讲解。</p>
+<h3 id="11-匿名函数lambda">1.1 匿名函数（Lambda）</h3>
+<p>匿名函数是一种通过单个语句生成函数的方式，其结果是返回值。匿名函数使用 lambda 关键字定义，该关键字仅表达“我们声明一个匿名函数”的意思。</p>
+<p>使用 lambda 表达式的时候，在心里默念：输入 x（: 左边的变量），输出 x + 2（: 右边的表达式）：</p>
+<pre><code class="language-python">y = lambda x: x+2
+</code></pre>
+<h4 id="a-案例-1">a. 案例 1:</h4>
+<p>匿名函数在数据分析中非常方便，因为在很多案例中 <strong>数据变形函数</strong> 都可以作为函数的参数。匿名函数代码量小（也更为清晰），将它作为参数进行传值， 比写一个完整的函数或者 <strong>将匿名函数赋值给局部变量</strong> 更好：</p>
+<pre><code class="language-python">def apply_to_list(some_list, f):
+    return [f(x) for x in some_list]
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+
+Out: [8, 0, 2, 10, 12]
+</code></pre>
+<p>值得一说的是，以上函数也可以用“列表解析”简单实现，但是使用上面的方法，我们能够简单地将一个自定义操作符传递给 apply_to_list 函数。</p>
+<pre><code class="language-python">y = [x * 2 for x in ints];    y
+
+Out: [8, 0, 2, 10, 12]
+</code></pre>
+<p>通过这个例子，知道了我们可以把 lambda 表达式定义为 f，然后用 f(x) 将 x 作为参数传入到匿名函数中。</p>
+<h4 id="b-案例-2">b. 案例 2:</h4>
+<p>假如想要根据字符串中不同字母的数量对一个字符串集合进行排序，可以将一个匿名函数传给列表的 sort 方法：</p>
+<pre><code class="language-python">strings = ['foo','card','bareo','aaaaa','abab']
+strings.sort(key=lambda x:len(set(list(x))))
+strings
+
+Out: ['aaaaa', 'foo', 'abab', 'card', 'bareo']
+</code></pre>
+<p>输入一个 <code>x</code>，将输出的 <code>len(set(list(x)))</code> 作为参数输入到 <code>strings</code> 的 <code>sort</code> 方法中。</p>
+<p>Q：输入一个 <code>x</code>，但是这个 <code>x</code> 是什么，在哪里输入了？看样子 <code>x</code> 是 <code>strings</code> 的每一个元素。</p>
+<p>A：原因出在 <code>sort</code> 的 <code>key</code> 上面：</p>
+<blockquote>
+<p>key 指定一个具有一个参数的函数，用于从每个列表元素中提取比较键(例如，key=str.lower)。与列表中每个项对应的键计算一次，然后用于整个排序过程。</p>
+</blockquote>
+<p>也就是说 <code>key</code> 会把 <code>strings</code> 的每一个元素拿到 <code>key</code> 的函数里进行运算，然后将计算的结果用于排序。</p>
+<p>到这里我们明确了，lambda 表达式就是一个没有显式的 <code>__name__</code> 属性的函数，如果没有给它传参，那么这个函数是不会有什么效果的。</p>
+<p>接下来，我们将 lambda 和 map 函数结合，写出高效的代码。</p>
+<h3 id="12-map-序列遍历函数">1.2 map() 序列遍历函数</h3>
+<p>一句话概括：对于 <code>map(f,sequence)</code>, map 函数可以将一个函数 (f) 应用到一个序列 (sequence) 上，使这个函数对这个序列的元素分别生效。</p>
+<p>如果将 lambda 匿名函数作为 map 里的这个函数 f，那么就可以将这两个强大的工具相结合了。</p>
+<h4 id="a-案例-1-1">a. 案例 1</h4>
+<p>需求：将 list 的每一个元素都加上 2，得到新的列表：</p>
+<pre><code class="language-python">a = [1, 2, 3]
+#### 方法一：将 map 函数与 lambda 表达式相结合
+b = map(lambda x: x + 2, a);
+# 在 python3 里，map 函数仅仅是创建一个带运行的命令容器，只有在其他函数调用它的时候才返回结果，所以需要再次转换成序列才行
+b = tuple(b) ; b
+
+Out: (3, 4, 5)
+</code></pre>
+<h4 id="b-案例-2-1">b. 案例 2:</h4>
+<p><code>map()</code> 也接受多参数的函数，如：将 <code>a</code>，<code>b</code> 两个列表对应的元素相乘，把结果返回给列表 <code>c</code>：</p>
+<pre><code class="language-python">c = list(map(lambda x,y: x*y,a,b)); c
+
+Out: [3, 8, 15]
+</code></pre>
+<p>值得一提的是，上面 map 和 lambda 组合的功能，用“列表解析”也是可以完成的：</p>
+<pre><code class="language-python">b = [i + 2 for i in a];  
+c = [i * j for i,j in zip(a,b)];  
+print('b:',b)
+print('c:',c)
+
+Out: b:  [3, 4, 5]
+     c:  [3, 8, 15]
+</code></pre>
+<p>Q：有了列表解析，为什么还要有 map() 命令呢？</p>
+<p>A：其实列表解析虽然代码简短，但是本质上还是 for 命令，而 python 的 for 命令效率不高。但是 map() 函数实现了相同的功能，并且效率更高。原则上来说，它的循环命令相当于 C 语言。</p>
+<h3 id="13-reduce-序列递归函数">1.3 reduce() 序列递归函数</h3>
+<p>它有点像 map()函数，但是 map() 函数是逐一遍历，而 reduce() 函数用于递归计算。</p>
+<h4 id="a-案例-1-2">a. 案例 1</h4>
+<p>计算 n 的阶乘：</p>
+<pre><code class="language-python">from functools import reduce
+n = 5
+reduce(lambda x,y: x*y, range(1, n+1))
+
+Out:  120
+</code></pre>
+<p>让我们来分析一下发生了什么：</p>
+<ul>
+<li><code>range(1, n+1)</code> 相当于给出了一个列表，元素是 1～n 这 n 个整数。</li>
+<li><code>lambda x,y: x*y</code> 构造了一个二元函数，返回两个参数的乘积。</li>
+<li><code>reduce()</code> 命令先将列表的前两个元素作为函数的参数进行运算，然后将运算结果与第三个数字作为函数的参数 &hellip; 再将运算结果和第四个数字作为函数的参数&hellip; 直到列表最后，返回最终结果。</li>
+</ul>
+<p>如果用循环命令，那就要这样写：</p>
+<pre><code class="language-python">s = 1
+n = 5
+for i in range(1, n+1):
+    s = s * i
+s
+
+Out: 120
+</code></pre>
+<h3 id="14-filter-列表过滤器函数">1.4 filter() 列表过滤器函数</h3>
+<p>顾名思义，它是一个过滤器，用来筛选出列表中符合条件的元素。 &mdash; 这个在做列表筛选的时候是很有用的!</p>
+<p>先来看一个案例演示：</p>
+<h4 id="a-案例-1过滤出列表中大于-5-小于-8-的数字">a. 案例 1：过滤出列表中大于 5 小于 8 的数字</h4>
+<pre><code class="language-python">b = filter(lambda x: x &gt; 5 and x &lt; 8, range(10))
+b = list(b)  # python3.x 需要转换一下，理由同 map()
+b
+
+Out: [6, 7]
+</code></pre>
+<p>我们来看看发生了什么：</p>
+<ul>
+<li>使用 <code>filter()</code> 函数首先需要一个返回值为 bool 型的函数，如 <code>lambda x: x &gt; 5 and x &lt; 8</code> 定义了一个函数，判断 x 是否大于 5 且小于 8。</li>
+<li>然后将这个函数作用到 <code>range(10)</code> 的每一个元素中，如果为 True，则“挑出那个元素”，最后将满足条件的所有元素组成一个列表返回。</li>
+</ul>
+<p>如果使用列表解析，则写成：</p>
+<pre><code class="language-python">b = [i for i in range(10) if i &gt; 5 and i &lt; 8]
+b 
+
+Out: [6, 7]
+</code></pre>
+<p>可以看到列表解析也并不比 <code>filter()</code> 函数复杂，但是后者的运算速度要比 python 内置的循环快得多。</p>
+<h2 id="2-python-小技巧">2. python 小技巧</h2>
+<h3 id="21-f-strings">2.1 F-Strings</h3>
+<p>在 python3.6 以上，F-Strings 提供了一种简便的方法，可以将 Python 表达式嵌入字符串文本中进行格式化。</p>
+<p>只需在大括号内有变量或表达式的字符串前面加一个小写或大写的 &lsquo;f&rsquo; 即可。</p>
+<pre><code class="language-python">name = 'vde'
+age = '25'
+print(f'my name is {name}, and I am {age} years old')
+
+Out: my name is vde, and I am 25 years old
+</code></pre>
+<p>F-Strings 是一种很棒的格式化字符串新方法，此法得出的结果可读性更强，更简洁，不易出错。</p>
+<h3 id="22-enumerate-追踪序列索引">2.2 enumerate 追踪序列索引</h3>
+<p>在遍历一个序列时，我们往往需要在知道它的每个元素值的同时，知道当前元素的索引。此时我们就可以用 <code>enumerate</code> 追踪序列的索引。</p>
+<h4 id="用法示意">用法示意</h4>
+<pre><code class="language-python">for i, value in enumerate(collection):
+    # 使用值做点事
+</code></pre>
+<p>接下来我们使用 <code>enumerate</code> 构建一个字典，将元素值作为字典的键，索引值作为字典的值（当然也可以反过来）。</p>
+<pre><code class="language-python">li = ['one', 'two', 'three']
+mapping = {}
+for i, v in enumerate(li):
+    mapping[v] = i
+mapping
+
+Out: {'one': 0, 'two': 1, 'three': 2}
+</code></pre>
+<h3 id="23-柯里化部分参数应用">2.3 柯里化：部分参数应用</h3>
+<p>柯里化指的是通过部分参数应用的方式<strong>从已有的函数中衍生出新的函数</strong>。</p>
+<p>例如我们有一个不重要的函数，其功能是将两个数加在一起：</p>
+<pre><code class="language-python">def add_numbers(x, y):
+	return x + y
+</code></pre>
+<p>使用这个函数，我们可以衍生出一个只有一个变量的新函数，<code>add_five</code>, 可以给 x 参数加上 5。</p>
+<p><code>add_five = lambda y: add_numbers(x, 5)</code></p>
+<p>第一个参数对于函数 <code>add_numbers</code> 就是柯里化了（部分参数应用了）。</p>
+<ul>
+<li>内建的 functools 模块可以使用 <code>pratial</code> 函数简化这种处理：</li>
+</ul>
+<pre><code class="language-python">from functools import partial
+add_five = partial(add_numbers, b = 5)  ## 也可以通过 a=5 来指定固定值到底是哪个
+</code></pre>
+<h3 id="24-zip">2.4 zip()</h3>
+<p><code>zip()</code> 将列表、元组或其他序列的元素配对，新建一个<strong>元组构成的列表</strong>：</p>
+<pre><code class="language-python">In [9]: seq1 = [1, 2, 3]
+   ...: seq2 = ['one', 'two', 'three']
+   ...: zipped = zip(seq1, seq2)
+
+In [10]: zipped  ## 先生成的是一个 zip 对象，要 list 以后才能转换成列表显示出来。
+Out[10]: &lt;zip at 0x2070ad95b88&gt;
+
+In [11]: list(zipped)
+Out[11]: [(1, 'one'), (2, 'two'), (3, 'three')]
+</code></pre>
+<p>zip() 可以处理任意长度的序列，不等长的话，生成列表的长度由最短的序列决定，多出来的部分就直接舍弃了。</p>
+<pre><code class="language-python">In [13]: list(zip(seq1,seq2,seq3))
+Out[13]: [(1, 'one', False), (2, 'two', True)]  #3 和 'three' 直接被舍弃了
+</code></pre>
+<h4 id="应用场景">应用场景：</h4>
+<ol>
+<li>
+<p>同时遍历多个序列，有时会和<code>enumerate()</code>同时使用:</p>
+<pre><code class="language-python">In [14]: for i , (a, b) in enumerate(zip(seq1, seq2)):
+    ...:     print('{0}: {1}, {2}'.format(i, a, b))
+    ...:
+0: 1, one
+1: 2, two
+2: 3, three
+</code></pre>
+</li>
+<li>
+<p>从序列生成字典：</p>
+<p>如果有两个序列想在字典中按元素配对，以下两种方式均可以实现，但明显第二种更简单：</p>
+<p>a) 使用 zip 遍历两个序列进行配对</p>
+<pre><code class="language-python">In [20]: mapping = {}
+
+In [21]: for key, value in zip(tup1, tup2):
+    ...:     mapping[key] = value
+    ...:
+
+In [22]: mapping
+Out[22]: {'one': 1, 'two': 2, 'three': 3}
+</code></pre>
+<p>b) 直接生成</p>
+<p>由于字典本质上是 2- 元组（含有 2 个元素的元组）的集合，字典是可以接受一个 2- 元组的列表作为参数的：</p>
+<pre><code class="language-python">In [23]: mapping = dict(zip(range(5), reversed(range(5))));  mapping
+Out[24]: {0: 4, 1: 3, 2: 2, 3: 1, 4: 0}
+</code></pre>
+</li>
+</ol>
+<h2 id="3-参数解包">3. 参数解包</h2>
+<p>首先要知道，解包的方式是：</p>
+<ul>
+<li>在列表或元组变量前，加一个 <code>*</code></li>
+<li>在字典变量前，加两个 <code>*</code></li>
+</ul>
+<p>当需要对列表或元组中的参数进行解包以进行需要单独位置参数的函数调用时，Splat 或 Scatter 运算符 * 有时能发挥作用。</p>
+<pre><code class="language-python">## 理解何为解包：解包运算符接受了列表中的所有元素，并将它们作为参数传递。
+a = [1,2]  # 列表或元组
+b = {&quot;name&quot;:'vde', 'age':25}  # 字典
+print(*a)
+# 但是不可直接 print(**b)，---- TypeError: 'name' is an invalid keyword argument for print()# print(**b)
+
+Out: 1 2
+</code></pre>
+<p>以上代码打印出列表 a 中的每个元素，这些元素以空格分隔。等效于代码：<code>print(1,2,3,4,5,6)</code></p>
+<h3 id="31-参数解包应用于函数的参数传递">3.1 参数解包应用于函数的参数传递</h3>
+<p>参数解包在函数中经常使用，以将方法调用接收到的所有参数‘打包’到单个变量中。一个简单的例子：</p>
+<pre><code class="language-python">def f1(*argsss):
+    print(argsss)
+f1(1,2)
+f1('one','two','three','four')
+
+Out: (1, 2)
+     ('one', 'two', 'three', 'four')
+</code></pre>
+<p><code>*args</code> 可以将 args 中的所有参数解包并传递到函数中，所以可以接收无限量的参数。再来看一个综合的例子：</p>
+<pre><code class="language-python">def f2(*args, **kwargs):
+    print(f'args: {args}')print(f'kwargs: {kwargs}')
+</code></pre>
+<pre><code class="language-python"># 会把 a 和 b 一起作为一个元组传递给 *args，而 **kwargs 就接收不到参数了，所以输出为空。
+f2(a,b)
+
+Out: args: ([1, 2], {'name': 'vde', 'age': 25})
+     kwargs: {}
+</code></pre>
+<pre><code class="language-python"># 将 a 传递给 *args, 将 b 传递给 **kwargs，分别进行解包：
+f2(*a,**b)
+
+Out: args: (1, 2)
+     kwargs: {'name': 'vde', 'age': 25}
+</code></pre>
+<pre><code class="language-python">## 还原解包的过程，其实就相当于把参数分解以后，传入了函数中。
+def f3(one, two, name, age):
+    print(f'one: {one}')
+    print(f'two: {two}')
+    print(f'name: {name}')
+    print(f'age: {age}')f3(*a,**b)
+
+Out: one: 1
+     two: 2
+     name: vde
+     age: 25
+</code></pre>
+<h3 id="32-与-zip-配合对已配对的序列进行拆分">3.2 与 zip 配合对已”配对“的序列进行拆分</h3>
+<p>接下来详细讲解这个过程：</p>
+<pre><code class="language-python">aa = [('one',1),('two',2),('tree',3),('four',4)]  ;aa
+
+Out: [('one', 1), ('two', 2), ('tree', 3), ('four', 4)]
+</code></pre>
+<ol>
+<li>
+<p>先用 <code>*</code> 对 aa 进行解包，解包为四个序列：</p>
+<pre><code class="language-python">print(*aa)
+
+Out: ('one', 1) ('two', 2) ('tree', 3) ('four', 4)
+</code></pre>
+</li>
+<li>
+<p>然后传递给 zip 函数，分别取四个序列的第一个元素拼在一起，再分别取四个序列的第二个元素拼在一起：</p>
+<pre><code class="language-python">ab = list(zip(*aa))   ;ab
+
+Out: [('one', 'two', 'tree', 'four'), (1, 2, 3, 4)]
+</code></pre>
+</li>
+<li>
+<p>用将列表 ab 的第一个元素和第二个元素的值分别传给 a 和 b：</p>
+<pre><code class="language-python">a, b = ab
+print(f'a: {a}')
+print(f'b: {b}')
+Out: a: ('one', 'two', 'tree', 'four')
+     b: (1, 2, 3, 4)
+</code></pre>
+</li>
+</ol>
+<blockquote>
+<p>这个方法的思路是使用 zip(*aa) 将 aa 的行和列进行转置。</p>
+</blockquote>
+<blockquote>
+<ul>
+<li>aa 本来 size 为 (4*2)，第 1 列为 one, two, three, four，第二列为 1, 2, 3, 4。</li>
+<li>而经过转置以后，size 变成 (2*4) 的了。第一行为 one, two, three, four，第二行为 1, 2, 3, 4。</li>
+</ul>
+</blockquote>
+<h2 id="4-列表集合和字典的推导式">4. 列表、集合和字典的推导式</h2>
+<h3 id="41-列表推导式">4.1 列表推导式</h3>
+<ul>
+<li>
+<p>列表推导式是最受欢迎的 python 语言特性之一。</p>
+</li>
+<li>
+<p>它允许你过滤一个容器 (collection) 的元素 (val)，用一种简明的表达式转换(expr) 传递给过滤器 (if condition) 的元素，从而生成一个新的列表。转换前的每个元素为 val，转换后为 expr。</p>
+</li>
+</ul>
+<p>列表推导式的基本形式为：</p>
+<p><code>list_comp = [expr for val in collection if condition]</code></p>
+<p>这与下面的 for 循环是等价的：</p>
+<pre><code class="language-python">result = []
+for val in collection:
+    if condition:
+        result.append(expr)
+</code></pre>
+<p><strong>举例 1：</strong> 例如给定一个字符串列表，我们可以过滤出长度大于 2 的，并且将字母改为大写：</p>
+<pre><code class="language-python">In [25]: strings = ['a', 'as', 'bat', 'car', 'dove', 'python']
+
+In [26]: [x.upper() for x in strings if len(x) &gt; 2]
+Out[26]: ['BAT', 'CAR', 'DOVE', 'PYTHON']
+</code></pre>
+<h3 id="42-集合和字典的推导式">4.2 集合和字典的推导式</h3>
+<p>集合与字典的推导式是列表推导式的自然扩展，用相似的方式生成集合与字典。</p>
+<ul>
+<li>
+<p>字典推导式如下所示：</p>
+<p><code>dict_comp = {key-expr : value-expr for value in collection if condition}</code></p>
+</li>
+</ul>
+<p><strong>举例 2：</strong> 创建一个将字符串与其位置相匹配的字典作为字典推导式：</p>
+<pre><code class="language-python">In [29]: loc_mapping = {val:index for index, val in enumerate(strings)}
+
+In [30]: loc_mapping
+Out[30]: {'a': 0, 'as': 1, 'bat': 2, 'car': 3, 'dove': 4, 'python': 5}
+</code></pre>
+<ul>
+<li>
+<p>字典推导式如下所示：</p>
+<p><code>set_comp = {expr for value in collection if condition}</code></p>
+</li>
+</ul>
+<p>集合推导式看起来很像列表推导式，只是中括号变成了大括号。</p>
+<p><strong>举例 3：</strong> 如果有一个字符串的列表，假设我们想要一个集合，集合里包含列表中字符串的长度：</p>
+<pre><code class="language-python">In [27]: unique_len = {len(x) for x in strings}
+
+In [28]: unique_len
+Out[28]: {1, 2, 3, 4, 6}
+</code></pre>
+<p>我们也可以使用 <code>map</code> 函数进行更函数化、更简洁地表达：</p>
+<pre><code class="language-python">In [31]: set(map(len, strings))
+Out[31]: {1, 2, 3, 4, 6}
+</code></pre>
+<h2 id="5-生成器">5. 生成器</h2>
+<h3 id="51-迭代器对象">5.1 迭代器对象</h3>
+<h4 id="511-迭代的概念">5.1.1 迭代的概念</h4>
+<p>上一次输出的结果为下一次输入的初始值，重复的过程称为迭代, 每次重复即<strong>一次迭代</strong>，并且每次迭代的结果是下一次迭代的初始值，注意循环不是迭代。</p>
+<ul>
+<li>
+<p>为什么要有迭代器？</p>
+<p>对于没有索引的数据类型，必须提供一种不依赖索引的迭代方式。</p>
+</li>
+</ul>
+<h4 id="512-迭代器实现原理">5.1.2 迭代器实现原理</h4>
+<p>通过一致的方式遍历序列的这个特性是通过 ** 迭代器协议 ** 来实现的。迭代器协议是一种令对象可遍历的通用方式。</p>
+<p>迭代器就是一种用于上下文中（比如 for 循环）<strong>向 python 解释器生成对象</strong>的<strong>对象</strong>。</p>
+<pre><code class="language-python">In [74]: for i in dict1:
+    ...:     print(i)
+    ...:
+a
+b
+c
+</code></pre>
+<p>在写下 <code>for i in dict1</code> 时，Python 的解释器就会首先尝试根据 dict1 生成一个<strong>迭代器对象</strong>。</p>
+<p>其实在后台 for 语句对容器对象调用了 <code> __iter()__</code> 函数, 该函数用于生成迭代器对象。<code>__iter__()</code> 会返回一个定义了 <code> __next__()</code> 方法的迭代器对象，它在容器中逐个访问容器内元素，并在你调用 <code>next()</code> 方法的时候返回容器中的下一个值——迭代器通过 next()不断产出下一个元素直到迭代器耗尽。</p>
+<p>任何实现了 <code>__iter__</code> 和 <code>__next__()</code> 方法的对象都是迭代器，<code>__iter__</code> 返回迭代器自身，<code>__next__</code> 返回容器中的下一个值，如果容器中没有更多元素了，则抛出 <code>StopIteration</code> 异常。</p>
+<h4 id="513-判断对象是否可迭代">5.1.3 判断对象是否可迭代：</h4>
+<p>原生函数 iter(instance) 可以判断某个对象是否可迭代，它的工作流程大概分为以下 3 个步骤：</p>
+<ul>
+<li>检查对象 instance 是否实现了 <code>__iter__</code> 方法，并调用它获取返回的迭代器(iterator)。</li>
+<li>如果对象没有实现 <code>__iter__</code> 方法，但是实现了 <code>__getitem__</code> 方法，Python 会生成一个迭代器。</li>
+<li>如果上述都失败，则编译器则抛出 <code>TypeErro</code>r 错误，<code>‘xxx' Object is not iterable</code>。</li>
+</ul>
+<pre><code class="language-python">In [75]: dict_iterator = iter(dict1)
+
+In [76]: dict_iterator
+Out[76]: &lt;dict_keyiterator at 0x2070b1dd4f8&gt;
+</code></pre>
+<h4 id="514-接收迭代器对象的函数和方法">5.1.4 接收迭代器对象的函数和方法</h4>
+<p>大多数以列表或列表型对象为参数的方法都可以接收任意的迭代器对象。</p>
+<ol>
+<li>内建方法：<code>min, max, sum</code></li>
+<li>类型构造函数（工厂函数）：<code>list(), str(), tuple()</code></li>
+</ol>
+<h3 id="52-生成器">5.2 生成器</h3>
+<p>生成器（Generator）是创建迭代器的简单而强大的工具。它们写起来就像是正规的函数，会自动创建 <code>iter()</code> 和 <code>next()</code> 方法，只是在需要返回数据的时候使用 <code>yield </code> 语句。每次 <code>next()</code> 被调用时，生成器会返回它脱离的位置（它记忆语句最后一次执行的位置和所有的数据值）。</p>
+<p>Python 中的生成器主要分为两种类型：</p>
+<ol>
+<li>
+<p>生成器函数 (generator function) 返回得到的生成器(包含 yield 关键字的函数)。</p>
+</li>
+<li>
+<p>生成器表达式 (generator expression) 返回得到的生成器。</p>
+</li>
+</ol>
+<h4 id="521-生成器函数">5.2.1 生成器函数</h4>
+<p>如需创建一个生成器，只需要在函数中返回关键字 return 替换为 yield 关键字：</p>
+<pre><code class="language-python">def squares(n = 10):
+    for i in range(1, n+1):
+        yield i*2
+</code></pre>
+<p>当你实际调用生成器时，代码并不会立即执行，它只是返回了得到的生成器：</p>
+<pre><code class="language-python">In [77]: gen = squares()In [78]: gen
+Out[78]: &lt;generator object squares at Ox7fbbd5ab4570&gt;
+</code></pre>
+<p>直到你请求生成器中的元素时，它才会执行它的代码：</p>
+<pre><code class="language-python">In [79]: for x in gen:
+  .....: print(x, end = ' ')
+Out[79]: 1 4 9 16 25 36 49 64 81 100
+</code></pre>
+<h4 id="522-生成器表达式">5.2.2 生成器表达式</h4>
+<p>使用生成器表达式来创建生成器更为简单，只需要将列表推导式中的中括号替换成小括号即可。</p>
+<pre><code class="language-python">In [80]: gen = (x ** 2 for x in range(100)); gen
+Out[81]: &lt;generator object &lt;genexpr&gt; at 0x000002070B168E58&gt;
+</code></pre>
+<p>上面的代码和下面的更为复杂的生成器是等价的：</p>
+<pre><code class="language-python">In [82]: def make_gen():
+    ...:     for x in range(100):
+    ...:         yield x ** 2
+In [83]: gen = make_gen(); gen
+Out[84]: &lt;generator object make_gen at 0x000002070AF4E570&gt;
+</code></pre>
+<p>在很多情况下，生成器表达式可以作为函数参数用于替代列表推导式：</p>
+<pre><code class="language-python">In [85]: sum([x ** 2 for x in range(100)])  ### 列表推导式作为 sum()的参数
+Out[85]: 328350  
+
+In [86]: sum(x ** 2 for x in range(100))	### 生成器表达式作为 sum()的参数
+Out[86]: 328350
+
+In [87]: dict([(i , i**2) for i in range(5)])	### 列表推导式作为 dict()的参数
+Out[87]: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+
+In [88]: dict((i , i**2) for i in range(5))		### 生成器表达式作为 dict()的参数
+Out[88]: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}
+</code></pre>
+<h3 id="53-itertools-模块">5.3 <code>itertools</code> 模块</h3>
+<p>标准库中的 <code>itertools</code> 模块是适用于大多数数据算法的生成器集合。</p>
+<h4 id="531-groupby-函数">5.3.1 groupby 函数</h4>
+<p><code>groupby</code> 可以根据任意的序列和一个函数，通过函数的返回值对序列中连续的元素进行分组。</p>
+<p>根据每一个独一的 key 生成 <code>（key, sub-iterator）</code> 元组</p>
+<pre><code class="language-python">In [89]: import itertools
+
+In [90]: first_letter_func = lambda x : x[0]
+
+In [91]: names = ['Alan', 'Adam', 'Wes', 'Will', 'Albert', 'Steven']
+
+In [93]: for letter, names in itertools.groupby(names, first_letter_func):
+    ...:     print(letter, list(names))     ## names is a generator
+    ...:
+A ['Alan', 'Adam']
+W ['Wes', 'Will']
+A ['Albert']
+S ['Steven']
+</code></pre>
+
+
+
+<link rel="stylesheet" href="/css/donate.css" />
+
+
+<div class="donate">
+  <div class="donate-header"></div>
+  <div class="donate-slug" id="donate-slug">python-tips</div>
+  <button class="donate-button">DONATE</button>
+  <div class="donate-footer">「Donation Given, Fragrance in Hand」</div>
+</div>
+<div class="donate-modal-wrapper">
+  <div class="donate-modal">
+    <div class="donate-box">
+      <div class="donate-box-content">
+        <div class="donate-box-content-inner">
+          <div class="donate-box-header">「Donation Given, Fragrance in Hand」</div>
+          <div class="donate-box-body">
+            <div class="donate-box-money">
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-2" data-v="2" data-unchecked="￥ 2" data-checked="2 元">￥ 2</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-5" data-v="5" data-unchecked="￥ 5" data-checked="5 元">￥ 5</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-10" data-v="10" data-unchecked="￥ 10" data-checked="10 元">￥ 10</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-50" data-v="50" data-unchecked="￥ 50" data-checked="50 元">￥ 50</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-100" data-v="100" data-unchecked="￥ 100" data-checked="100 元">￥ 100</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-custom" data-v="custom" data-unchecked="任意金额" data-checked="任意金额">任意金额</button>
+            </div>
+            <div class="donate-box-pay">
+              <img class="donate-box-pay-qrcode" id="donate-box-pay-qrcode" src=""/>
+            </div>
+          </div>
+          <div class="donate-box-footer">
+            <div class="donate-box-pay-method donate-box-pay-method-checked" data-v="wechat-pay">
+              <img class="donate-box-pay-method-image" id="donate-box-pay-method-image-wechat-pay" src=""/>
+            </div>
+            <div class="donate-box-pay-method" data-v="alipay">
+              <img class="donate-box-pay-method-image"  id="donate-box-pay-method-image-alipay" src=""/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="donate-box-close-button">
+      <svg class="donate-box-close-button-icon" fill="#fff" viewBox="0 0 24 24" width="24" height="24"><path d="M13.486 12l5.208-5.207a1.048 1.048 0 0 0-.006-1.483 1.046 1.046 0 0 0-1.482-.005L12 10.514 6.793 5.305a1.048 1.048 0 0 0-1.483.005 1.046 1.046 0 0 0-.005 1.483L10.514 12l-5.208 5.207a1.048 1.048 0 0 0 .006 1.483 1.046 1.046 0 0 0 1.482.005L12 13.486l5.207 5.208a1.048 1.048 0 0 0 1.483-.006 1.046 1.046 0 0 0 .005-1.482L13.486 12z" fill-rule="evenodd"></path></svg>
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/donate.js"></script>
+</script>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev"></span>
+  <span class="nav-next"><a href="/blogs/mac-window-manage/">MacOS中的平铺式桌面 -- yabai</a> &rarr;</span>
+</nav>
+<script type="text/javascript">
+document.addEventListener('keyup', function(e) {
+  if (e.target.nodeName.toUpperCase() != 'BODY') return;
+  var url = false;
+  if (e.which == 37) {  
+    
+  } else if (e.which == 39) {  
+    
+    url = '\/blogs\/mac-window-manage\/';
+    
+  }
+  if (url) window.location = url;
+});
+</script>
+
+
+
+
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2608165017777396"
+     data-ad-slot="1261604535"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+<section class="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+    this.page.url = "https:\/\/tintingoo.com" + location.pathname;
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var disqus_js = '//Tintingo.disqus.com/embed.js';
+    var d = document, s = d.createElement('script');
+    s.src = disqus_js; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    var t = d.getElementById('disqus_thread');
+    var b = false, l = function(scroll) {
+      if (b) return;
+      (d.head || d.body).appendChild(s); b = true;
+      if (scroll) t.scrollIntoView();
+    }
+    s.onerror = function(e) {
+      if (sessionStorage.getItem('failure-note')) return;
+      t.innerText = 'Sorry, but you cannot make comments because Disqus failed to load for some reason. It is known to be blocked in China. If you are sure it is not blocked in your region, please refresh the page. 中国大陆地区读者需要翻墙才能发表评论。';
+      sessionStorage.setItem('failure-note', true);
+    };
+    
+    if (location.hash.match(/^#comment-[0-9]+$/)) return l(true);
+    var c = function() {
+      if (b) return;
+      var rect = t.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) l();
+    };
+    window.addEventListener('load', c);
+    d.addEventListener('scroll', c);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/show-language/prism-show-language.min.js"></script>
+
+<script>
+    (function() {
+        if (!self.Prism) {
+            return;
+        }
+
+        Prism.languages.dos = Prism.languages.powershell;
+        Prism.languages.gremlin = Prism.languages.groovy;
+
+        var Languages = {
+            'r': 'R', 'python': 'Python', 'xml': 'XML', 'html': 'HTML',
+            'yaml': 'YAML', 'latex': 'LaTeX', 'tex': 'TeX',
+            'powershell': 'PowerShell', 'javascript': 'JavaScript',
+            'dos': 'DOS', 'qml': 'QML', 'json': 'JSON', 'bash': 'Bash',
+            'text': 'Text', 'txt': 'Text', 'sparql': 'SPARQL',
+            'gremlin': 'Gremlin', 'cypher': 'Cypher', 'ngql': 'nGQL',
+            'shell': 'Shell', 'sql': 'SQL', 'apacheconf': 'Apache Configuration'
+        };
+
+        Prism.hooks.add('before-highlight', function(env) {
+        	var language = Languages[env.language] || env.language;
+        	env.element.setAttribute('data-language', language);
+        });
+    })();
+</script>
+
+
+
+
+<script async src="/js/fix-toc.js"></script>
+<script async src="/js/center-img.js"></script>
+<script async src="/js/right-quote.js"></script>
+<script async src="/js/fix-footnote.js"></script>
+<script async src="/js/external-link.js"></script>
+<script async src="/js/alt-title.js"></script>
+<script src="/js/no-highlight.js"></script>
+<script src="/js/math-code.js"></script>
+
+
+
+
+
+
+
+
+<script async src="/js/load-typekit.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/vanilla-back-to-top@latest/dist/vanilla-back-to-top.min.js"></script>
+<script>
+addBackToTop({
+  diameter: 48
+})
+</script>
+
+
+
+  <hr>
+  <div class="copyright no-border-bottom">
+    <div class="copyright-author-year">
+      <span>&copy; 2021-2024</span>
+    </div>
+    <div class="copyright-links">
+      <a href="https://github.com/norery/tintingoo.com" rel="noreferrer" target="_blank">Github</a>
+      <span> · </span>
+      <a href="https://www.researchgate.net/profile/Yi-Ding-157" rel="noreferrer" target="_blank">ResearchGate</a>
+      <span> · </span>
+      <a href="https://orcid.org/my-orcid?orcid=0000-0003-3443-9313" rel="noreferrer" target="_blank">ORCID</a>
+      <span> · </span>
+      <a href="https://www.scopus.com/authid/detail.uri?authorId=58078994400" rel="noreferrer" target="_blank">Scopus</a>
+    </div>
+  </div>
+  </footer>
+  </article>
+  </body>
+</html>
+

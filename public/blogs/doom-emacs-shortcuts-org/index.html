@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+        <title>探索 Doom Emacs 的快捷键命令 - Tintingo | 丁毅</title>
+
+    <meta name="referrer" content="no-referrer">
+    
+    <meta property="og:title" content="探索 Doom Emacs 的快捷键命令 - Tintingo | 丁毅">
+    <meta name="description" property="og:description" content="Doom Emacs 的快捷键逻辑一直被很多使用者称赞，在使用了一段时间后，我也觉得很顺手，决定在此套按键逻辑的基础上进行扩展。在 Hack 的过程中，发现还是有不少问">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tintingo | 丁毅">
+    <meta property="og:url" content="http://localhost:4321/blogs/doom-emacs-shortcuts-org/">
+
+    
+    
+    
+    
+    <meta name="author" property="article:author" content="Tintingo">
+    
+    
+    
+    <meta name="date" property="article:published_time" content="2022-02-15" scheme="YYYY-MM-DD">
+    
+    
+    <meta name="date" property="article:modified_time" content="2022-02-15" scheme="YYYY-MM-DD">
+    
+
+    
+    <meta name="keywords" property="article:tag" content ="MacOS,Emacs,效率工具">
+    
+    
+    <meta name="theme-color" content="#0d0d0d">
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/web/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/web/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/web/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="62x62" href="/images/web/favicon-62x62.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/web/favicon-192x192.png">
+    <link rel="apple-touch-icon" size="192x192" href="/images/web/icon-192x192.png">
+    <link rel="manifest" href="/manifest.json">
+        
+    
+
+    
+
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http://localhost:4321/blogs"
+        },
+        "name": "探索 Doom Emacs 的快捷键命令",
+        "headline": "探索 Doom Emacs 的快捷键命令",
+        "description" : "Doom Emacs 的快捷键逻辑一直被很多使用者称赞，在使用了一段时间后，我也觉得很顺手，决定在此套按键逻辑的基础上进行扩展。在 Hack 的过程中，发现还是有不少问",
+        "genre": [
+            "Emacs"
+        ],
+        "datePublished": "2022-02-15",
+        "dateModified": "2022-02-15",
+        "wordCount": "1723",
+        "keywords": [
+            "MacOS", "Emacs", "效率工具"
+        ],
+        "image": [
+            
+        ],
+        "author": {
+            "@type": "Person",
+            "name": "Tintingo"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Tintingo",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "http://localhost:4321/images/web/publisher-logo.png"
+            }
+        },
+        "url": "http://localhost:4321/blogs/doom-emacs-shortcuts-org/"
+    }
+    </script>
+    
+
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/js-cookie/3.0.0/js.cookie.min.js'></script>
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.5.95/css/materialdesignicons.min.css">
+
+
+
+
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism.min.css">
+
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism-.min.css">
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RJC7CCKE67"></script>
+<script>
+if (window.location.hostname != "127.0.0.1" && window.location.hostname != "localhost") {
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RJC7CCKE67');
+}
+</script>
+
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="/css/fonts.css" />
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href="/css/light.css">
+<link rel="stylesheet" type="text/css" href="/css/dark.css" id="dark-mode-style" disabled="disabled">
+<link rel="stylesheet" type="text/css" href="/css/icons.css">
+<link rel="stylesheet" type="text/css" href="/css/print.css">
+
+  </head>
+
+  
+  <body class="blogs">
+    <header class="masthead">
+      
+
+<div class="logo"></div>
+<p class="slogan">Tintingoo&#39;s Blog</p>
+      <nav class="menu">
+  <ul>
+  
+  
+  
+    
+  
+  
+    <li><a href="/">Home</a></li>
+  
+    <li><a href="/blogs/">Blog</a></li>
+  
+    <li><a href="/categories/">Categories</a></li>
+  
+    <li><a href="/photography/">Photography</a></li>
+  
+  
+
+
+<li class="menu-separator"><span>&nbsp;</span></li>
+
+<li><a href="/blogs/index.xml" target="_blank" type="application/rss+xml" title="RSS feed">Subscribe</a></li>
+
+<li><a href="https://github.com/norery/tintingoo.com/blob/main/LICENSE" target="_blank" title="Attribution-NonCommercial-ShareAlike 4.0 International">License</a></li>
+
+
+  <li class="light-dark-mode no-border-bottom"><a id="light-dark-mode-action"><span id="light-dark-mode-icon" class="mdi mdi-weather-night"></span></a></li>
+  </ul>
+</nav>
+
+      <script src="/js/toggle-theme.js"></script>
+    </header>
+
+    <article class="main">
+      <header class="title">
+      
+<h1>探索 Doom Emacs 的快捷键命令</h1>
+
+
+
+
+
+
+
+<h3>Tintingo / 
+2022-02-15</h3>
+
+
+
+<h3 class="post-meta">
+
+
+<strong>Categories: </strong>
+<a href="/categories/emacs">Emacs</a>
+
+
+
+
+/
+
+
+
+
+<strong>Tags: </strong>
+<span>MacOS</span>, <span>Emacs</span>, <span>效率工具</span>
+
+
+
+
+/
+
+
+<strong>Word Count: </strong>
+1723
+</h3>
+
+
+
+<hr>
+
+
+      </header>
+
+
+
+<div class="toc-depth-3" ><nav id="TableOfContents">
+<ul>
+<li><a href="#headline-1">参考文章</a>
+</li>
+<li><a href="#headline-2">快捷键类型</a>
+<ul>
+<li><a href="#headline-3">1. 全局快捷键</a>
+</li>
+<li><a href="#headline-4">2. 基于 Major-Mode 的局部快捷键</a>
+</li>
+<li><a href="#headline-5">3. 基于 mode-map 的局部快捷键</a>
+</li>
+</ul>
+</li>
+<li><a href="#headline-6">三种快捷键的优先度测试</a>
+</li>
+</ul>
+</nav></div> 
+
+
+
+<p>
+Doom Emacs 的快捷键逻辑一直被很多使用者称赞，在使用了一段时间后，我也觉得很顺手，决定在此套按键逻辑的基础上进行扩展。在 Hack 的过程中，发现还是有不少问题需要注意的，在本文中做一些记录。</p>
+<div id="outline-container-headline-1" class="outline-2">
+<h2 id="headline-1">
+参考文章
+</h2>
+<div id="outline-text-headline-1" class="outline-text-2">
+<p><a href="https://www.youtube.com/watch?v=xaZMwNELaJY">The Video of System Crafters</a> and <a href="https://github.com/hlissner/doom-emacs/blob/develop/core/core-keybinds.el">His Configuration: core-keybinds.el</a></p>
+</div>
+</div>
+<div id="outline-container-headline-2" class="outline-2">
+<h2 id="headline-2">
+快捷键类型
+</h2>
+<div id="outline-text-headline-2" class="outline-text-2">
+<div id="outline-container-headline-3" class="outline-3">
+<h3 id="headline-3">
+1. 全局快捷键
+</h3>
+<div id="outline-text-headline-3" class="outline-text-3">
+<p><code class="verbatim">global-set-key</code> 设置的是全局快捷键，它不会被绑定到任何 Major mode 或 minor mode 中，优先级是最低的。可以将其理解为一个基础的键位设定，当启用的 Major mode 或 minor mode 中对该快捷键设置了其他的功能时，使用 <code class="verbatim">global-set-key</code> 设置的功能就不会表现出来。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(global-set-key (kbd <span style="color:#e6db74">&#34;key&#34;</span>) <span style="color:#e6db74">&#39;command</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;; for a real example</span>
+</span></span><span style="display:flex;"><span>(global-set-key (kbd <span style="color:#e6db74">&#34;s-k&#34;</span>)
+</span></span><span style="display:flex;"><span>    (lambda () (interactive) (evil-previous-line <span style="color:#ae81ff">5</span>)))</span></span></code></pre></div>
+</div>
+<p>
+上面的例子中，我们将 <code class="verbatim">s-k</code> 键（s 在 macOS 中为 Command 键）设置为光标往上移动五行。</p>
+<p>
+设置成功以后，可以使用 <code class="verbatim">SPC hk</code> 查看 <code class="verbatim">s-k</code> 快捷键，发现它的 Key Bindings 描述为 <code class="verbatim">global-map s-k</code> , 说明该快捷键绑定在 <code class="verbatim">global map</code> 中。使用 <code class="verbatim">SPC h b k</code> 打开 <code class="verbatim">which-key-show-map</code> 搜索 <code class="verbatim">global map</code> 就可以找到刚才定义的快捷键了,或者使用 <code class="verbatim">SPC h v</code> 查找 <code class="verbatim">global map</code> 这个变量,也可以找到该快捷键.</p>
+</div>
+</div>
+<div id="outline-container-headline-4" class="outline-3">
+<h3 id="headline-4">
+2. 基于 Major-Mode 的局部快捷键
+</h3>
+<div id="outline-text-headline-4" class="outline-text-3">
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(local-set-key (kbd <span style="color:#e6db74">&#34;key&#34;</span>) <span style="color:#e6db74">&#39;command</span>)</span></span></code></pre></div>
+</div>
+<p>
+使用 <code class="verbatim">SPC hf</code> 查看 <code class="verbatim">local-set-key</code> 的说明，发现：</p>
+<blockquote>
+<p>The binding goes in the current buffer&#39;s local map, which in most cases is shared with all other buffers in the same major mode.</p>
+</blockquote>
+<p>
+发现这个绑定被放到了 the current buffer&#39;s local map 中，这个 map 会被该 buffer 相同的 major mode 所使用。所以说 local-set-key 也可以被记忆为基于 Major-Mode 的局部快捷键设置命令。</p>
+<p>
+在下面的例子中，我们将快捷键绑定到 <code class="verbatim">Org Mode</code> 中，当 major mode 为 Org Mode 时，按下 <code class="verbatim">s-k</code> 快捷键时，光标将会跳转到上一个 heading 上。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; for a real example</span>
+</span></span><span style="display:flex;"><span>(add-hook <span style="color:#e6db74">&#39;org-mode-hook</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#39;</span>(lambda ()
+</span></span><span style="display:flex;"><span>             (local-set-key (kbd <span style="color:#e6db74">&#34;s-k&#34;</span>) <span style="color:#e6db74">&#39;org-previous-visible-heading</span>)))</span></span></code></pre></div>
+</div>
+<p>
+这里结合 <code class="verbatim">add-hook</code> ，使用 <code class="verbatim">local-set-key</code> 设置了仅在 org-mode（必须为一个 major mode） 中生效的 local 快捷键，不会影响到其他 major-mode 中。设置成功后，使用 <code class="verbatim">SPC h b m</code> 可以在当前的 Major mode key map 中找到 <code class="verbatim">s-k</code> 快捷键，当然这需要当前的 major mode 为 org-mode。</p>
+</div>
+</div>
+<div id="outline-container-headline-5" class="outline-3">
+<h3 id="headline-5">
+3. 基于 mode-map 的局部快捷键
+</h3>
+<div id="outline-text-headline-5" class="outline-text-3">
+<p>
+使用 <code class="verbatim">define-key</code> 定义的局部快捷键绑定在特定的 KEYMAP 中，仅在 major or minor-mode 启用该  KEYMAP 时生效。这使我们可以精确地对快捷键进行控制。相比起前两种定义，这种方式范围最精确，优先级也最高。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span><span style="color:#75715e">;; example in SPC hf -&gt; define-key</span>
+</span></span><span style="display:flex;"><span>(<span style="color:#a6e22e">define-key</span> evil-motion-state-map (kbd <span style="color:#e6db74">&#34;s-k&#34;</span>) <span style="color:#e6db74">&#39;emacs-version</span>)</span></span></code></pre></div>
+</div>
+<p>
+这个例子我们使用了 <code class="verbatim">define-key</code> 对 <code class="verbatim">s-k</code> 快捷键绑定在 <code class="verbatim">evil-motion-state-map</code> 中，当 这个 KEYMAP 被启用时，按下 <code class="verbatim">s-k</code> 将会在底部打印 Emacs 的版本信息。</p>
+<p>
+但是实际我们用的最多的是 <a href="https://github.com/noctuid/general.el/tree/a0b17d207badf462311b2eef7c065b884462cb7c">general package</a> 提供的 <code class="verbatim">general-define-key</code> 命令来创建绑定在 KEYMAP 的局部快捷键，它可以提供更为强大的功能。接下来我们使用 <code class="verbatim">general-define-key</code> 来实现与上面的 <code class="verbatim">define-key</code> 相同的功能。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(general-define-key :keymaps
+</span></span><span style="display:flex;"><span>                    <span style="color:#f92672">&#39;</span>(evil-motion-state-map)
+</span></span><span style="display:flex;"><span>                    <span style="color:#e6db74">&#34;s-k&#34;</span>
+</span></span><span style="display:flex;"><span>                    (<span style="color:#a6e22e">list</span> :def <span style="color:#e6db74">&#39;emacs-version</span> :which-key <span style="color:#e6db74">&#34;show emacs-version&#34;</span>))</span></span></code></pre></div>
+</div>
+<p>
+Doom Emacs 中还提供了一个 <code class="verbatim">map!</code> 命令，使用 <code class="verbatim">SPC hf map!</code> 可以看到：</p>
+<blockquote>
+<p>A convenience macro for defining keybinds, powered by general.</p>
+</blockquote>
+<p>
+当光标位于 <code class="verbatim">map!</code> 之上时，可以使用 <code class="verbatim">M-x macrostep expend</code> 对其进行展开，下面的 <code class="verbatim">map!</code> 代码块展开即为上文中的 <code class="verbatim">general-define-key</code> 代码块。</p>
+<div class="src src-emacs-lisp">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-emacs-lisp" data-lang="emacs-lisp"><span style="display:flex;"><span>(map! :map evil-motion-state-map
+</span></span><span style="display:flex;"><span>      :desc <span style="color:#e6db74">&#34;show emacs-version&#34;</span> <span style="color:#e6db74">&#34;s-k&#34;</span>  <span style="color:#e6db74">&#39;emacs-version</span>
+</span></span><span style="display:flex;"><span>  )</span></span></code></pre></div>
+</div>
+<p>
+这里先对 <code class="verbatim">general</code> 以及 <code class="verbatim">map!</code> 的基本概念有个大致了解，后续将对它们的用法和写法做详细介绍。</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-headline-6" class="outline-2">
+<h2 id="headline-6">
+三种快捷键的优先度测试
+</h2>
+<div id="outline-text-headline-6" class="outline-text-2">
+<p>上面我们使用了三种方式分别对 <code class="verbatim">s-k</code> 快捷键做了定义，分别为：</p>
+<ol>
+<li>CASE1 –&gt; <code class="verbatim">global-set-key</code> -&gt; 将光标往上移动五行，若不被覆盖则会全局生效。</li>
+<li>CASE2 –&gt; <code class="verbatim">local-set-key</code> -&gt; 移动到上一个 org heading. 若不被覆盖则会在 Org Mode 这个 Major Mode 被启用时生效。</li>
+<li>CASE3 –&gt; <code class="verbatim">define-key</code> or <code class="verbatim">general-define-key</code> or <code class="verbatim">map!</code> -&gt; 打印当前 Emacs 版本信息。</li>
+</ol>
+<p>这三种方式的优先度顺序为: <code class="verbatim">define-key</code> &gt; <code class="verbatim">local-set-key</code> &gt; <code class="verbatim">global-set-key</code> , 下面设计了两组试验对优先度顺序进行演示：</p>
+<ul>
+<li>
+<p>实验一:将三个 CASE 的代码均放在配置文件中，为排除代码顺序的可能影响，三个 CASE 在配置文件中的放置顺序为： CASE3, CASE2, CASE1</p>
+<ul>
+<li>实验结果：只有 CASE3 生效。说明三种 CASE 同时存在时，CASE3 将其余两种均覆盖掉了。</li>
+</ul>
+</li>
+<li>
+<p>实验二:将前两个 CASE 按照 CASE2, CASE1 的顺序放置在配置文件中</p>
+<ul>
+<li>实验结果:在 Org 文件中,CASE2 生效, 这说明当 Major Mode 为 Org Mode 时, CASE2 将 CASE1 覆盖掉了; 而在非 Org 文件中, CASE1 生效,因为此时 CASE2 没有生效,就无法覆盖 CASE1.</li>
+</ul>
+</li>
+</ul>
+<p>三种方式中,第二种方式在日常中基本没有应用,不必在意.当需实现更为精细的控制时,可使用第三种方式定义快捷键;如果确定该快捷键不会在某种情况下被覆盖(比较冷门或使用快捷键前缀)时,使用第三种方式也是比较简单和快速的.</p>
+<p>
+总结设置快捷键的工作流程：</p>
+<ol>
+<li>
+<p>寻找实现功能的 command 名称。</p>
+<ul>
+<li>如果已有一个比较复杂的快捷键可实现该功能，可使用 <code class="verbatim">SPC hk</code> 查找该 command 名称，然后使用 <code class="verbatim">SPC hf</code> 查找定义它的函数的详细说明。</li>
+<li>如果没有已定义的快捷键，就只能通过搜索文档查找有无已定义的功能，或自己写代码实现该功能。</li>
+<li>思考该快捷键的使用场景，要绑定到哪个 KEYMAP 中(可以使用 <code class="verbatim">SPC h b k</code> 或 <code class="verbatim">SPC h v</code> 查看 KEYMAP 变量)? 又或者直接定义一个 global map？</li>
+</ul>
+</li>
+</ol>
+<p>在绑定快捷键时需要用到的查找命令及快捷键汇总如下:</p>
+<table>
+<thead>
+<tr>
+<th>Doom shortcut key</th>
+<th>Signature</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SPC h k</td>
+<td>helpful-key KEY-SEQUENCE</td>
+<td>Show help for interactive command bound to KEY-SEQUENCE</td>
+</tr>
+<tr>
+<td>SPC h f</td>
+<td>helpful-callable SYMBOL</td>
+<td>Show help for function, macro or special form named SYMBOL</td>
+</tr>
+<tr>
+<td>SPC h v</td>
+<td>helpful-variable SYMBOL</td>
+<td>Show help for variable named SYMBOL</td>
+</tr>
+<tr>
+<td>SPC h b k</td>
+<td>which-key-show-keymap KEYMAP &amp;optional NO-PAGING</td>
+<td>Show the top-level bindings in KEYMAP using which-key</td>
+</tr>
+<tr>
+<td>SPC h b m</td>
+<td>which-key-show-major-mode &amp;optional ALL</td>
+<td>Show top-level bindings in the map of the current major mode</td>
+</tr>
+<tr>
+<td>SPC h m</td>
+<td>describe-mode &amp;optional BUFFER</td>
+<td>Display documentation of current major mode and minor modes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+
+<link rel="stylesheet" href="/css/donate.css" />
+
+
+<div class="donate">
+  <div class="donate-header"></div>
+  <div class="donate-slug" id="donate-slug">doom-emacs-shortcuts-org</div>
+  <button class="donate-button">DONATE</button>
+  <div class="donate-footer">「Donation Given, Fragrance in Hand」</div>
+</div>
+<div class="donate-modal-wrapper">
+  <div class="donate-modal">
+    <div class="donate-box">
+      <div class="donate-box-content">
+        <div class="donate-box-content-inner">
+          <div class="donate-box-header">「Donation Given, Fragrance in Hand」</div>
+          <div class="donate-box-body">
+            <div class="donate-box-money">
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-2" data-v="2" data-unchecked="￥ 2" data-checked="2 元">￥ 2</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-5" data-v="5" data-unchecked="￥ 5" data-checked="5 元">￥ 5</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-10" data-v="10" data-unchecked="￥ 10" data-checked="10 元">￥ 10</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-50" data-v="50" data-unchecked="￥ 50" data-checked="50 元">￥ 50</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-100" data-v="100" data-unchecked="￥ 100" data-checked="100 元">￥ 100</button>
+              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-custom" data-v="custom" data-unchecked="任意金额" data-checked="任意金额">任意金额</button>
+            </div>
+            <div class="donate-box-pay">
+              <img class="donate-box-pay-qrcode" id="donate-box-pay-qrcode" src=""/>
+            </div>
+          </div>
+          <div class="donate-box-footer">
+            <div class="donate-box-pay-method donate-box-pay-method-checked" data-v="wechat-pay">
+              <img class="donate-box-pay-method-image" id="donate-box-pay-method-image-wechat-pay" src=""/>
+            </div>
+            <div class="donate-box-pay-method" data-v="alipay">
+              <img class="donate-box-pay-method-image"  id="donate-box-pay-method-image-alipay" src=""/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="donate-box-close-button">
+      <svg class="donate-box-close-button-icon" fill="#fff" viewBox="0 0 24 24" width="24" height="24"><path d="M13.486 12l5.208-5.207a1.048 1.048 0 0 0-.006-1.483 1.046 1.046 0 0 0-1.482-.005L12 10.514 6.793 5.305a1.048 1.048 0 0 0-1.483.005 1.046 1.046 0 0 0-.005 1.483L10.514 12l-5.208 5.207a1.048 1.048 0 0 0 .006 1.483 1.046 1.046 0 0 0 1.482.005L12 13.486l5.207 5.208a1.048 1.048 0 0 0 1.483-.006 1.046 1.046 0 0 0 .005-1.482L13.486 12z" fill-rule="evenodd"></path></svg>
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript" src="/js/donate.js"></script>
+</script>
+
+
+  <footer>
+  
+<nav class="post-nav">
+  <span class="nav-prev">&larr; <a href="/blogs/mac-window-manage/">MacOS中的平铺式桌面 -- yabai</a></span>
+  <span class="nav-next"><a href="/blogs/establish-blog-hugo/">本博客的建立及部署 -- 使用 blogdown &#43; Vercel 快速建立博客</a> &rarr;</span>
+</nav>
+<script type="text/javascript">
+document.addEventListener('keyup', function(e) {
+  if (e.target.nodeName.toUpperCase() != 'BODY') return;
+  var url = false;
+  if (e.which == 37) {  
+    
+    url = '\/blogs\/mac-window-manage\/';
+    
+  } else if (e.which == 39) {  
+    
+    url = '\/blogs\/establish-blog-hugo\/';
+    
+  }
+  if (url) window.location = url;
+});
+</script>
+
+
+
+
+<ins class="adsbygoogle"
+     style="display:block; text-align:center;"
+     data-ad-layout="in-article"
+     data-ad-format="fluid"
+     data-ad-client="ca-pub-2608165017777396"
+     data-ad-slot="1261604535"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+<section class="comments">
+  <div id="disqus_thread"></div>
+  <script>
+  var disqus_config = function () {
+  
+    this.page.url = "https:\/\/tintingoo.com" + location.pathname;
+  
+  };
+  (function() {
+    var inIFrame = function() {
+      var iframe = true;
+      try { iframe = window.self !== window.top; } catch (e) {}
+      return iframe;
+    };
+    if (inIFrame()) return;
+    var disqus_js = '//Tintingo.disqus.com/embed.js';
+    var d = document, s = d.createElement('script');
+    s.src = disqus_js; s.async = true;
+    s.setAttribute('data-timestamp', +new Date());
+    var t = d.getElementById('disqus_thread');
+    var b = false, l = function(scroll) {
+      if (b) return;
+      (d.head || d.body).appendChild(s); b = true;
+      if (scroll) t.scrollIntoView();
+    }
+    s.onerror = function(e) {
+      if (sessionStorage.getItem('failure-note')) return;
+      t.innerText = 'Sorry, but you cannot make comments because Disqus failed to load for some reason. It is known to be blocked in China. If you are sure it is not blocked in your region, please refresh the page. 中国大陆地区读者需要翻墙才能发表评论。';
+      sessionStorage.setItem('failure-note', true);
+    };
+    
+    if (location.hash.match(/^#comment-[0-9]+$/)) return l(true);
+    var c = function() {
+      if (b) return;
+      var rect = t.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom >= 0) l();
+    };
+    window.addEventListener('load', c);
+    d.addEventListener('scroll', c);
+  })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/plugins/show-language/prism-show-language.min.js"></script>
+
+<script>
+    (function() {
+        if (!self.Prism) {
+            return;
+        }
+
+        Prism.languages.dos = Prism.languages.powershell;
+        Prism.languages.gremlin = Prism.languages.groovy;
+
+        var Languages = {
+            'r': 'R', 'python': 'Python', 'xml': 'XML', 'html': 'HTML',
+            'yaml': 'YAML', 'latex': 'LaTeX', 'tex': 'TeX',
+            'powershell': 'PowerShell', 'javascript': 'JavaScript',
+            'dos': 'DOS', 'qml': 'QML', 'json': 'JSON', 'bash': 'Bash',
+            'text': 'Text', 'txt': 'Text', 'sparql': 'SPARQL',
+            'gremlin': 'Gremlin', 'cypher': 'Cypher', 'ngql': 'nGQL',
+            'shell': 'Shell', 'sql': 'SQL', 'apacheconf': 'Apache Configuration'
+        };
+
+        Prism.hooks.add('before-highlight', function(env) {
+        	var language = Languages[env.language] || env.language;
+        	env.element.setAttribute('data-language', language);
+        });
+    })();
+</script>
+
+
+
+
+<script async src="/js/fix-toc.js"></script>
+<script async src="/js/center-img.js"></script>
+<script async src="/js/right-quote.js"></script>
+<script async src="/js/fix-footnote.js"></script>
+<script async src="/js/external-link.js"></script>
+<script async src="/js/alt-title.js"></script>
+<script src="/js/no-highlight.js"></script>
+<script src="/js/math-code.js"></script>
+
+
+
+
+
+
+
+
+<script async src="/js/load-typekit.js"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/vanilla-back-to-top@latest/dist/vanilla-back-to-top.min.js"></script>
+<script>
+addBackToTop({
+  diameter: 48
+})
+</script>
+
+
+
+  <hr>
+  <div class="copyright no-border-bottom">
+    <div class="copyright-author-year">
+      <span>&copy; 2021-2024</span>
+    </div>
+    <div class="copyright-links">
+      <a href="https://github.com/norery/tintingoo.com" rel="noreferrer" target="_blank">Github</a>
+      <span> · </span>
+      <a href="https://www.researchgate.net/profile/Yi-Ding-157" rel="noreferrer" target="_blank">ResearchGate</a>
+      <span> · </span>
+      <a href="https://orcid.org/my-orcid?orcid=0000-0003-3443-9313" rel="noreferrer" target="_blank">ORCID</a>
+      <span> · </span>
+      <a href="https://www.scopus.com/authid/detail.uri?authorId=58078994400" rel="noreferrer" target="_blank">Scopus</a>
+    </div>
+  </div>
+  </footer>
+  </article>
+  </body>
+</html>
+
