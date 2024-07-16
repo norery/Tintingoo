@@ -103,15 +103,6 @@ thead, tfoot, tr:nth-child(even) {
   color: #D3D3D3 !important;
 }
 
-.donate-box {
-  background: var(--body-background-color-dark) !important;
-}
-
-.donate-box-header {
-  background: var(--body-code-background-color-dark) !important;
-  color: var(--body-fore-color-dark) !important;
-}
-
 code {
   background: var(--body-code-background-color-dark) !important;
 }

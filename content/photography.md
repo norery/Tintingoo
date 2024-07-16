@@ -5,7 +5,6 @@ date: '2020-05-15'
 lastmod: '2020-05-15'
 slug: photography
 disable_author_date: true
-disable_donate: true
 disable_comments: true
 disable_adsense: true
 ---

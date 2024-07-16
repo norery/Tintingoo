@@ -1,4 +1,7 @@
 {{ if .Section }}
+<br/>
+<br/>
+
 <nav class="post-nav">
   <span class="nav-prev">{{ with .PrevInSection }}&larr; <a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</span>
   <span class="nav-next">{{ with .NextInSection }}<a href="{{ .RelPermalink }}">{{ .Title }}</a> &rarr;{{ end }}</span>
@@ -23,7 +26,6 @@ document.addEventListener('keyup', function(e) {
 
 {{ partial "google_adsense_footer.html" . }}
 
-{{ partial "disqus.html" . }}
 {{ partial "footer_prismjs.html" . }}
 
 <script async src="/js/fix-toc.js"></script>

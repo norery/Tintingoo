@@ -75,10 +75,6 @@ thead, tfoot, tr:nth-child(even) {
   box-shadow: 0 2px 4px var(--body-box-shadow), 0 0 2px var(--body-box-shadow);
 }
 
-.donate-button {
-  color: var(--body-fore-color-dark);
-}
-
 .aplayer {
   background: var(--body-block-background-color) !important;
 }

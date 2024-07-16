@@ -151,14 +151,12 @@ if (window.location.hostname != "127.0.0.1" && window.location.hostname != "loca
   
 
 
-<li class="menu-separator"><span>&nbsp;</span></li>
-
-<li><a href="/blogs/index.xml" target="_blank" type="application/rss+xml" title="RSS feed">Subscribe</a></li>
-
 <li><a href="https://github.com/norery/tintingoo.com/blob/main/LICENSE" target="_blank" title="Attribution-NonCommercial-ShareAlike 4.0 International">License</a></li>
 
 
-  <li class="light-dark-mode no-border-bottom"><a id="light-dark-mode-action"><span id="light-dark-mode-icon" class="mdi mdi-weather-night"></span></a></li>
+  
+    
+
   </ul>
 </nav>
 
@@ -413,58 +411,11 @@ rms = np.sqrt(np.mean((nder5-ader)**2))
 <p>可以发现五点差商形式的误差 rms 为 0.000218，比三点差商形式高出一个数量级。</p>
 
 
-
-<link rel="stylesheet" href="/css/donate.css" />
-
-
-<div class="donate">
-  <div class="donate-header"></div>
-  <div class="donate-slug" id="donate-slug">FDM-WaveEquation-Derivative</div>
-  <button class="donate-button">DONATE</button>
-  <div class="donate-footer">「Donation Given, Fragrance in Hand」</div>
-</div>
-<div class="donate-modal-wrapper">
-  <div class="donate-modal">
-    <div class="donate-box">
-      <div class="donate-box-content">
-        <div class="donate-box-content-inner">
-          <div class="donate-box-header">「Donation Given, Fragrance in Hand」</div>
-          <div class="donate-box-body">
-            <div class="donate-box-money">
-              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-2" data-v="2" data-unchecked="￥ 2" data-checked="2 元">￥ 2</button>
-              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-5" data-v="5" data-unchecked="￥ 5" data-checked="5 元">￥ 5</button>
-              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-10" data-v="10" data-unchecked="￥ 10" data-checked="10 元">￥ 10</button>
-              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-50" data-v="50" data-unchecked="￥ 50" data-checked="50 元">￥ 50</button>
-              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-100" data-v="100" data-unchecked="￥ 100" data-checked="100 元">￥ 100</button>
-              <button class="donate-box-money-button donate-box-money-button-unchecked" id="donate-box-money-button-custom" data-v="custom" data-unchecked="任意金额" data-checked="任意金额">任意金额</button>
-            </div>
-            <div class="donate-box-pay">
-              <img class="donate-box-pay-qrcode" id="donate-box-pay-qrcode" src=""/>
-            </div>
-          </div>
-          <div class="donate-box-footer">
-            <div class="donate-box-pay-method donate-box-pay-method-checked" data-v="wechat-pay">
-              <img class="donate-box-pay-method-image" id="donate-box-pay-method-image-wechat-pay" src=""/>
-            </div>
-            <div class="donate-box-pay-method" data-v="alipay">
-              <img class="donate-box-pay-method-image"  id="donate-box-pay-method-image-alipay" src=""/>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button type="button" class="donate-box-close-button">
-      <svg class="donate-box-close-button-icon" fill="#fff" viewBox="0 0 24 24" width="24" height="24"><path d="M13.486 12l5.208-5.207a1.048 1.048 0 0 0-.006-1.483 1.046 1.046 0 0 0-1.482-.005L12 10.514 6.793 5.305a1.048 1.048 0 0 0-1.483.005 1.046 1.046 0 0 0-.005 1.483L10.514 12l-5.208 5.207a1.048 1.048 0 0 0 .006 1.483 1.046 1.046 0 0 0 1.482.005L12 13.486l5.207 5.208a1.048 1.048 0 0 0 1.483-.006 1.046 1.046 0 0 0 .005-1.482L13.486 12z" fill-rule="evenodd"></path></svg>
-    </button>
-  </div>
-</div>
-
-<script type="text/javascript" src="/js/donate.js"></script>
-</script>
-
-
   <footer>
   
+<br/>
+<br/>
+
 <nav class="post-nav">
   <span class="nav-prev">&larr; <a href="/blogs/fdm-waveequation-taylor/">从泰勒展开推导弹性波动方程的有限差分近似</a></span>
   <span class="nav-next"></span>
@@ -499,51 +450,6 @@ document.addEventListener('keyup', function(e) {
 
 
 
-
-
-<section class="comments">
-  <div id="disqus_thread"></div>
-  <script>
-  var disqus_config = function () {
-  
-    this.page.url = "https:\/\/tintingoo.com" + location.pathname;
-  
-  };
-  (function() {
-    var inIFrame = function() {
-      var iframe = true;
-      try { iframe = window.self !== window.top; } catch (e) {}
-      return iframe;
-    };
-    if (inIFrame()) return;
-    var disqus_js = '//Tintingo.disqus.com/embed.js';
-    var d = document, s = d.createElement('script');
-    s.src = disqus_js; s.async = true;
-    s.setAttribute('data-timestamp', +new Date());
-    var t = d.getElementById('disqus_thread');
-    var b = false, l = function(scroll) {
-      if (b) return;
-      (d.head || d.body).appendChild(s); b = true;
-      if (scroll) t.scrollIntoView();
-    }
-    s.onerror = function(e) {
-      if (sessionStorage.getItem('failure-note')) return;
-      t.innerText = 'Sorry, but you cannot make comments because Disqus failed to load for some reason. It is known to be blocked in China. If you are sure it is not blocked in your region, please refresh the page. 中国大陆地区读者需要翻墙才能发表评论。';
-      sessionStorage.setItem('failure-note', true);
-    };
-    
-    if (location.hash.match(/^#comment-[0-9]+$/)) return l(true);
-    var c = function() {
-      if (b) return;
-      var rect = t.getBoundingClientRect();
-      if (rect.top < window.innerHeight && rect.bottom >= 0) l();
-    };
-    window.addEventListener('load', c);
-    d.addEventListener('scroll', c);
-  })();
-  </script>
-  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</section>
 
 
 

@@ -5,7 +5,6 @@ date: '2022-02-11'
 lastmod: '2022-02-11'
 slug: cn/about
 disable_author_date: true
-disable_donate: true
 disable_comments: true
 disable_adsense: true
 ---

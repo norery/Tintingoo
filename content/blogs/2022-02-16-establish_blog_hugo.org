@@ -37,7 +37,7 @@ tags:
 
 简单说来就是以下几点：
 
-1. 安装 [[https://www.r-project.org/][R语言]] 及 [[https://www.rstudio.com/products/rstudio/download/#download][RStudio]]，还有 git.
+1. 安装 [[https://www.r-project.org/][R语言]] 及 [[https://www.rstudio.com/products/rstudio/download/#download][RStudio]]，还有 Git.
 2. 安装 =blogdown= 包
    #+begin_src r
  install.packages("blogdown")

@@ -1241,7 +1241,7 @@ load-path
 </ol>
 <p>简单说来就是以下几点：</p>
 <ol>
-<li>安装 <a href="https://www.r-project.org/">R语言</a> 及 <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>，还有 git.</li>
+<li>安装 <a href="https://www.r-project.org/">R语言</a> 及 <a href="https://www.rstudio.com/products/rstudio/download/#download">RStudio</a>，还有 Git.</li>
 <li>
 <p>安装 <code class="verbatim">blogdown</code> 包</p>
 <div class="src src-r">
