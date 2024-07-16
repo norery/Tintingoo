@@ -7,10 +7,10 @@ lastmod: '2022-02-11'
 
 Hi, I’m **Ding Yi**.  This is a relaxed yet somewhat informative, personal place where I share subjective content. The website may contain:
 
-1. Some content related to earthquake engineering - professional knowledge (probably not many people will read 😑)
-2. A little bit of programming tutorials - Python, Matlab ... (more like notes than tutorials)
-3. Records and sharing of efficiency tools that have been tinkered with
-4. Some life insights and summaries
+1. Some content related to earthquake engineering - professional knowledge (may not be read by many 😑). 
+2. A bit of programming tutorials - Python, Matlab ... (more like notes than tutorials). 
+3. Sharing efficiency tools. 
+4. Insights and summaries on life.
 
 ### R E S E A R C H    C O N T E N T
 + AI for Earthquake Engineering
