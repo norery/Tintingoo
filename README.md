@@ -1,4 +1,4 @@
-# 丁毅的个人主页 <img src="static/images/web/icon-192x192.png" align="right" alt="logo" height="100" style="border: none; float: right;">
+# Ding Yi's personal homepage <img src="static/images/web/avatar-dark-theme.svg" align="right" alt="logo" height="100" style="border: none; float: right;">
 
 ![License](https://img.shields.io/badge/license-CC%20BY--NC--SA%204.0-blue.svg)
 ![Issues](https://img.shields.io/github/issues/leovan/leovan.me.svg)
